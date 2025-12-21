@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PlantsVsZombies.Movements
+namespace GameFrameWork.Movements
 {
     internal class JumpMovement : IMovement
     {

@@ -1,5 +1,5 @@
 ﻿using System;
-namespace PlantsVsZombies
+namespace GameFrameWork
 {
     public interface IUpdatable
     {

@@ -1,5 +1,5 @@
 ﻿using System.Drawing;
-namespace PlantsVsZombies
+namespace GameFrameWork
 {
 
     public class Enemy : GameObject

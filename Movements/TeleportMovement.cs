@@ -5,14 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using EZInput;
 
-namespace PlantsVsZombies.Movements
+namespace GameFrameWork.Movements
 {
-    internal class Teleport : IMovement
+    internal class TeleportMovement : IMovement
     {
         Random random = new Random();
         private float width;
         private float height; 
-        public Teleport(float width , float height) 
+        public TeleportMovement(float width , float height) 
         {
             this.width = width;
             this.height = height;

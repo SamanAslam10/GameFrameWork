@@ -1,4 +1,4 @@
-namespace PlantsVsZombies
+namespace GameFrameWork
 {
     public interface IPhysicsObject
     {

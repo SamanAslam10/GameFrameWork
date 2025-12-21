@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using EZInput;
 
-namespace PlantsVsZombies.Movements
+namespace GameFrameWork.Movements
 {
     internal class DiagonalJumpMovement : IMovement
     {

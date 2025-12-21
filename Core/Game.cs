@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-namespace PlantsVsZombies
+namespace GameFrameWork
 {
 
     public partial class Game

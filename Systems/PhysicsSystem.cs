@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Linq;
 
-namespace PlantsVsZombies
+namespace GameFrameWork
 {
     public class PhysicsSystem
     {
