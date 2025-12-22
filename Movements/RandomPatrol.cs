@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.ApplicationServices;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,45 +10,56 @@ namespace GameFrameWork
     internal class RandomPatrol : IMovement
     {
         Random random = new Random();
-        private float left;
-        private float right;
-        private float top;
-        private float bottom;
-        private float speed = 3f;
+        private float minX;
+        private float maxX;
+        private float minY;
+        private float maxY;
+        private float speed = 60f;
+        bool hasTarget = false;
+        PointF targetPoints;
 
         public RandomPatrol(float left, float right, float top, float bottom)
         {
-            this.left = left;
-            this.right = right;
-            this.top = top;
-            this.bottom = bottom;
+            this.minX = left;
+            this.maxX = right;
+            this.minY = top;
+            this.maxY = bottom;
         }
 
         public void Move(GameObject obj , GameTime gameTime) 
         {
-            obj.Position = new PointF(obj.Position.X, obj.Position.Y + speed);
-            if (obj.Position.Y <= top)
+            if (hasTarget == false) 
             {
-                obj.Position = new PointF(obj.Position.X, top);
-                speed = Math.Abs(speed); // move Down
+                PickTarget();
             }
-            if (obj.Position.Y >= bottom)
-            {
-                obj.Position = new PointF(obj.Position.X, bottom);
-                speed = -Math.Abs(speed); // move Up
-            }
-            obj.Position = new PointF(obj.Position.X + speed, obj.Position.Y);
+            float distanceX = targetPoints.X - obj.Position.X;
+            float distanceY = targetPoints.Y - obj.Position.Y;
 
-            if (obj.Position.X < left)
+            float distance = (float)Math.Sqrt(distanceX * distanceX + distanceY * distanceY);
+
+            if (distance < speed) 
             {
-                obj.Position = new PointF(left, obj.Position.Y);
-                speed = Math.Abs(speed); // Move right
+                hasTarget = false;
+                return;
             }
-            else if (obj.Position.X > right)
-            {
-                obj.Position = new PointF(right, obj.Position.Y);
-                speed = -Math.Abs(speed); // Move left
-            }
+            float directionX = distanceX / distance;
+            float directionY = distanceY / distance;
+
+            obj.Position = new PointF
+            (
+                obj.Position.X + directionX * speed * gameTime.DeltaTime,
+                obj.Position.Y + directionY * speed * gameTime.DeltaTime
+            );
         }
+        private void PickTarget() 
+        {
+            targetPoints = new PointF
+            (
+                random.Next((int)minX,(int)maxX-10),
+                random.Next((int)minY,(int)maxY - 10)
+            );
+            hasTarget = true;
+        }
+
     }
 }
