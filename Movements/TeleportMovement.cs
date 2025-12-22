@@ -19,7 +19,7 @@ namespace GameFrameWork.Movements
         }   
         public void Move(GameObject obj , GameTime gameTime) 
         {
-            if (Keyboard.IsKeyPressed(Key.Shift)) 
+            if (Keyboard.IsKeyPressed(Key.Shift))
             {
                 obj.Position = RandomPosition(obj.Size);
             }

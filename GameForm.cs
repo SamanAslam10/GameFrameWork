@@ -8,6 +8,7 @@ namespace GameFrameWork
         Game game = new Game();
         PhysicsSystem physicsSystem = new PhysicsSystem();
         TeleportMovement teleport;
+        RandomPatrol randomPatrol;
         VerticalPatrolMovement verticalPatrol;
 
         public GameForm()
@@ -22,11 +23,19 @@ namespace GameFrameWork
             BackColor = Color.PaleTurquoise;
             game.AddObject(new Player
             {
-                Movement = verticalPatrol,
+                Movement = randomPatrol,
                 Position = new PointF(500, 140),
                 Size = new SizeF(120, 120),
-                Sprite = GameFrameWork.Properties.Resources.ufospaceshooter
+                Sprite = GameFrameWork.Properties.Resources.ufospaceshooter,
+                
             });
+            //game.AddObject(new Player
+            //{
+                //Movement = teleport,
+                //Position = new PointF(500, 140),
+                //Size = new SizeF(120, 120),
+                //Sprite = GameFrameWork.Properties.Resources.ufospaceshooter
+            //});
         }
         protected override void OnPaint(PaintEventArgs e)
         {
@@ -44,6 +53,7 @@ namespace GameFrameWork
         {
             teleport = new TeleportMovement(this.ClientSize.Width, this.ClientSize.Height);
             verticalPatrol = new VerticalPatrolMovement(0, this.ClientSize.Height);
+            randomPatrol = new RandomPatrol(0,this.ClientSize.Width  ,0 , this.ClientSize.Height );
             Setting();
         }
     }
