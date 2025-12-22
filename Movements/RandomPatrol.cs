@@ -37,11 +37,6 @@ namespace GameFrameWork
 
             float distance = (float)Math.Sqrt(distanceX * distanceX + distanceY * distanceY);
 
-            if (distance < speed) 
-            {
-                hasTarget = false;
-                return;
-            }
             float directionX = distanceX / distance;
             float directionY = distanceY / distance;
 
@@ -50,6 +45,11 @@ namespace GameFrameWork
                 obj.Position.X + directionX * speed * gameTime.DeltaTime,
                 obj.Position.Y + directionY * speed * gameTime.DeltaTime
             );
+            if (distance < speed) 
+            {
+                hasTarget = false;
+                return;
+            }
         }
         private void PickTarget() 
         {
