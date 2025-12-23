@@ -23,19 +23,26 @@ namespace GameFrameWork
             BackColor = Color.PaleTurquoise;
             game.AddObject(new Player
             {
-                Movement = randomPatrol,
+                Movement = new KeyboardMovement(),
                 Position = new PointF(500, 140),
                 Size = new SizeF(120, 120),
                 Sprite = GameFrameWork.Properties.Resources.ufospaceshooter,
                 
             });
-            //game.AddObject(new Player
-            //{
-                //Movement = teleport,
-                //Position = new PointF(500, 140),
-                //Size = new SizeF(120, 120),
-                //Sprite = GameFrameWork.Properties.Resources.ufospaceshooter
-            //});
+            game.AddObject(new Player
+            {
+                Movement = teleport,
+                Position = new PointF(500, 140),
+                Size = new SizeF(120, 120),
+                Sprite = GameFrameWork.Properties.Resources.ufospaceshooter
+            });
+            game.AddObject(new EnvironmentObject
+            {
+                Type = "Tree",
+                Sprite = GameFrameWork.Properties.Resources.ufospaceshooter,
+                Size = new SizeF(120 , 120)
+
+            });
         }
         protected override void OnPaint(PaintEventArgs e)
         {
