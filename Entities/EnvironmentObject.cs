@@ -8,7 +8,7 @@ namespace GameFrameWork
 {
     internal class EnvironmentObject : IMovable, ICollidable, IPhysicsObject, IDrawable, IUpdatable
     {
-        public string Type {  get; set; }
+        public string ObjType {  get; set; }
         public Image Sprite {  get; set; }
         public SizeF Size {  get; set; }
 
@@ -25,9 +25,10 @@ namespace GameFrameWork
         public float? CustomGravity { get; set; } = null;
 
         public RectangleF Bounds => new RectangleF(position, Size);
-        public EnvironmentObject(string Type , Image sprite , SizeF size) 
+
+        public EnvironmentObject(string ObjType , Image sprite , SizeF size) 
         {
-            this.Type = Type;
+            this.ObjType = ObjType;
             this.Sprite = sprite;
             this.Size = size;
         }
