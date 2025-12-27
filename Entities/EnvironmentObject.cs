@@ -25,8 +25,6 @@ namespace GameFrameWork
         public float? CustomGravity { get; set; } = null;
 
         public RectangleF Bounds => new RectangleF(position, Size);
-
-
         public EnvironmentObject(string Type , Image sprite , SizeF size) 
         {
             this.Type = Type;
@@ -56,6 +54,5 @@ namespace GameFrameWork
         {
             // Default behavior: Do nothing
         }
-
     }
 }

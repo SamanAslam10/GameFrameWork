@@ -26,8 +26,7 @@ namespace GameFrameWork
                 Movement = new KeyboardMovement(),
                 Position = new PointF(500, 140),
                 Size = new SizeF(120, 120),
-                Sprite = GameFrameWork.Properties.Resources.ufospaceshooter,
-                
+                Sprite = GameFrameWork.Properties.Resources.ufospaceshooter, 
             });
             game.AddObject(new Player
             {
@@ -41,7 +40,6 @@ namespace GameFrameWork
                 Type = "Tree",
                 Sprite = GameFrameWork.Properties.Resources.ufospaceshooter,
                 Size = new SizeF(120 , 120)
-
             });
         }
         protected override void OnPaint(PaintEventArgs e)
