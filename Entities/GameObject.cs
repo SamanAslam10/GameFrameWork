@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace GameFrameWork
 {
-    public class GameObject : IDrawable, IUpdatable, IMovable, ICollidable, IPhysicsObject
+    public class GameObject : IDrawable, IUpdatable, IMovable, ICollidable, IPhysicsObject 
     {
         // Position of the object in the game world (encapsulated state)
         public PointF Position { get; set; }
@@ -31,7 +31,7 @@ namespace GameFrameWork
         public bool IsRigidBody { get; set; } = false;
 
         // Optional sprite for rendering
-        public Image? Sprite { get; set; } = null;
+        public ISprite? Sprite { get; set; }
 
         // Bounds of the object for collision detection
         // Exposed as a computed property rather than stored state (keeps consistency)
@@ -43,6 +43,7 @@ namespace GameFrameWork
         public virtual void Update(GameTime gameTime)
         {
             Position = new PointF(Position.X + Velocity.X, Position.Y + Velocity.Y);
+            Sprite?.Update(gameTime.DeltaTime);
         }
 
         // Draw the object. If a <see cref="Sprite"/> is set it will be drawn, otherwise a default rectangle.
@@ -51,7 +52,7 @@ namespace GameFrameWork
         {
             if (Sprite != null)
             {
-                graphics.DrawImage(Sprite, Bounds);
+                Sprite?.Draw(graphics,Position,Size);
             }
             else
             {

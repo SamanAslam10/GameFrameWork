@@ -9,6 +9,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\pea.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\pea.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="EZInput" Version="1.3.2" />
   </ItemGroup>
 

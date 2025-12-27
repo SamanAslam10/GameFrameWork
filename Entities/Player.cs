@@ -6,7 +6,7 @@ namespace GameFrameWork
         // Movement strategy: demonstrates composition over inheritance.
         // Different movement behaviors can be injected (KeyboardMovement, PatrolMovement, etc.).
         public IMovement? Movement { get; set; }
-        public AnimationSystem? animation {  get; set; }
+        
 
         // Domain state
         public int Health { get; set; } = 100;
@@ -17,7 +17,6 @@ namespace GameFrameWork
         public override void Update(GameTime gameTime)
         {
             Movement?.Move(this, gameTime);
-            animation?.UpdateFrame(gameTime);
             base.Update(gameTime);
         }
 

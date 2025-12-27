@@ -6,7 +6,7 @@ namespace GameFrameWork
     {
         // Optional movement behavior: demonstrates composition and allows testable movement logic.
         public IMovement? Movement { get; set; }
-        public AnimationSystem? animation { get; set; }
+        
 
         // Default enemy velocity is set in constructor to give basic movement out-of-the-box.
         public Enemy()
@@ -18,14 +18,13 @@ namespace GameFrameWork
         public override void Update(GameTime gameTime)
         {
             Movement?.Move(this, gameTime); // movement must be called
-            animation?.UpdateFrame(gameTime);
             base.Update(gameTime);
         }
 
         /// Custom draw: demonstrates polymorphism (override base draw to provide enemy visuals).
         public override void Draw(Graphics g)
         {
-            g.FillRectangle(Brushes.Red, Bounds);
+            base.Draw(g);
         }
 
         /// On collision, enemy deactivates when hit by bullets (encapsulation of reaction logic inside the entity).

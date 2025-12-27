@@ -8,7 +8,7 @@ namespace GameFrameWork
 {
     public class AnimationSystem
     {
-        private Dictionary<String, Image[]> Animations;
+        private Dictionary<String, Image[]> Animations = new Dictionary<string, Image[]>();
         int CurrentFrame;
         string CurrentState;
         float FrameDuration;
@@ -21,7 +21,7 @@ namespace GameFrameWork
         }
         public void UpdateFrame(GameTime gameTime) 
         {
-            timer = gameTime.DeltaTime;
+            timer += gameTime.DeltaTime;
             if ( timer > FrameDuration) 
             {
                 CurrentFrame = (CurrentFrame + 1) % Animations[CurrentState].Length;
