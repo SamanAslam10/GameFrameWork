@@ -64,7 +64,8 @@ namespace GameFrameWork
                 if (loadingbar.Value >= 100 )
                 {
                     isLoading = false;
-                    this.Controls.Remove(loadingscreen); 
+                    this.Controls.Remove(loadingscreen);
+                    MainMenu();
                 }
                 return; 
             }
@@ -83,6 +84,11 @@ namespace GameFrameWork
 
         private void GameForm_Load(object sender, EventArgs e)
         {
+            this.WindowState = FormWindowState.Maximized;
+            this.FormBorderStyle = FormBorderStyle.None;
+            this.TopMost = true;
+
+
             LoadingScreen();
             Setting();
             verticalPatrol = new VerticalPatrolMovement(this.Top , this.Bottom);
@@ -107,6 +113,17 @@ namespace GameFrameWork
             this.Controls.Add(loadingscreen);
             loadingscreen.Controls.Add(loadingbar);
             loadingscreen.BringToFront();
+        }
+        private void MainMenu() 
+        {
+            Panel mainMenu = new Panel();
+            mainMenu.BackgroundImage = Resources.menu;
+            mainMenu.BackgroundImageLayout = ImageLayout.Stretch;
+            mainMenu.Location = new Point(0, 0);
+            mainMenu.Size = this.ClientSize;
+            mainMenu.Show();
+
+            this.Controls.Add(mainMenu);
         }
     }
 }
