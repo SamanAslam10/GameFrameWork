@@ -13,6 +13,7 @@ namespace GameFrameWork
         TeleportMovement teleport;
         RandomPatrol randomPatrol;
         VerticalPatrolMovement verticalPatrol;
+        KeyboardMovement keyboardMovement;
         AnimatedSprite animatedSprite ;
         StaticSprite staticSprite;
 
@@ -28,34 +29,15 @@ namespace GameFrameWork
             DoubleBuffered = true;
             GameTimer.Start();
         }
-
         private void Setting()
         {
-            game.AddObject(new Enemy
-            {
-                Sprite = new AnimatedSprite( Resources.EatingFlagZombie),
-                Movement = verticalPatrol,
-                Size = new SizeF(120 , 130),
-                Position = new PointF(550 , 550)
-            });
-            game.AddObject(new Player
-            {
-                Position = new PointF(100, 200),
-                Size = new Size(100, 100),
-                Sprite = new StaticSprite(Resources.pea),
-                Movement = new KeyboardMovement()
-            });
         }
         protected override void OnPaint(PaintEventArgs e)
         {
+            base.OnPaint(e);
+            e.Graphics.FillRectangle(Brushes.Red, 50, 50, 200, 200);
             game.Draw(e.Graphics);
-            Graphics g = e.Graphics;
-            foreach (var obj in game.Objects) 
-            {
-                obj.Draw(g);
-            }
         }
-
         private void GameTimer_Tick(object sender, EventArgs e)
         {
             if (isLoading)
@@ -70,7 +52,7 @@ namespace GameFrameWork
                 }
                 return; 
             }
-
+            
             game.Update(new GameTime());
             physicsSystem.Apply(game.Objects.ToList());
             foreach (var obj in game.Objects) 
@@ -82,7 +64,6 @@ namespace GameFrameWork
             Invalidate();
             
         }
-
         private void GameForm_Load(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Maximized;
@@ -156,7 +137,7 @@ namespace GameFrameWork
         }
         private void StartButton_Click(object sender, EventArgs e) 
         {
-
+            LoadLevels();
         }
         private void LevelButton_Click(object sender, EventArgs e)
         {
@@ -185,6 +166,8 @@ namespace GameFrameWork
             Button lvl2 = CreateLevelButton(Resources.level2, x + (gap + width), y, unlocked >= 2);
             Button lvl3 = CreateLevelButton(Resources.level3, x + (gap + width) * 2, y, unlocked >= 3);
 
+            lvl1.Click += lvl1_Click; 
+
             Button backbutton = BackButton(Resources.backButton, 720, 1200);
             backbutton.Click += backbutton_Click;
 
@@ -193,6 +176,10 @@ namespace GameFrameWork
             levels.Controls.Add(lvl3);
 
             this.Controls.Add(levels);
+        }
+        private void lvl1_Click(object sender, EventArgs e) 
+        {
+            LoadLevels();
         }
         private Button BackButton(Image img, int x, int y)
         {
@@ -222,6 +209,28 @@ namespace GameFrameWork
         private void backbutton_Click(object sender, EventArgs e)
         {
             MainMenu();
+        }
+        private void LoadLevels() 
+        {
+            Controls.Clear();
+            Panel BackGround = new Panel();
+            BackGround.BackgroundImage = Resources.lawn;
+            BackGround.Dock = DockStyle.Fill;
+            BackGround.BackgroundImageLayout = ImageLayout.Stretch;
+
+            this.Controls.Add( BackGround );
+            BackGround.SendToBack();
+
+            game.Objects.Clear();
+
+            game.AddObject(new Enemy
+            {
+                Sprite = new AnimatedSprite(Resources.BasicZombieWalking),
+                Movement = null,
+                Size = new SizeF(250, 200),
+                Position = new PointF(200 , 200),
+
+            });
         }
     }
 }
