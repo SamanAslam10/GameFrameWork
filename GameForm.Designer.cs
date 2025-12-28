@@ -42,7 +42,9 @@
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            BackgroundImageLayout = ImageLayout.Stretch;
+            ClientSize = new Size(980, 454);
+            DoubleBuffered = true;
             Name = "GameForm";
             Text = "Form1";
             Load += GameForm_Load;

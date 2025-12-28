@@ -117,13 +117,37 @@ namespace GameFrameWork
         private void MainMenu() 
         {
             Panel mainMenu = new Panel();
-            mainMenu.BackgroundImage = Resources.menu;
+            mainMenu.BackgroundImage = Resources.mainMenu;
             mainMenu.BackgroundImageLayout = ImageLayout.Stretch;
-            mainMenu.Location = new Point(0, 0);
-            mainMenu.Size = this.ClientSize;
-            mainMenu.Show();
+            mainMenu.Dock = DockStyle.Fill;
+
+            int centerX = 1150;  
+            int baseY = 320;   
+            int gap = 145;
+
+            Button StartButton = CreateMenuButton("START" , centerX, baseY);
+            Button LevelButton = CreateMenuButton("LEVELS",centerX, baseY + gap);
+            Button ExitButton = CreateMenuButton("EXIT",centerX, baseY + gap * 2);
+
+            mainMenu.Controls.Add(StartButton);
+            mainMenu.Controls.Add(LevelButton);
+            mainMenu.Controls.Add(ExitButton);
 
             this.Controls.Add(mainMenu);
+            mainMenu.BringToFront();
+        }
+        private Button CreateMenuButton(string Text , int x , int y) 
+        {
+            return new Button
+            {
+                Text = Text ,
+                Font = new Font("Showcard Gothic", 32, FontStyle.Italic),
+                ForeColor = Color.Black,
+                BackColor = Color.DarkGray,
+                Size = new Size(350, 101),
+                Location = new Point(x, y),
+                FlatStyle = FlatStyle.Flat
+            };
         }
     }
 }
