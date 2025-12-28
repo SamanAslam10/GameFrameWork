@@ -1,6 +1,7 @@
 using GameFrameWork.Movements;
 using GameFrameWork.Properties;
 using System.Drawing;
+using System.Runtime.CompilerServices;
 using System.Runtime.Versioning;
 
 namespace GameFrameWork
@@ -175,9 +176,17 @@ namespace GameFrameWork
 
             int unlocked = FileHandling.Load();
 
-            Button lvl1 = CreateLevelButton(Resources.level1, 720, 320, unlocked >= 1);
-            Button lvl2 = CreateLevelButton(Resources.level2, 720, 420, unlocked >= 2);
-            Button lvl3 = CreateLevelButton(Resources.level3, 720, 520, unlocked >= 3);
+            int x = 350;
+            int gap = 150;
+            int width = 280;
+            int y = 120;
+
+            Button lvl1 = CreateLevelButton(Resources.level1, x, y, unlocked >= 1);
+            Button lvl2 = CreateLevelButton(Resources.level2, x + (gap + width), y, unlocked >= 2);
+            Button lvl3 = CreateLevelButton(Resources.level3, x + (gap + width) * 2, y, unlocked >= 3);
+
+            Button backbutton = BackButton(Resources.backButton, 720, 1200);
+            backbutton.Click += backbutton_Click;
 
             levels.Controls.Add(lvl1);
             levels.Controls.Add(lvl2);
@@ -185,21 +194,34 @@ namespace GameFrameWork
 
             this.Controls.Add(levels);
         }
+        private Button BackButton(Image img, int x, int y)
+        {
+            Button button = new Button();
+            button.Size = new Size(280, 260);
+            button.Location = new Point(x, y);
+            button.FlatStyle = FlatStyle.Flat;
+            button.FlatAppearance.BorderSize = 0;
+            button.Padding = new Padding(-2);
+            button.Image = img;
+            return button;
+        }
         private Button CreateLevelButton(Image img ,int x , int y , bool unlocked) 
         {
-            return new Button
-            {
-                
-                Size = new Size(400, 400),
-                Location = new Point(x, y),
-                FlatStyle = FlatStyle.Flat,
-                Font = new Font("Showcard Gothic",16),
+            Button button = new Button();
+            button.Size = new Size(280, 260);
+            button.Location = new Point(x, y);
+            button.FlatStyle = FlatStyle.Flat;
+            button.FlatAppearance.BorderSize = 0;
+            button.Padding = new Padding(-2);
+            button.Image = img;
+            button.Image = unlocked ? img : Resources.levelLocked;
 
-                Image = unlocked ? img : Resources.levelLocked,
-                ImageAlign = ContentAlignment.MiddleCenter,
-
-                Enabled = unlocked,
-            };
+            button.Enabled = unlocked;
+            return button;
+        }
+        private void backbutton_Click(object sender, EventArgs e)
+        {
+            MainMenu();
         }
     }
 }
