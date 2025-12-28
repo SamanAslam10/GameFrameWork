@@ -3,6 +3,6 @@
     public class GameTime
     {
         // Time elapsed since the last update
-        public float DeltaTime { get; set; } = 1f;
+        public float DeltaTime { get; set; } = 0.016f;
     }
 }

@@ -32,26 +32,16 @@ namespace GameFrameWork
             GameTimer.Start();
             BackgroundMusic();
         }
-        private void ZombieCreation(int n)
+        private void Setting()
         {
-           
-            
-                float X = this.ClientSize.Width - 250;
-                float Y = Random.Next(100,this.ClientSize.Height - 250);
-                game.AddObject(new Enemy
-                {
-                    Position = new PointF(X, Y),
-                    Size = new Size(250, 250),
-                    Sprite = new AnimatedSprite(Resources.zombieDeath),
-                    Movement = new MoveLeftMovement(16f)
-                });
-            
-            
-        }
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            base.OnPaint(e);
-            game.Draw(e.Graphics);
+            game.AddObject(new Player
+            {
+                Position = new PointF(100, 200),
+                Size = new Size(100, 100),
+                Sprite = new AnimatedSprite(Resources.EatingFlagZombie),
+                Movement = new MoveLeftMovement(5f)
+            });
+
         }
         private void GameTimer_Tick(object sender, EventArgs e)
         {
@@ -68,12 +58,12 @@ namespace GameFrameWork
                 return;
             }
 
-            game.Update(new GameTime());
             physicsSystem.Apply(game.Objects.ToList());
             foreach (var obj in game.Objects)
             {
-                obj.Update(new GameTime());
+                game.Update(new GameTime());
             }
+            game.Cleanup();
             Invalidate();
 
         }
@@ -213,7 +203,7 @@ namespace GameFrameWork
             button.FlatAppearance.BorderSize = 0;
             button.Padding = new Padding(-2);
             button.Image = img;
-            button.Image = unlocked ? img : Resources.levelLocked ;
+            button.Image = unlocked ? img : Resources.levelLocked;
 
             button.Enabled = unlocked;
             return button;
@@ -236,21 +226,16 @@ namespace GameFrameWork
             BackGround.Paint += BackGround_Paint;
 
             game.Objects.Clear();
-
-            int level = FileHandling.Load();
-            if(level == 1) 
-            {
-                ZombieCreation(10);
-
-            }
+            Setting();
         }
         private void BackGround_Paint(object sender, PaintEventArgs e)
         {
             game.Draw(e.Graphics);
         }
-        private void BackgroundMusic() 
+        private void BackgroundMusic()
         {
             sound.BackgroundPlay(Resources.BackgroundSound);
         }
+
     }
 }

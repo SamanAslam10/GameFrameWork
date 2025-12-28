@@ -52,6 +52,7 @@ namespace GameFrameWork
             if (Sprite != null)
             {
                 Sprite?.Draw(graphics,Position,Size);
+                
             }
             else
             {
