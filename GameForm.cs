@@ -129,6 +129,10 @@ namespace GameFrameWork
             Button LevelButton = CreateMenuButton("LEVELS",centerX, baseY + gap);
             Button ExitButton = CreateMenuButton("EXIT",centerX, baseY + gap * 2);
 
+            StartButton.Click += StartButton_Click;
+            LevelButton.Click += LevelButton_Click;
+            ExitButton.Click += ExitButton_Click;
+
             mainMenu.Controls.Add(StartButton);
             mainMenu.Controls.Add(LevelButton);
             mainMenu.Controls.Add(ExitButton);
@@ -147,6 +151,54 @@ namespace GameFrameWork
                 Size = new Size(350, 101),
                 Location = new Point(x, y),
                 FlatStyle = FlatStyle.Flat
+            };
+        }
+        private void StartButton_Click(object sender, EventArgs e) 
+        {
+
+        }
+        private void LevelButton_Click(object sender, EventArgs e)
+        {
+            LevelMenu();
+        }
+        private void ExitButton_Click(object sender, EventArgs e)
+        {
+           Application.Exit();
+        }
+        private void LevelMenu() 
+        {
+            Controls.Clear();
+            Panel levels = new Panel();
+            levels.BackgroundImage = Resources.levelsMenu;
+            levels.Dock = DockStyle.Fill;
+            levels.BackgroundImageLayout = ImageLayout.Stretch;
+
+            int unlocked = FileHandling.Load();
+
+            Button lvl1 = CreateLevelButton(Resources.level1, 720, 320, unlocked >= 1);
+            Button lvl2 = CreateLevelButton(Resources.level2, 720, 420, unlocked >= 2);
+            Button lvl3 = CreateLevelButton(Resources.level3, 720, 520, unlocked >= 3);
+
+            levels.Controls.Add(lvl1);
+            levels.Controls.Add(lvl2);
+            levels.Controls.Add(lvl3);
+
+            this.Controls.Add(levels);
+        }
+        private Button CreateLevelButton(Image img ,int x , int y , bool unlocked) 
+        {
+            return new Button
+            {
+                
+                Size = new Size(400, 400),
+                Location = new Point(x, y),
+                FlatStyle = FlatStyle.Flat,
+                Font = new Font("Showcard Gothic",16),
+
+                Image = unlocked ? img : Resources.levelLocked,
+                ImageAlign = ContentAlignment.MiddleCenter,
+
+                Enabled = unlocked,
             };
         }
     }

@@ -8,11 +8,11 @@ namespace GameFrameWork
 {
     internal class FileHandling
     {
-        public void Save(int level) 
+        public static void Save(int level) 
         {
             File.WriteAllText("Progress.txt", level.ToString());
         }
-        public int Load()
+        public static int Load()
         {
             if (!File.Exists("Progress.txt"))
             {
