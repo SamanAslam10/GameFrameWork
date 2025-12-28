@@ -8,7 +8,7 @@ namespace GameFrameWork
 {
     public interface ISprite
     {
-        void Update(float DeltaTime);
+        void Update(GameTime gameTime);
         void Draw(Graphics g , PointF position , SizeF size);
     }
 }

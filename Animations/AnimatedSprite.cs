@@ -29,9 +29,9 @@ namespace GameFrameWork
         }
 
         // Call this every update, deltaTime in seconds
-        public void Update(float deltaTime)
+        public void Update(GameTime gameTime)
         {
-            timer += deltaTime;
+            timer += gameTime.DeltaTime;
             if (timer >= frameTime)
             {
                 timer -= frameTime;

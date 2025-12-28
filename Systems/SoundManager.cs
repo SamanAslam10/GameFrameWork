@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Media;
+using Microsoft.VisualBasic.Devices;
+using GameFrameWork.Properties;
 
 namespace GameFrameWork
 {
@@ -15,9 +17,9 @@ namespace GameFrameWork
         private SoundPlayer damageSound;
         private SoundPlayer scoreSound;
         
-        public void BackgroundPlay(string path) 
+        public void BackgroundPlay(System.IO.UnmanagedMemoryStream sound) 
         {
-            backGroundSound = new SoundPlayer(path);
+            backGroundSound = new SoundPlayer(sound);
             backGroundSound.PlayLooping();
         }
         public void winPlay(string path)

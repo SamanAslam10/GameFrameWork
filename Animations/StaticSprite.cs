@@ -15,7 +15,7 @@ namespace GameFrameWork
             image = img;
         }
 
-        public void Update(float deltaTime) { /* nothing to update */ }
+        public void Update(GameTime gameTime) {}
 
         public void Draw(Graphics g, PointF position, SizeF size)
         {

@@ -6,7 +6,7 @@ namespace GameFrameWork
     {
         // Optional movement behavior: demonstrates composition and allows testable movement logic.
         public IMovement? Movement { get; set; }
-        
+
 
         // Default enemy velocity is set in constructor to give basic movement out-of-the-box.
         public Enemy()

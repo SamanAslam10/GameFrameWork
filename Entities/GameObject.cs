@@ -42,8 +42,7 @@ namespace GameFrameWork
         // Demonstrates polymorphism and the Template Method pattern: derived types customize behavior.
         public virtual void Update(GameTime gameTime)
         {
-            Position = new PointF(Position.X + Velocity.X, Position.Y + Velocity.Y);
-            Sprite?.Update(gameTime.DeltaTime);
+            Sprite?.Update(gameTime);
         }
 
         // Draw the object. If a <see cref="Sprite"/> is set it will be drawn, otherwise a default rectangle.

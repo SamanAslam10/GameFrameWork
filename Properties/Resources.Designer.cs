@@ -71,6 +71,15 @@ namespace GameFrameWork.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream BackgroundSound {
+            get {
+                return ResourceManager.GetStream("BackgroundSound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap BasicZombieWalking {
@@ -107,6 +116,24 @@ namespace GameFrameWork.Properties {
             get {
                 object obj = ResourceManager.GetObject("FlagZombieWalking", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream gameOver {
+            get {
+                return ResourceManager.GetStream("gameOver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream gameStart {
+            get {
+                return ResourceManager.GetStream("gameStart", resourceCulture);
             }
         }
         
