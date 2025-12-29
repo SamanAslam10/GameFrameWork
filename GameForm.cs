@@ -89,9 +89,9 @@ namespace GameFrameWork
         }
         private void GameForm_Load(object sender, EventArgs e)
         {
-            /*this.WindowState = FormWindowState.Maximized;
+            this.WindowState = FormWindowState.Maximized;
             this.FormBorderStyle = FormBorderStyle.None;
-            this.TopMost = true;*/
+            this.TopMost = true;
 
 
             LoadingScreen();
@@ -192,7 +192,7 @@ namespace GameFrameWork
 
             lvl1.Click += lvl1_Click;
 
-            Button backbutton = BackButton(Resources.backButton, 720, 1200);
+            Button backbutton = BackButton(Resources.backButton, 720, 120);
             backbutton.Click += backbutton_Click;
 
             levels.Controls.Add(lvl1);
@@ -201,6 +201,7 @@ namespace GameFrameWork
 
             this.Controls.Add(levels);
         }
+
         private void lvl1_Click(object sender, EventArgs e)
         {
             LoadLevels();
@@ -255,22 +256,26 @@ namespace GameFrameWork
             gamePanel.SendToBack();
 
             game.Objects.Clear();
-            CreatePlants();
+
+            Button sunflowerbtn = plantBarButtons(Resources.sunflowerBar, 20);
+            sunflowerbtn.Click += Sunflowerbtn_Click;
+
+            Button peashooterbtn = plantBarButtons(Resources.peashooterBar, 300);
+            peashooterbtn.Click += Peashooterbtn_Click;
+
+            gamePanel.MouseClick += gamePanel_MouseClick;
+
+            
+            gamePanel.Controls.Add(sunflowerbtn);
+            gamePanel.Controls.Add(peashooterbtn);
             gamePanel.Controls.Add(SunBar());
             gamePanel.Controls.Add(ZombieBar());
             gamePanel.Controls.Add(TopBarMenuButton());
+            gamePanel.Controls.Add(ScoreLabel());
 
             Setting();
         }
-        private void CreatePlants() 
-        {
-            Panel bar = PlantSelectionBar();
-            bar.MouseClick += Bar_MouseClick;
-
-            this.Controls.Add(bar);
-            bar.BringToFront();
-        }
-        private void Bar_MouseClick(object? sender, MouseEventArgs e)
+        private void gamePanel_MouseClick(object? sender, MouseEventArgs e)
         {
             if(selectedPlantType != null) 
             {
@@ -295,25 +300,6 @@ namespace GameFrameWork
                 }
             } 
         }
-        private Panel PlantSelectionBar() 
-        {
-            Panel plantBar = new Panel();
-            plantBar.Dock = DockStyle.Left;
-            plantBar.BackgroundImage = Resources.plantBar;
-            plantBar.Width = 90;
-            plantBar.BackColor = Color.Transparent;
-            plantBar.BorderStyle = BorderStyle.None;
-
-            Button sunflowerbtn = plantBarButtons(Resources.sunflowerBar , 20);
-            sunflowerbtn.Click += Sunflowerbtn_Click;
-
-            Button peashooterbtn = plantBarButtons(Resources.peashooterBar , 120);
-            peashooterbtn.Click += Peashooterbtn_Click;
-
-            plantBar.Controls.Add(sunflowerbtn);
-            plantBar.Controls.Add(peashooterbtn);
-            return plantBar;
-        }
         private void Peashooterbtn_Click(object? sender, EventArgs e)
         {
             selectedPlantType = "Peashooter";
@@ -325,9 +311,10 @@ namespace GameFrameWork
         private Button plantBarButtons(Image img , int y) 
         {
             Button btn = new Button();
-            btn.Size = new Size(150, 1200);
+            btn.Size = new Size(150, 200);
             btn.Location = new Point(35, y);
-            btn.Image = img;
+            btn.BackgroundImage = img;
+            btn.BackgroundImageLayout = ImageLayout.Stretch;
             btn.FlatStyle = FlatStyle.Flat;
             btn.FlatAppearance.BorderSize = 2;
             btn.FlatAppearance.BorderColor = Color.Black;
@@ -344,26 +331,27 @@ namespace GameFrameWork
 
             zombiesSpawned = 0;
             zombieSpawnTimer = 0f;
-
-            score = 0;
+        }
+        private Label ScoreLabel() 
+        {
             scoreLabel = new Label
             {
-                Text = "Score: 0",
+                Text = score.ToString(),
                 Font = new Font("Arial", 24),
-                ForeColor = Color.White,
+                ForeColor = Color.Black,
                 BackColor = Color.Transparent,
-                Location = new Point(20, 20),
+                Location = new Point(600, 10),
                 AutoSize = true
             };
-            this.Controls.Add(scoreLabel);
+            return scoreLabel;
         }
         private Panel SunBar() 
         {
             Panel sunPanel = new Panel();
             sunPanel.BackgroundImage = Resources.sunbar;
             sunPanel.BackgroundImageLayout = ImageLayout.Stretch;
-            sunPanel.Size = new Size(200, 150);
-            sunPanel.Location = new Point(150, 5);
+            sunPanel.Size = new Size(350, 80);
+            sunPanel.Location = new Point(350, 20);
             sunPanel.BackColor = Color.Transparent; 
             sunPanel.BorderStyle = BorderStyle.None;
 
@@ -375,7 +363,7 @@ namespace GameFrameWork
         {
             ProgressBar zombieBar = new ProgressBar();
             zombieBar.Size = new Size(250, 50);
-            zombieBar.Location = new Point(800, 35);
+            zombieBar.Location = new Point(800, 20);
 
             zombieBar.Value = ZombieBarValue();
             return zombieBar;
@@ -390,7 +378,7 @@ namespace GameFrameWork
             menuBtn.Image = Resources.menubar;
             menuBtn.BackgroundImageLayout =(ImageLayout)ImageLayout.Stretch;
             menuBtn.Size = new Size(250,50);
-            menuBtn.Location = new Point(this.ClientSize.Width - 300, 5);
+            menuBtn.Location = new Point(1400, 20);
             menuBtn.BackColor = Color.Transparent;
             menuBtn.FlatStyle = FlatStyle.Flat;
             menuBtn.FlatAppearance.BorderSize = 0;
