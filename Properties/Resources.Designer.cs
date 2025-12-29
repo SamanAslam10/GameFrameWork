@@ -250,6 +250,16 @@ namespace GameFrameWork.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap peashooterlogo {
+            get {
+                object obj = ResourceManager.GetObject("peashooterlogo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap RIP {
             get {
                 object obj = ResourceManager.GetObject("RIP", resourceCulture);
@@ -273,6 +283,16 @@ namespace GameFrameWork.Properties {
         internal static System.Drawing.Bitmap sunflower {
             get {
                 object obj = ResourceManager.GetObject("sunflower", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Sunflowerlogo {
+            get {
+                object obj = ResourceManager.GetObject("Sunflowerlogo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

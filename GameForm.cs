@@ -24,6 +24,17 @@ namespace GameFrameWork
         private Panel loadingscreen;
         private ProgressBar loadingbar;
 
+        private string selectedPlantType = null;
+        
+
+
+        private int score = 0;
+        private Label scoreLabel;
+        private float zombieSpawnTimer = 0f;
+        private float zombieSpawnInterval = 3f;
+        private int zombiesSpawned = 0;
+        private int maxZombies = 10;
+
 
         public GameForm()
         {
@@ -202,8 +213,9 @@ namespace GameFrameWork
             button.FlatStyle = FlatStyle.Flat;
             button.FlatAppearance.BorderSize = 0;
             button.Padding = new Padding(-2);
-            button.Image = img;
-            button.Image = unlocked ? img : Resources.levelLocked;
+            button.BackgroundImage = img;
+            button.BackgroundImageLayout = ImageLayout.Stretch;
+            button.BackgroundImage = unlocked ? img : Resources.levelLocked;
 
             button.Enabled = unlocked;
             return button;
@@ -218,7 +230,7 @@ namespace GameFrameWork
             Panel BackGround = new Panel();
             BackGround.BackgroundImage = Resources.lawn;
             BackGround.Dock = DockStyle.Fill;
-            BackGround.BackgroundImageLayout = ImageLayout.Stretch;
+            BackGround.BackgroundImageLayout = ImageLayout.Zoom;
 
             this.Controls.Add(BackGround);
             BackGround.SendToBack();
@@ -226,7 +238,82 @@ namespace GameFrameWork
             BackGround.Paint += BackGround_Paint;
 
             game.Objects.Clear();
-            Setting();
+            CreatePlants();
+        }
+        private void CreatePlants() 
+        {
+            Panel bar = PlantSelectionBar();
+            bar.MouseClick += Bar_MouseClick;
+
+            this.Controls.Add(bar);
+            bar.BringToFront();
+        }
+
+        private void Bar_MouseClick(object? sender, MouseEventArgs e)
+        {
+            if(selectedPlantType != null) 
+            {
+                Image plantSprite = null;
+                if (selectedPlantType == "Sunflower") 
+                {
+                    plantSprite = Resources.sunflower;
+                }
+                else if(selectedPlantType == "Peashooter") 
+                {
+                    plantSprite = Resources.Peashooter;
+
+                }
+                if (plantSprite != null) 
+                {
+                    game.AddObject(new Player
+                    {
+                        Sprite = new AnimatedSprite(plantSprite),
+                        Size = new SizeF(200, 200),
+                        Position = new PointF(e.X, e.Y)
+                    });
+                }
+            } 
+        }
+
+        private Panel PlantSelectionBar() 
+        {
+            Panel plantBar = new Panel();
+            plantBar.Dock = DockStyle.Top;
+            plantBar.Height = 200;
+            plantBar.BackColor = Color.FromArgb(61, 48, 39);
+
+            Button sunflowerbtn = plantBarButtons(Resources.Sunflowerlogo);
+            sunflowerbtn.Click += Sunflowerbtn_Click;
+
+            Button peashooterbtn = plantBarButtons(Resources.peashooterlogo);
+            peashooterbtn.Click += Peashooterbtn_Click;
+
+            plantBar.Controls.Add(sunflowerbtn);
+            plantBar.Controls.Add(peashooterbtn);
+            return plantBar;
+        }
+
+        private void Peashooterbtn_Click(object? sender, EventArgs e)
+        {
+            selectedPlantType = "Peashooter";
+        }
+
+        private void Sunflowerbtn_Click(object? sender, EventArgs e)
+        {
+            selectedPlantType = "Sunflower";
+        }
+
+        private Button plantBarButtons(Image img ) 
+        {
+            Button button = new Button();
+            button.Size = new Size(180, 180);
+            button.FlatStyle = FlatStyle.Flat;
+            button.FlatAppearance.BorderSize = 0;
+            button.Padding = new Padding(-2);
+            button.BackgroundImage = img;
+            button.BackgroundImageLayout = ImageLayout.Stretch;
+
+            return button;
         }
         private void BackGround_Paint(object sender, PaintEventArgs e)
         {
@@ -236,6 +323,23 @@ namespace GameFrameWork
         {
             sound.BackgroundPlay(Resources.BackgroundSound);
         }
+        private void LoadLevels2()
+        {
 
+            zombiesSpawned = 0;
+            zombieSpawnTimer = 0f;
+
+            score = 0;
+            scoreLabel = new Label
+            {
+                Text = "Score: 0",
+                Font = new Font("Arial", 24),
+                ForeColor = Color.White,
+                BackColor = Color.Transparent,
+                Location = new Point(20, 20),
+                AutoSize = true
+            };
+            this.Controls.Add(scoreLabel);
+        }
     }
 }
