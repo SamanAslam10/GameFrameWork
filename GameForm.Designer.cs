@@ -42,12 +42,12 @@
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(61, 48, 39);
+            BackColor = Color.White;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(980, 454);
             DoubleBuffered = true;
             Name = "GameForm";
-            Text = "Form1";
+            Text = "PlantsVsZombies";
             Load += GameForm_Load;
             ResumeLayout(false);
         }

@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Runtime.CompilerServices;
 using System.Runtime.Versioning;
 using System.Security.Policy;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrayNotify;
 
 namespace GameFrameWork
 {
@@ -25,8 +26,9 @@ namespace GameFrameWork
         private ProgressBar loadingbar;
 
         private string selectedPlantType = null;
-        
-
+        //2
+        private DateTime lastUpdateTime = DateTime.Now;
+        Panel gamePanel;
 
         private int score = 0;
         private Label scoreLabel;
@@ -40,17 +42,21 @@ namespace GameFrameWork
         {
             InitializeComponent();
             DoubleBuffered = true;
+
+            //1
+            GameTimer.Interval = 16;
             GameTimer.Start();
+
             BackgroundMusic();
         }
         private void Setting()
         {
             game.AddObject(new Player
             {
-                Position = new PointF(100, 200),
-                Size = new Size(100, 100),
-                Sprite = new AnimatedSprite(Resources.EatingFlagZombie),
-                Movement = new MoveLeftMovement(5f)
+                Position = new PointF(800, 900),
+                Size = new Size(300, 300),
+                Sprite = new AnimatedSprite(Resources.EatingFlagZombie,10f),
+                Movement = new MoveLeftMovement(10f)
             });
 
         }
@@ -68,16 +74,24 @@ namespace GameFrameWork
                 }
                 return;
             }
-            game.Update(new GameTime());
+            //3
+            DateTime currentTime = DateTime.Now;
+            float deltaTime = (float)(currentTime - lastUpdateTime).TotalSeconds;
+            lastUpdateTime = currentTime;
+
+            game.Update(new GameTime() { DeltaTime = deltaTime});
+            if (gamePanel != null && game.Objects.Count > 0)
+            {
+                gamePanel.Invalidate();
+            }
             game.Cleanup();
-            Invalidate();
 
         }
         private void GameForm_Load(object sender, EventArgs e)
         {
-            this.WindowState = FormWindowState.Maximized;
+            /*this.WindowState = FormWindowState.Maximized;
             this.FormBorderStyle = FormBorderStyle.None;
-            this.TopMost = true;
+            this.TopMost = true;*/
 
 
             LoadingScreen();
@@ -89,6 +103,8 @@ namespace GameFrameWork
             loadingscreen.BackgroundImageLayout = ImageLayout.Stretch;
             loadingscreen.Size = this.ClientSize;
             loadingscreen.Location = new Point(0, 0);
+
+            SetDoubleBuffered(loadingscreen);
 
             loadingbar = new ProgressBar();
             loadingbar.Show();
@@ -222,22 +238,29 @@ namespace GameFrameWork
         private void LoadLevels()
         {
             Controls.Clear();
-            Panel BackGround = new Panel();
-            BackGround.BackgroundImage = Resources.lawn;
-            BackGround.Dock = DockStyle.Fill;
-            BackGround.BackgroundImageLayout = ImageLayout.Zoom;
+            //
+            gamePanel = new Panel();
+            gamePanel.BackgroundImage = Resources.lawn;
+            gamePanel.Dock = DockStyle.Fill;
+            gamePanel.BackgroundImageLayout = ImageLayout.Stretch;
 
-            this.Controls.Add(BackGround);
-            BackGround.SendToBack();
+            SetDoubleBuffered(gamePanel);
 
-            BackGround.Paint += BackGround_Paint;
+            gamePanel.Paint += (s,e) => 
+            {
+                game.Draw(e.Graphics);
+            };
+
+            this.Controls.Add(gamePanel);
+            gamePanel.SendToBack();
 
             game.Objects.Clear();
             CreatePlants();
-            BackGround.Controls.Add(SunBar());
-            BackGround.Controls.Add(ZombieBar());
-            BackGround.Controls.Add(TopBarMenuButton());
+            gamePanel.Controls.Add(SunBar());
+            gamePanel.Controls.Add(ZombieBar());
+            gamePanel.Controls.Add(TopBarMenuButton());
 
+            Setting();
         }
         private void CreatePlants() 
         {
@@ -312,10 +335,6 @@ namespace GameFrameWork
 
             return btn;
         }
-        private void BackGround_Paint(object sender, PaintEventArgs e)
-        {
-            game.Draw(e.Graphics);
-        }
         private void BackgroundMusic()
         {
             sound.BackgroundPlay(Resources.BackgroundSound);
@@ -348,30 +367,53 @@ namespace GameFrameWork
             sunPanel.BackColor = Color.Transparent; 
             sunPanel.BorderStyle = BorderStyle.None;
 
+            SetDoubleBuffered(sunPanel);
 
             return sunPanel;
         }
         private ProgressBar ZombieBar() 
         {
             ProgressBar zombieBar = new ProgressBar();
-            zombieBar.Size = new Size(350, 18);
+            zombieBar.Size = new Size(250, 50);
             zombieBar.Location = new Point(800, 35);
-            zombieBar.Value = 0;
 
+            zombieBar.Value = ZombieBarValue();
             return zombieBar;
+        }
+        private int ZombieBarValue() 
+        {
+            return 50;
         }
         private Button TopBarMenuButton() 
         {
             Button menuBtn = new Button();
             menuBtn.Image = Resources.menubar;
             menuBtn.BackgroundImageLayout =(ImageLayout)ImageLayout.Stretch;
-            menuBtn.Size = new Size(200, 150);
-            menuBtn.Location = new Point(this.ClientSize.Width - 90, 5);
+            menuBtn.Size = new Size(250,50);
+            menuBtn.Location = new Point(this.ClientSize.Width - 300, 5);
             menuBtn.BackColor = Color.Transparent;
             menuBtn.FlatStyle = FlatStyle.Flat;
             menuBtn.FlatAppearance.BorderSize = 0;
 
+            menuBtn.Click += menubtn_Click;
+
             return menuBtn;
+        }
+        private void menubtn_Click(object? sender, EventArgs e)
+        {
+            Controls.Clear();
+            MainMenu();
+        }
+        private void SetDoubleBuffered(Control control)
+        {
+            if (SystemInformation.TerminalServerSession)
+                return;
+
+            System.Reflection.PropertyInfo prop = typeof(Control).GetProperty
+                ( "DoubleBuffered",System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance
+                );
+
+            prop.SetValue(control, true, null);
         }
     }
 }
