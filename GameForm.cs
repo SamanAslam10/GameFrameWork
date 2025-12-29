@@ -40,7 +40,8 @@ namespace GameFrameWork
 
         private const int SUNFLOWER_COST = 50;
         private const int PEASHOOTER_COST = 100;
-
+        Button sunflowerbtn;
+        Button peashooterbtn;
 
         public GameForm()
         {
@@ -83,7 +84,7 @@ namespace GameFrameWork
             float deltaTime = (float)(currentTime - lastUpdateTime).TotalSeconds;
             lastUpdateTime = currentTime;
 
-            
+            PlantCardLock();
             game.Update(new GameTime() { DeltaTime = deltaTime});
             if (gamePanel != null && game.Objects.Count > 0)
             {
@@ -206,7 +207,6 @@ namespace GameFrameWork
 
             this.Controls.Add(levels);
         }
-
         private void lvl1_Click(object sender, EventArgs e)
         {
             LoadLevels();
@@ -232,7 +232,7 @@ namespace GameFrameWork
             button.Padding = new Padding(-2);
             button.BackgroundImage = img;
             button.BackgroundImageLayout = ImageLayout.Stretch;
-            button.BackgroundImage = unlocked ? img : Resources.levelLocked;
+            button.BackgroundImage = unlocked ? img : Resources.level_locked_;
 
             button.Enabled = unlocked;
             return button;
@@ -262,10 +262,10 @@ namespace GameFrameWork
 
             game.Objects.Clear();
 
-            Button sunflowerbtn = plantBarButtons(Resources.sunflowerBar, 20);
+            sunflowerbtn = plantBarButtons(Resources.sunflowerBar, 20);
             sunflowerbtn.Click += Sunflowerbtn_Click;
 
-            Button peashooterbtn = plantBarButtons(Resources.peashooterBar, 300);
+            peashooterbtn = plantBarButtons(Resources.peashooterBar, 300);
             peashooterbtn.Click += Peashooterbtn_Click;
 
             gamePanel.MouseClick += gamePanel_MouseClick;
@@ -329,6 +329,25 @@ namespace GameFrameWork
                 }
                 
             } 
+        }
+        private void PlantCardLock() 
+        {
+            if(selectedPlantType == "Sunflower") 
+            {
+                if(game.sunCount < SUNFLOWER_COST) 
+                {
+                    sunflowerbtn = plantBarButtons(Resources.sunflowerBar_disabled_, 20);
+                    sunflowerbtn.Click += Sunflowerbtn_Click;
+                }
+            }
+            if(selectedPlantType == "Peashooter")
+            {
+                if(game.sunCount  < PEASHOOTER_COST) 
+                {
+                    peashooterbtn = plantBarButtons(Resources.peashooterBar_disabled_, 300);
+                    peashooterbtn.Click += Peashooterbtn_Click;
+                }
+            }
         }
         private void Peashooterbtn_Click(object? sender, EventArgs e)
         {

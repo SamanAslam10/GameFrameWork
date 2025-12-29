@@ -150,6 +150,16 @@ namespace GameFrameWork.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap level_locked_ {
+            get {
+                object obj = ResourceManager.GetObject("level(locked)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap level1 {
             get {
                 object obj = ResourceManager.GetObject("level1", resourceCulture);
@@ -173,16 +183,6 @@ namespace GameFrameWork.Properties {
         internal static System.Drawing.Bitmap level3 {
             get {
                 object obj = ResourceManager.GetObject("level3", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap levelLocked {
-            get {
-                object obj = ResourceManager.GetObject("levelLocked", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -270,6 +270,16 @@ namespace GameFrameWork.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap peashooterBar_disabled_ {
+            get {
+                object obj = ResourceManager.GetObject("peashooterBar(disabled)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap peashooterlogo {
             get {
                 object obj = ResourceManager.GetObject("peashooterlogo", resourceCulture);
@@ -333,6 +343,16 @@ namespace GameFrameWork.Properties {
         internal static System.Drawing.Bitmap sunflowerBar {
             get {
                 object obj = ResourceManager.GetObject("sunflowerBar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap sunflowerBar_disabled_ {
+            get {
+                object obj = ResourceManager.GetObject("sunflowerBar(disabled)", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
