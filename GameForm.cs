@@ -1,5 +1,6 @@
 using GameFrameWork.Movements;
 using GameFrameWork.Properties;
+using System;
 using System.Drawing;
 using System.Runtime.CompilerServices;
 using System.Runtime.Versioning;
@@ -26,7 +27,7 @@ namespace GameFrameWork
         private ProgressBar loadingbar;
 
         private string selectedPlantType = null;
-        //2
+   
         private DateTime lastUpdateTime = DateTime.Now;
         Panel gamePanel;
 
@@ -37,6 +38,7 @@ namespace GameFrameWork
         private int zombiesSpawned = 0;
         private int maxZombies = 10;
 
+        
 
         public GameForm()
         {
@@ -51,7 +53,7 @@ namespace GameFrameWork
         }
         private void Setting()
         {
-            game.AddObject(new Player
+            game.AddObject(new Enemy
             {
                 Position = new PointF(800, 900),
                 Size = new Size(300, 300),
@@ -79,6 +81,7 @@ namespace GameFrameWork
             float deltaTime = (float)(currentTime - lastUpdateTime).TotalSeconds;
             lastUpdateTime = currentTime;
 
+            
             game.Update(new GameTime() { DeltaTime = deltaTime});
             if (gamePanel != null && game.Objects.Count > 0)
             {
@@ -279,25 +282,33 @@ namespace GameFrameWork
         {
             if(selectedPlantType != null) 
             {
-                Image plantSprite = null;
+                
                 if (selectedPlantType == "Sunflower") 
-                {
-                    plantSprite = Resources.sunflower;
-                }
-                else if(selectedPlantType == "Peashooter") 
-                {
-                    plantSprite = Resources.Peashooter;
-
-                }
-                if (plantSprite != null) 
                 {
                     game.AddObject(new Player
                     {
-                        Sprite = new AnimatedSprite(plantSprite),
-                        Size = new SizeF(200, 200),
-                        Position = new PointF(e.X, e.Y)
+                        Sprite = new AnimatedSprite(Resources.sunflower),
+                        Size = new SizeF(150, 150),
+                        Position = new PointF(e.X, e.Y),
+                        PlantType = "Sunflower",
+                        FireCooldown = 5f,
+                        GameRef = game
                     });
                 }
+                else if(selectedPlantType == "Peashooter") 
+                {
+                    game.AddObject(new Player
+                    {
+                        Sprite = new AnimatedSprite(Resources.Peashooter),
+                        Size = new SizeF(200, 200),
+                        Position = new PointF(e.X, e.Y),
+                        PlantType = "Peashooter",
+                        FireCooldown = 2f,
+                        GameRef = game
+                    });
+
+                }
+                
             } 
         }
         private void Peashooterbtn_Click(object? sender, EventArgs e)

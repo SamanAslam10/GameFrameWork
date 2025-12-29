@@ -1,8 +1,15 @@
-﻿using System.Drawing;
+﻿using GameFrameWork.Movements;
+using GameFrameWork.Properties;
+using System.Drawing;
 namespace GameFrameWork
 {
     public class Player : GameObject
     {
+        public float FireCooldown = 2f;
+        private float fireTimer = 0f;
+        public string PlantType;
+        public Game GameRef;
+
         // Movement strategy: demonstrates composition over inheritance.
         // Different movement behaviors can be injected (KeyboardMovement, PatrolMovement, etc.).
         public IMovement? Movement { get; set; }
@@ -16,12 +23,41 @@ namespace GameFrameWork
         /// Shows the Strategy pattern (movement behavior varies independently from Player class).
         public override void Update(GameTime gameTime)
         {
+            fireTimer += gameTime.DeltaTime;
+
+            if (fireTimer >= FireCooldown)
+            {
+                fireTimer = 0f;
+                Shoot();
+            }
             Movement?.Move(this, gameTime);
             base.Update(gameTime);
         }
-
+        private void Shoot()
+        {
+            if (PlantType == "Sunflower")
+            {
+                GameRef.AddObject(new Bullet
+                {
+                    Sprite = new StaticSprite(Resources.sun),
+                    Size = new SizeF(60, 60),
+                    Position = new PointF(Position.X + 30, Position.Y + 30),
+                    Movement = new UpwardMovement(10f)
+                });
+            }
+            else if (PlantType == "Peashooter")
+            {
+                GameRef.AddObject(new Bullet
+                {
+                    Sprite = new StaticSprite(Resources.pea),
+                    Size = new SizeF(40, 40),
+                    Position = new PointF(Position.X + Size.Width, Position.Y + 40),
+                    Movement = new MoveRightMovement(10f)
+                });
+            }
+        }
         /// Draw uses base implementation; override if player needs custom visuals.
-   
+
         public override void Draw(Graphics g)
         {
             base.Draw(g);

@@ -5,6 +5,8 @@ namespace GameFrameWork
     public class Bullet : GameObject
     {
         // Bullets set a default velocity in the constructor - a simple example of behavior initialization.
+        public IMovement? Movement { get; set; }
+
         public Bullet()
         {
             Velocity = new PointF(8, 0);
@@ -14,9 +16,10 @@ namespace GameFrameWork
         /// Consider extending with continous collision detection (CCD) to avoid tunnelling at high speeds.
         public override void Update(GameTime gameTime)
         {
+            Movement?.Move(this, gameTime);
             base.Update(gameTime);
 
-            if (Position.X > 1000)
+            if (Position.X > 2000 || Position.Y > 1200)
                 IsActive = false;
         }
 
