@@ -336,12 +336,12 @@ namespace GameFrameWork
             {
                 if(game.sunCount < SUNFLOWER_COST) 
                 {
-                    sunflowerbtn = plantBarButtons(Resources.sunflowerBar_disabled_, 20);
+                    sunflowerbtn.BackgroundImage = Resources.sunflowerBar_disabled_ ;
                     sunflowerbtn.Enabled = false;
                 }
                 else 
                 {
-                    sunflowerbtn = plantBarButtons(Resources.sunflowerBar, 20);
+                    sunflowerbtn.BackgroundImage = Resources.sunflowerBar;
                     sunflowerbtn.Enabled = true;
                 }
             }
@@ -349,12 +349,12 @@ namespace GameFrameWork
             {
                 if(game.sunCount  < PEASHOOTER_COST) 
                 {
-                    peashooterbtn = plantBarButtons(Resources.peashooterBar_disabled_, 300);
+                    peashooterbtn.BackgroundImage = Resources.peashooterBar_disabled_;                
                     peashooterbtn.Enabled = false;
                 }
                 else 
                 {
-                    peashooterbtn = plantBarButtons(Resources.peashooterBar_disabled_, 300);
+                    peashooterbtn.BackgroundImage = Resources.peashooterBar_disabled_;
                     peashooterbtn.Enabled = true;
                 }
             }
