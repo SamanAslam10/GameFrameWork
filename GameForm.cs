@@ -337,7 +337,12 @@ namespace GameFrameWork
                 if(game.sunCount < SUNFLOWER_COST) 
                 {
                     sunflowerbtn = plantBarButtons(Resources.sunflowerBar_disabled_, 20);
-                    sunflowerbtn.Click += Sunflowerbtn_Click;
+                    sunflowerbtn.Enabled = false;
+                }
+                else 
+                {
+                    sunflowerbtn = plantBarButtons(Resources.sunflowerBar, 20);
+                    sunflowerbtn.Enabled = true;
                 }
             }
             if(selectedPlantType == "Peashooter")
@@ -345,7 +350,12 @@ namespace GameFrameWork
                 if(game.sunCount  < PEASHOOTER_COST) 
                 {
                     peashooterbtn = plantBarButtons(Resources.peashooterBar_disabled_, 300);
-                    peashooterbtn.Click += Peashooterbtn_Click;
+                    peashooterbtn.Enabled = false;
+                }
+                else 
+                {
+                    peashooterbtn = plantBarButtons(Resources.peashooterBar_disabled_, 300);
+                    peashooterbtn.Enabled = true;
                 }
             }
         }

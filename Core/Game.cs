@@ -27,7 +27,10 @@ namespace GameFrameWork
         {
             foreach (var obj in objects.Where(o => o.IsActive))
             {
-                obj.Update(gameTime);
+                if (obj.IsActive) 
+                {
+                    obj.Update(gameTime);
+                }
             }
         }
 
