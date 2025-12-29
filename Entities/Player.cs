@@ -5,7 +5,7 @@ namespace GameFrameWork
 {
     public class Player : GameObject
     {
-        public float FireCooldown = 2f;
+        public float FireCooldown ;
         private float fireTimer = 0f;
         public string PlantType;
         public Game GameRef;
@@ -42,7 +42,9 @@ namespace GameFrameWork
                     Sprite = new StaticSprite(Resources.sun),
                     Size = new SizeF(60, 60),
                     Position = new PointF(Position.X + 30, Position.Y + 30),
-                    Movement = new UpwardMovement(10f)
+                    Movement = new UpwardMovement(10f),
+                    IsSun = true,
+
                 });
             }
             else if (PlantType == "Peashooter")

@@ -7,6 +7,7 @@ namespace GameFrameWork
     public partial class Game
     {
         private List<GameObject> objects = new List<GameObject>();
+        public int sunCount { get; set; } = 50;
 
         public List<GameObject> Objects => objects;
 
@@ -16,7 +17,10 @@ namespace GameFrameWork
         {
             objects.Add(obj);
         }
-
+        public void AddSun(int sun)
+        {
+            sunCount += sun;
+        }
         /// Update all active objects. The Game is responsible for iterating objects and orchestrating the update sequence.
         /// This separation of concerns keeps the game loop logic central and simple.
         public void Update(GameTime gameTime)

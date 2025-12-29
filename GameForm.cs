@@ -38,7 +38,9 @@ namespace GameFrameWork
         private int zombiesSpawned = 0;
         private int maxZombies = 10;
 
-        
+        private const int SUNFLOWER_COST = 50;
+        private const int PEASHOOTER_COST = 100;
+
 
         public GameForm()
         {
@@ -274,7 +276,8 @@ namespace GameFrameWork
             gamePanel.Controls.Add(SunBar());
             gamePanel.Controls.Add(ZombieBar());
             gamePanel.Controls.Add(TopBarMenuButton());
-            gamePanel.Controls.Add(ScoreLabel());
+            gamePanel.Controls.Add(sunCountLabel());
+            sunCountLabel().BringToFront();
 
             Setting();
         }
@@ -285,28 +288,44 @@ namespace GameFrameWork
                 
                 if (selectedPlantType == "Sunflower") 
                 {
-                    game.AddObject(new Player
+                    if(game.sunCount < SUNFLOWER_COST) 
                     {
-                        Sprite = new AnimatedSprite(Resources.sunflower),
-                        Size = new SizeF(150, 150),
-                        Position = new PointF(e.X, e.Y),
-                        PlantType = "Sunflower",
-                        FireCooldown = 5f,
-                        GameRef = game
-                    });
+                        return;
+                    }
+                    if(game.sunCount >= SUNFLOWER_COST) 
+                    {
+                        game.AddObject(new Player
+                        {
+                            Sprite = new AnimatedSprite(Resources.sunflower),
+                            Size = new SizeF(150, 150),
+                            Position = new PointF(e.X, e.Y),
+                            PlantType = "Sunflower",
+                            FireCooldown = 5f,
+                            GameRef = game
+                        });
+                        game.AddSun(-SUNFLOWER_COST);
+                    }
+                    
                 }
                 else if(selectedPlantType == "Peashooter") 
                 {
-                    game.AddObject(new Player
+                    if(game.sunCount < PEASHOOTER_COST) 
                     {
-                        Sprite = new AnimatedSprite(Resources.Peashooter),
-                        Size = new SizeF(200, 200),
-                        Position = new PointF(e.X, e.Y),
-                        PlantType = "Peashooter",
-                        FireCooldown = 2f,
-                        GameRef = game
-                    });
-
+                        return;
+                    }
+                    if(game.sunCount >= PEASHOOTER_COST) 
+                    {
+                        game.AddObject(new Player
+                        {
+                            Sprite = new AnimatedSprite(Resources.Peashooter),
+                            Size = new SizeF(200, 200),
+                            Position = new PointF(e.X, e.Y),
+                            PlantType = "Peashooter",
+                            FireCooldown = 2f,
+                            GameRef = game
+                        });
+                        game.AddSun(-PEASHOOTER_COST);
+                    }
                 }
                 
             } 
@@ -343,12 +362,12 @@ namespace GameFrameWork
             zombiesSpawned = 0;
             zombieSpawnTimer = 0f;
         }
-        private Label ScoreLabel() 
+        private Label sunCountLabel() 
         {
             scoreLabel = new Label
             {
-                Text = score.ToString(),
-                Font = new Font("Arial", 24),
+                Text = game.sunCount.ToString(),
+                Font = new Font("Arial", 24, FontStyle.Bold),
                 ForeColor = Color.Black,
                 BackColor = Color.Transparent,
                 Location = new Point(600, 10),
