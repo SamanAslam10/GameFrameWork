@@ -230,6 +230,16 @@ namespace GameFrameWork.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap menubar {
+            get {
+                object obj = ResourceManager.GetObject("menubar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap pea {
             get {
                 object obj = ResourceManager.GetObject("pea", resourceCulture);
@@ -250,9 +260,29 @@ namespace GameFrameWork.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap peashooterBar {
+            get {
+                object obj = ResourceManager.GetObject("peashooterBar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap peashooterlogo {
             get {
                 object obj = ResourceManager.GetObject("peashooterlogo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap plantBar {
+            get {
+                object obj = ResourceManager.GetObject("plantBar", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -280,9 +310,29 @@ namespace GameFrameWork.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap sunbar {
+            get {
+                object obj = ResourceManager.GetObject("sunbar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap sunflower {
             get {
                 object obj = ResourceManager.GetObject("sunflower", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap sunflowerBar {
+            get {
+                object obj = ResourceManager.GetObject("sunflowerBar", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

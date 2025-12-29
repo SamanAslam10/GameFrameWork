@@ -68,12 +68,7 @@ namespace GameFrameWork
                 }
                 return;
             }
-
-            physicsSystem.Apply(game.Objects.ToList());
-            foreach (var obj in game.Objects)
-            {
-                game.Update(new GameTime());
-            }
+            game.Update(new GameTime());
             game.Cleanup();
             Invalidate();
 
@@ -239,6 +234,10 @@ namespace GameFrameWork
 
             game.Objects.Clear();
             CreatePlants();
+            BackGround.Controls.Add(SunBar());
+            BackGround.Controls.Add(ZombieBar());
+            BackGround.Controls.Add(TopBarMenuButton());
+
         }
         private void CreatePlants() 
         {
@@ -248,7 +247,6 @@ namespace GameFrameWork
             this.Controls.Add(bar);
             bar.BringToFront();
         }
-
         private void Bar_MouseClick(object? sender, MouseEventArgs e)
         {
             if(selectedPlantType != null) 
@@ -274,46 +272,45 @@ namespace GameFrameWork
                 }
             } 
         }
-
         private Panel PlantSelectionBar() 
         {
             Panel plantBar = new Panel();
-            plantBar.Dock = DockStyle.Top;
-            plantBar.Height = 200;
-            plantBar.BackColor = Color.FromArgb(61, 48, 39);
+            plantBar.Dock = DockStyle.Left;
+            plantBar.BackgroundImage = Resources.plantBar;
+            plantBar.Width = 90;
+            plantBar.BackColor = Color.Transparent;
+            plantBar.BorderStyle = BorderStyle.None;
 
-            Button sunflowerbtn = plantBarButtons(Resources.Sunflowerlogo);
+            Button sunflowerbtn = plantBarButtons(Resources.sunflowerBar , 20);
             sunflowerbtn.Click += Sunflowerbtn_Click;
 
-            Button peashooterbtn = plantBarButtons(Resources.peashooterlogo);
+            Button peashooterbtn = plantBarButtons(Resources.peashooterBar , 120);
             peashooterbtn.Click += Peashooterbtn_Click;
 
             plantBar.Controls.Add(sunflowerbtn);
             plantBar.Controls.Add(peashooterbtn);
             return plantBar;
         }
-
         private void Peashooterbtn_Click(object? sender, EventArgs e)
         {
             selectedPlantType = "Peashooter";
         }
-
         private void Sunflowerbtn_Click(object? sender, EventArgs e)
         {
             selectedPlantType = "Sunflower";
         }
-
-        private Button plantBarButtons(Image img ) 
+        private Button plantBarButtons(Image img , int y) 
         {
-            Button button = new Button();
-            button.Size = new Size(180, 180);
-            button.FlatStyle = FlatStyle.Flat;
-            button.FlatAppearance.BorderSize = 0;
-            button.Padding = new Padding(-2);
-            button.BackgroundImage = img;
-            button.BackgroundImageLayout = ImageLayout.Stretch;
+            Button btn = new Button();
+            btn.Size = new Size(150, 1200);
+            btn.Location = new Point(35, y);
+            btn.Image = img;
+            btn.FlatStyle = FlatStyle.Flat;
+            btn.FlatAppearance.BorderSize = 2;
+            btn.FlatAppearance.BorderColor = Color.Black;
+            btn.BackColor = Color.FromArgb(180, 150, 90);
 
-            return button;
+            return btn;
         }
         private void BackGround_Paint(object sender, PaintEventArgs e)
         {
@@ -340,6 +337,41 @@ namespace GameFrameWork
                 AutoSize = true
             };
             this.Controls.Add(scoreLabel);
+        }
+        private Panel SunBar() 
+        {
+            Panel sunPanel = new Panel();
+            sunPanel.BackgroundImage = Resources.sunbar;
+            sunPanel.BackgroundImageLayout = ImageLayout.Stretch;
+            sunPanel.Size = new Size(200, 150);
+            sunPanel.Location = new Point(150, 5);
+            sunPanel.BackColor = Color.Transparent; 
+            sunPanel.BorderStyle = BorderStyle.None;
+
+
+            return sunPanel;
+        }
+        private ProgressBar ZombieBar() 
+        {
+            ProgressBar zombieBar = new ProgressBar();
+            zombieBar.Size = new Size(350, 18);
+            zombieBar.Location = new Point(800, 35);
+            zombieBar.Value = 0;
+
+            return zombieBar;
+        }
+        private Button TopBarMenuButton() 
+        {
+            Button menuBtn = new Button();
+            menuBtn.Image = Resources.menubar;
+            menuBtn.BackgroundImageLayout =(ImageLayout)ImageLayout.Stretch;
+            menuBtn.Size = new Size(200, 150);
+            menuBtn.Location = new Point(this.ClientSize.Width - 90, 5);
+            menuBtn.BackColor = Color.Transparent;
+            menuBtn.FlatStyle = FlatStyle.Flat;
+            menuBtn.FlatAppearance.BorderSize = 0;
+
+            return menuBtn;
         }
     }
 }
