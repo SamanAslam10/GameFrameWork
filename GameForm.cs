@@ -31,7 +31,7 @@ namespace GameFrameWork
         private DateTime lastUpdateTime = DateTime.Now;
         Panel gamePanel;
 
-        private int score = 0;
+        private Label sunCount;
         private Label scoreLabel;
         private float zombieSpawnTimer = 0f;
         private float zombieSpawnInterval = 3f;
@@ -84,6 +84,7 @@ namespace GameFrameWork
             float deltaTime = (float)(currentTime - lastUpdateTime).TotalSeconds;
             lastUpdateTime = currentTime;
 
+            sunCount.Text = game.sunCount.ToString();
             PlantCardLock();
             game.Update(new GameTime() { DeltaTime = deltaTime});
             if (gamePanel != null && game.Objects.Count > 0)
@@ -270,14 +271,15 @@ namespace GameFrameWork
 
             gamePanel.MouseClick += gamePanel_MouseClick;
 
+            sunCount = sunCountLabel();
             
             gamePanel.Controls.Add(sunflowerbtn);
             gamePanel.Controls.Add(peashooterbtn);
             gamePanel.Controls.Add(SunBar());
             gamePanel.Controls.Add(ZombieBar());
             gamePanel.Controls.Add(TopBarMenuButton());
-            gamePanel.Controls.Add(sunCountLabel());
-            sunCountLabel().BringToFront();
+            gamePanel.Controls.Add(sunCount);
+            sunCount.BringToFront();
 
             Setting();
         }
