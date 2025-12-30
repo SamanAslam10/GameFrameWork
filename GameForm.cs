@@ -79,12 +79,13 @@ namespace GameFrameWork
                 }
                 return;
             }
-            //3
             DateTime currentTime = DateTime.Now;
             float deltaTime = (float)(currentTime - lastUpdateTime).TotalSeconds;
             lastUpdateTime = currentTime;
-
-            sunCount.Text = game.sunCount.ToString();
+            if (sunCount != null)
+            {
+                sunCount.Text = game.sunCount.ToString();
+            }
             PlantCardLock();
             game.Update(new GameTime() { DeltaTime = deltaTime});
             if (gamePanel != null && game.Objects.Count > 0)
@@ -334,31 +335,26 @@ namespace GameFrameWork
         }
         private void PlantCardLock() 
         {
-            if(selectedPlantType == "Sunflower") 
+            
+            if(game.sunCount < SUNFLOWER_COST) 
             {
-                if(game.sunCount < SUNFLOWER_COST) 
-                {
-                    sunflowerbtn.BackgroundImage = Resources.sunflowerBar_disabled_ ;
-                    sunflowerbtn.Enabled = false;
-                }
-                else 
-                {
-                    sunflowerbtn.BackgroundImage = Resources.sunflowerBar;
-                    sunflowerbtn.Enabled = true;
-                }
+                sunflowerbtn.BackgroundImage = Resources.sunflowerBar_disabled_ ;
+                sunflowerbtn.Enabled = false;
             }
-            if(selectedPlantType == "Peashooter")
+            else 
             {
-                if(game.sunCount  < PEASHOOTER_COST) 
-                {
-                    peashooterbtn.BackgroundImage = Resources.peashooterBar_disabled_;                
-                    peashooterbtn.Enabled = false;
-                }
-                else 
-                {
-                    peashooterbtn.BackgroundImage = Resources.peashooterBar_disabled_;
-                    peashooterbtn.Enabled = true;
-                }
+                sunflowerbtn.BackgroundImage = Resources.sunflowerBar;
+                sunflowerbtn.Enabled = true;
+            }            
+            if(game.sunCount  < PEASHOOTER_COST) 
+            {
+               peashooterbtn.BackgroundImage = Resources.peashooterBar_disabled_;                
+               peashooterbtn.Enabled = false;
+            }
+            else 
+            {
+                peashooterbtn.BackgroundImage = Resources.peashooterBar_disabled_;
+                peashooterbtn.Enabled = true;
             }
         }
         private void Peashooterbtn_Click(object? sender, EventArgs e)
