@@ -25,11 +25,11 @@ namespace GameFrameWork
         /// This separation of concerns keeps the game loop logic central and simple.
         public void Update(GameTime gameTime)
         {
-            foreach (var obj in objects.Where(o => o.IsActive))
+            for (int i = 0; i < objects.Count; i++) 
             {
-                if (obj.IsActive) 
+                if (objects[i].IsActive == true) 
                 {
-                    obj.Update(gameTime);
+                    objects[i].Update(gameTime);
                 }
             }
         }

@@ -8,7 +8,6 @@ namespace GameFrameWork
         public float FireCooldown ;
         private float fireTimer = 0f;
         public string PlantType;
-        public Game GameRef;
 
         // Movement strategy: demonstrates composition over inheritance.
         // Different movement behaviors can be injected (KeyboardMovement, PatrolMovement, etc.).
@@ -82,4 +81,5 @@ namespace GameFrameWork
             }
         }
     }
+ 
 }

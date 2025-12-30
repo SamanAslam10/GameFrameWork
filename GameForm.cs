@@ -66,7 +66,8 @@ namespace GameFrameWork
                 Size = new Size(300, 300),
 
                 Sprite = new AnimatedSprite(Resources.BasicZombieWalking,0.1f),
-                Movement = new MoveLeftMovement(3f)
+                Movement = new MoveLeftMovement(3f),
+                IsRigidBody = true,
             });
 
         }
@@ -87,15 +88,11 @@ namespace GameFrameWork
             DateTime currentTime = DateTime.Now;
             float deltaTime = (float)(currentTime - lastUpdateTime).TotalSeconds;
             lastUpdateTime = currentTime;
-            if(levelStart == true) 
-            {
-                levelTimer++;
-            }
+            
             if (sunCount != null)
             {
                 sunCount.Text = game.sunCount.ToString();
             }
-            PlantCardLock();
             if (levelStart && noZombieGenerated < maxZombie)
             {
                 zombieGenerationTimer++;
@@ -109,6 +106,8 @@ namespace GameFrameWork
             }
             if (levelStart == true) 
             {
+                levelTimer++;
+                PlantCardLock();
                 CheckLevelCompletion();
             }
             game.Update(new GameTime() { DeltaTime = deltaTime});
@@ -270,10 +269,12 @@ namespace GameFrameWork
             button.FlatStyle = FlatStyle.Flat;
             button.FlatAppearance.BorderSize = 0;
             button.Padding = new Padding(-2);
-            button.BackgroundImage = img;
             button.BackgroundImageLayout = ImageLayout.Stretch;
-            bool lockedLevel = true;
-            if( lockedLevel == unlocked) 
+            if (unlocked)
+            {
+                button.BackgroundImage = img;
+            }
+            else 
             {
                 button.BackgroundImage = Resources.level_locked_;
             }
@@ -434,7 +435,8 @@ namespace GameFrameWork
                             Position = new PointF(e.X, e.Y),
                             PlantType = "Sunflower",
                             FireCooldown = 5f,
-                            GameRef = game
+                            GameRef = game,
+                            IsRigidBody = true,
                         });
                         game.AddSun(-SUNFLOWER_COST);
                     }
@@ -455,7 +457,8 @@ namespace GameFrameWork
                             Position = new PointF(e.X, e.Y),
                             PlantType = "Peashooter",
                             FireCooldown = 2f,
-                            GameRef = game
+                            GameRef = game,
+                            IsRigidBody= true,
                         });
                         game.AddSun(-PEASHOOTER_COST);
                     }
