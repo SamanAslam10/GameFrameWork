@@ -19,7 +19,7 @@ namespace GameFrameWork
 
         public void Draw(Graphics g, PointF position, SizeF size)
         {
-            g.DrawImage(image , position);
+            g.DrawImage(image , new RectangleF(position.X, position.Y, size.Width, size.Height));
         }
     }
 }
