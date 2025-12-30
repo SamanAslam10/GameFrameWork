@@ -68,12 +68,18 @@ namespace GameFrameWork
         /// Collision reaction for the player. Demonstrates single responsibility: domain reaction is handled here.
         public override void OnCollision(GameObject other)
         {
-            if (other is Enemy)
-                Health -= 10;
+            if (other is Enemy zombie)
+            {
+                Health -= 1;
+                zombie.IsEating = true;
 
-            if (other is PowerUp)
-                Health += 20;
+                if (Health <= 0)
+                {
+                    IsActive = false;
+                    zombie.IsEating = false;
+                    zombie.Sprite = new AnimatedSprite(GameFrameWork.Properties.Resources.BasicZombieWalking);
+                }
+            }
         }
     }
-
 }

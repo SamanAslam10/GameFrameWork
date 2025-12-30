@@ -4,7 +4,11 @@ namespace GameFrameWork
 
     public class Enemy : GameObject
     {
-       
+        public int Health = 100;
+        public float Speed = 40f;
+
+
+        public bool IsEating = false;
         // Optional movement behavior: demonstrates composition and allows testable movement logic.
         public IMovement? Movement { get; set; }
 
@@ -20,6 +24,17 @@ namespace GameFrameWork
         {
             Movement?.Move(this, gameTime); // movement must be called
             base.Update(gameTime);
+            if (!IsEating)
+            {
+                Movement?.Move(this, gameTime);
+            }
+
+            // Death
+            if (Health <= 0)
+            {
+                IsActive = false;
+            }
+
         }
 
         /// Custom draw: demonstrates polymorphism (override base draw to provide enemy visuals).
@@ -32,7 +47,16 @@ namespace GameFrameWork
         public override void OnCollision(GameObject other)
         {
             if (other is Bullet)
-                IsActive = false;
+            {
+                Health -= 20;
+                other.IsActive = false;
+            }
+
+            if (other is Player)
+            {
+                IsEating = true;
+                Sprite = new AnimatedSprite(GameFrameWork.Properties.Resources.zombieEating);
+            }
         }
     }
 }

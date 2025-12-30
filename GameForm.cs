@@ -56,14 +56,17 @@ namespace GameFrameWork
 
             BackgroundMusic();
         }
-        private void Zombie()
+        private void GenerateZombie()
         {
+            int y = 150 + Random.Next(0, 5) * 100;
+
             game.AddObject(new Enemy
             {
-                Position = new PointF(800, 900),
+                Position = new PointF(gamePanel.Width, y),
                 Size = new Size(300, 300),
-                Sprite = new AnimatedSprite(Resources.EatingFlagZombie,10f),
-                Movement = new MoveLeftMovement(10f)
+
+                Sprite = new AnimatedSprite(Resources.BasicZombieWalking,0.1f),
+                Movement = new MoveLeftMovement(3f)
             });
 
         }
@@ -93,7 +96,18 @@ namespace GameFrameWork
                 sunCount.Text = game.sunCount.ToString();
             }
             PlantCardLock();
-            if(levelStart == true) 
+            if (levelStart && noZombieGenerated < maxZombie)
+            {
+                zombieGenerationTimer++;
+
+                if (zombieGenerationTimer >= zombieGenerationDuration)
+                {
+                    GenerateZombie();
+                    zombieGenerationTimer = 0;
+                    noZombieGenerated++;
+                }
+            }
+            if (levelStart == true) 
             {
                 CheckLevelCompletion();
             }
@@ -379,6 +393,7 @@ namespace GameFrameWork
 
                 game.Objects.Clear();
 
+                GenerateZombie();
                 sunflowerbtn = plantBarButtons(Resources.sunflowerBar, 20);
                 sunflowerbtn.Click += Sunflowerbtn_Click;
 
