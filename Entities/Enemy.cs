@@ -4,6 +4,7 @@ namespace GameFrameWork
 
     public class Enemy : GameObject
     {
+       
         // Optional movement behavior: demonstrates composition and allows testable movement logic.
         public IMovement? Movement { get; set; }
 

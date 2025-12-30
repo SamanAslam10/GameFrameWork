@@ -18,6 +18,7 @@ namespace GameFrameWork
         private bool isLoading = true;
         private Panel loadingscreen;
         private ProgressBar loadingbar;
+        private Panel gameOver;
 
         private string selectedPlantType = null;
    
@@ -92,6 +93,10 @@ namespace GameFrameWork
                 sunCount.Text = game.sunCount.ToString();
             }
             PlantCardLock();
+            if(levelStart == true) 
+            {
+                CheckLevelCompletion();
+            }
             game.Update(new GameTime() { DeltaTime = deltaTime});
             if (gamePanel != null && game.Objects.Count > 0)
             {
@@ -174,11 +179,8 @@ namespace GameFrameWork
         }
         private void StartButton_Click(object sender, EventArgs e)
         {
-            int no = 1;
-            int duration = 3000;
-            levelStart = true;
-            maxZombie = 15;
-            LoadLevels(no , duration,levelStart);
+            StartLevel(1);
+            LoadLevels(1, levelDuration, true);
         }
         private void LevelButton_Click(object sender, EventArgs e)
         {
@@ -222,27 +224,18 @@ namespace GameFrameWork
         }
         private void lvl1_Click(object sender, EventArgs e)
         {
-            int no = 1;
-            int duration = 3000;
-            levelStart = true;
-            maxZombie = 15;
-            LoadLevels(no, duration, levelStart);
+            StartLevel(1);
+            LoadLevels(1, levelDuration, true);
         }
         private void lvl2_Click(object sender, EventArgs e)
         {
-            int no = 2;
-            int duration = 3500;
-            levelStart = true;
-            maxZombie = 20;
-            LoadLevels(no, duration, levelStart);
+            StartLevel(2);
+            LoadLevels(2, levelDuration, true);
         }
         private void lvl3_Click(object sender, EventArgs e)
         {
-            int no = 3;
-            int duration = 4000;
-            levelStart = true;
-            maxZombie = 25;
-            LoadLevels(no, duration, levelStart);
+            StartLevel(3);
+            LoadLevels(3, levelDuration, true);
         }
         private Button BackButton(Image img, int x, int y)
         {
@@ -284,8 +277,84 @@ namespace GameFrameWork
             if(levelTimer > levelDuration) 
             {
                 levelStart = false;
-            }
+                GameOver();
+            } 
+        }
+        private void GameOver() 
+        {
+
+            gameOver = new Panel();
+            gameOver.BackgroundImage = Resources.gameOverx;
+            gameOver.BackgroundImageLayout = ImageLayout.Stretch;
+            gameOver.Size = new Size(600,600 );
+            gameOver.Dock = DockStyle.Bottom;
+            gameOver.BackColor = Color.Transparent;
+            gameOver.BorderStyle = BorderStyle.None;
             
+            SetDoubleBuffered(gameOver);
+
+            Button nextLevelBtn = new Button();
+            nextLevelBtn.Text = "Next Level";
+            nextLevelBtn.Size = new Size(200, 80);
+            nextLevelBtn.Location = new Point(this.Width / 2 - 100, this.Height / 2);
+            nextLevelBtn.Click += nextlevelBtn_Click;
+            
+
+            gameOver.Controls.Add(nextLevelBtn);
+            this.Controls.Add(gameOver);
+            gameOver.BringToFront();
+
+
+        }
+        private void nextlevelBtn_Click(object? sender, EventArgs e)
+        {
+            level++;
+            StartLevel(level);
+            this.Controls.Remove(gameOver);
+        }
+        private void StartLevel(int levelno) 
+        {
+            level = levelno;
+            levelStart = true;
+            levelTimer = 0;
+
+            if (level == 1) 
+            {
+                levelDuration = 3000;
+                maxZombie = 15;
+            }
+            else if(level == 2) 
+            {
+                levelDuration = 3500;
+                maxZombie = 20;
+            }
+            else if (level == 3) 
+            {
+                levelDuration = 4000;
+                maxZombie = 25;
+            }
+            noZombieGenerated = 0;
+            zombieGenerationTimer = 0;
+            zombieGenerationDuration = 100;
+        }
+        private void CheckLevelCompletion() 
+        {
+            if (!levelStart) 
+            {
+                return;
+            }
+            levelTimer++;
+            if (levelTimer >= levelDuration) 
+            {
+                levelStart = false;
+
+                int unlockedlevel = FileHandling.Load();
+                if(level > unlockedlevel) 
+                {
+                    FileHandling.Save(level);
+                }
+                GameOver();
+            }
         }
         private void LoadLevels(int no , int duration , bool start)
         {
