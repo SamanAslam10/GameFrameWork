@@ -44,7 +44,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             BackgroundImageLayout = ImageLayout.Stretch;
-            ClientSize = new Size(980, 454);
+            ClientSize = new Size(550, 485);
             DoubleBuffered = true;
             Name = "GameForm";
             Text = "PlantsVsZombies";

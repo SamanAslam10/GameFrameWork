@@ -12,17 +12,10 @@ namespace GameFrameWork
     public partial class GameForm : Form
     {
         Game game = new Game();
-        PhysicsSystem physicsSystem = new PhysicsSystem();
-        AnimatedSprite animatedSprite;
-        StaticSprite staticSprite;
-        Player player;
-        Enemy enemy;
         SoundManager sound = new SoundManager();
         Random Random = new Random();
-        MoveLeftMovement move;
 
         private bool isLoading = true;
-        private int loadingProgress = 0;
         private Panel loadingscreen;
         private ProgressBar loadingbar;
 
@@ -40,6 +33,17 @@ namespace GameFrameWork
         Button sunflowerbtn;
         Button peashooterbtn;
 
+        private bool levelStart = false;
+        private int level = 0;
+        private int levelTimer = 0;
+        private int levelDuration = 0;
+
+        private int maxZombie = 0;
+        private int noZombieGenerated = 0;
+        private int zombieGenerationTimer = 0;
+        private int zombieGenerationDuration = 0;
+
+
         public GameForm()
         {
             InitializeComponent();
@@ -51,7 +55,7 @@ namespace GameFrameWork
 
             BackgroundMusic();
         }
-        private void Setting()
+        private void Zombie()
         {
             game.AddObject(new Enemy
             {
@@ -79,6 +83,10 @@ namespace GameFrameWork
             DateTime currentTime = DateTime.Now;
             float deltaTime = (float)(currentTime - lastUpdateTime).TotalSeconds;
             lastUpdateTime = currentTime;
+            if(levelStart == true) 
+            {
+                levelTimer++;
+            }
             if (sunCount != null)
             {
                 sunCount.Text = game.sunCount.ToString();
@@ -166,7 +174,11 @@ namespace GameFrameWork
         }
         private void StartButton_Click(object sender, EventArgs e)
         {
-            LoadLevels();
+            int no = 1;
+            int duration = 3000;
+            levelStart = true;
+            maxZombie = 15;
+            LoadLevels(no , duration,levelStart);
         }
         private void LevelButton_Click(object sender, EventArgs e)
         {
@@ -196,6 +208,8 @@ namespace GameFrameWork
             Button lvl3 = CreateLevelButton(Resources.level3, x + (gap + width) * 2, y, unlocked >= 3);
 
             lvl1.Click += lvl1_Click;
+            lvl2.Click += lvl2_Click;
+            lvl3.Click += lvl3_Click;
 
             Button backbutton = BackButton(Resources.backButton, 720, 120);
             backbutton.Click += backbutton_Click;
@@ -208,7 +222,27 @@ namespace GameFrameWork
         }
         private void lvl1_Click(object sender, EventArgs e)
         {
-            LoadLevels();
+            int no = 1;
+            int duration = 3000;
+            levelStart = true;
+            maxZombie = 15;
+            LoadLevels(no, duration, levelStart);
+        }
+        private void lvl2_Click(object sender, EventArgs e)
+        {
+            int no = 2;
+            int duration = 3500;
+            levelStart = true;
+            maxZombie = 20;
+            LoadLevels(no, duration, levelStart);
+        }
+        private void lvl3_Click(object sender, EventArgs e)
+        {
+            int no = 3;
+            int duration = 4000;
+            levelStart = true;
+            maxZombie = 25;
+            LoadLevels(no, duration, levelStart);
         }
         private Button BackButton(Image img, int x, int y)
         {
@@ -243,47 +277,58 @@ namespace GameFrameWork
         {
             MainMenu();
         }
-
-        private void LoadLevels()
+        private void Level(int no , int duration) 
         {
-            Controls.Clear();
-            //
-            gamePanel = new Panel();
-            gamePanel.BackgroundImage = Resources.lawn;
-            gamePanel.Dock = DockStyle.Fill;
-            gamePanel.BackgroundImageLayout = ImageLayout.Stretch;
-
-            SetDoubleBuffered(gamePanel);
-
-            gamePanel.Paint += (s,e) => 
+            int levelNo = no;
+            int levelDuration = duration;
+            if(levelTimer > levelDuration) 
             {
-                game.Draw(e.Graphics);
-            };
-
-            this.Controls.Add(gamePanel);
-            gamePanel.SendToBack();
-
-            game.Objects.Clear();
-
-            sunflowerbtn = plantBarButtons(Resources.sunflowerBar, 20);
-            sunflowerbtn.Click += Sunflowerbtn_Click;
-
-            peashooterbtn = plantBarButtons(Resources.peashooterBar, 300);
-            peashooterbtn.Click += Peashooterbtn_Click;
-
-            gamePanel.MouseClick += gamePanel_MouseClick;
-
-            sunCount = sunCountLabel();
+                levelStart = false;
+            }
             
-            gamePanel.Controls.Add(sunflowerbtn);
-            gamePanel.Controls.Add(peashooterbtn);
-            gamePanel.Controls.Add(SunBar());
-            gamePanel.Controls.Add(ZombieBar());
-            gamePanel.Controls.Add(TopBarMenuButton());
-            gamePanel.Controls.Add(sunCount);
-            sunCount.BringToFront();
+        }
+        private void LoadLevels(int no , int duration , bool start)
+        {
+            if (start == true) 
+            {
+                Level(no , duration); Controls.Clear();
 
-            Setting();
+                gamePanel = new Panel();
+                gamePanel.BackgroundImage = Resources.lawn;
+                gamePanel.Dock = DockStyle.Fill;
+                gamePanel.BackgroundImageLayout = ImageLayout.Stretch;
+
+                SetDoubleBuffered(gamePanel);
+
+                gamePanel.Paint += (s, e) =>
+                {
+                    game.Draw(e.Graphics);
+                };
+
+                this.Controls.Add(gamePanel);
+                gamePanel.SendToBack();
+
+                game.Objects.Clear();
+
+                sunflowerbtn = plantBarButtons(Resources.sunflowerBar, 20);
+                sunflowerbtn.Click += Sunflowerbtn_Click;
+
+                peashooterbtn = plantBarButtons(Resources.peashooterBar, 300);
+                peashooterbtn.Click += Peashooterbtn_Click;
+
+                gamePanel.MouseClick += gamePanel_MouseClick;
+
+                sunCount = sunCountLabel();
+
+                gamePanel.Controls.Add(sunflowerbtn);
+                gamePanel.Controls.Add(peashooterbtn);
+                gamePanel.Controls.Add(SunBar());
+                gamePanel.Controls.Add(ZombieBar());
+                gamePanel.Controls.Add(TopBarMenuButton());
+                gamePanel.Controls.Add(sunCount);
+                sunCount.BringToFront();
+
+            }
         }
         private void gamePanel_MouseClick(object? sender, MouseEventArgs e)
         {
