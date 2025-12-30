@@ -12,35 +12,18 @@ namespace GameFrameWork
     internal class SoundManager
     {
         private SoundPlayer backGroundSound;
-        private SoundPlayer winSound;
-        private SoundPlayer loseSound;
-        private SoundPlayer damageSound;
-        private SoundPlayer scoreSound;
+        private SoundPlayer Sound;
         
         public void BackgroundPlay(System.IO.UnmanagedMemoryStream sound) 
         {
             backGroundSound = new SoundPlayer(sound);
             backGroundSound.PlayLooping();
         }
-        public void winPlay(string path)
+        public void Play(System.IO.UnmanagedMemoryStream sound)
         {
-            winSound = new SoundPlayer(path);
-            winSound.Play();
+            Sound = new SoundPlayer(sound);
+            Sound.Play();
         }
-        public void losePlay(string path)
-        {
-            loseSound = new SoundPlayer(path);
-            loseSound.Play();
-        }
-        public void damagePlay(string path)
-        {
-            damageSound = new SoundPlayer(path);
-            damageSound.Play();
-        }
-        public void scorePlay(string path)
-        {
-            scoreSound = new SoundPlayer(path);
-            scoreSound.Play();
-        }
+        
     }
 }

@@ -33,10 +33,7 @@ namespace GameFrameWork
 
         private Label sunCount;
         private Label scoreLabel;
-        private float zombieSpawnTimer = 0f;
-        private float zombieSpawnInterval = 3f;
-        private int zombiesSpawned = 0;
-        private int maxZombies = 10;
+        
 
         private const int SUNFLOWER_COST = 50;
         private const int PEASHOOTER_COST = 100;
@@ -234,8 +231,11 @@ namespace GameFrameWork
             button.Padding = new Padding(-2);
             button.BackgroundImage = img;
             button.BackgroundImageLayout = ImageLayout.Stretch;
-            button.BackgroundImage = unlocked ? img : Resources.level_locked_;
-
+            bool lockedLevel = true;
+            if( lockedLevel == unlocked) 
+            {
+                button.BackgroundImage = Resources.level_locked_;
+            }
             button.Enabled = unlocked;
             return button;
         }
@@ -243,6 +243,7 @@ namespace GameFrameWork
         {
             MainMenu();
         }
+
         private void LoadLevels()
         {
             Controls.Clear();
@@ -382,12 +383,6 @@ namespace GameFrameWork
         private void BackgroundMusic()
         {
             sound.BackgroundPlay(Resources.BackgroundSound);
-        }
-        private void LoadLevels2()
-        {
-
-            zombiesSpawned = 0;
-            zombieSpawnTimer = 0f;
         }
         private Label sunCountLabel() 
         {
