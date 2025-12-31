@@ -477,7 +477,7 @@ namespace GameFrameWork
             }            
             if(game.sunCount  >= PEASHOOTER_COST) 
             {
-                peashooterbtn.BackgroundImage = Resources.peashooterBar_disabled_;
+                peashooterbtn.BackgroundImage = Resources.peashooterBar;
                 peashooterbtn.Enabled = true;
             }
             else 
