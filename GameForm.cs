@@ -25,9 +25,7 @@ namespace GameFrameWork
         private DateTime lastUpdateTime = DateTime.Now;
         Panel gamePanel;
 
-        private Label sunCount;
-        private Label scoreLabel;
-        
+        private Label sunCount = new Label();
 
         private const int SUNFLOWER_COST = 50;
         private const int PEASHOOTER_COST = 100;
@@ -55,21 +53,6 @@ namespace GameFrameWork
             GameTimer.Start();
 
             BackgroundMusic();
-        }
-        private void GenerateZombie()
-        {
-            int y = 150 + Random.Next(0, 5) * 100;
-
-            game.AddObject(new Enemy
-            {
-                Position = new PointF(gamePanel.Width, y),
-                Size = new Size(300, 300),
-
-                Sprite = new AnimatedSprite(Resources.BasicZombieWalking,0.1f),
-                Movement = new MoveLeftMovement(3f),
-                IsRigidBody = true,
-            });
-
         }
         private void GameTimer_Tick(object sender, EventArgs e)
         {
@@ -109,6 +92,7 @@ namespace GameFrameWork
                 levelTimer++;
                 PlantCardLock();
                 CheckLevelCompletion();
+                sunCountLabel();
             }
             game.Update(new GameTime() { DeltaTime = deltaTime});
             if (gamePanel != null && game.Objects.Count > 0)
@@ -117,6 +101,20 @@ namespace GameFrameWork
             }
             game.Cleanup();
 
+        }
+        private void GenerateZombie()
+        {
+            int y = 150 + Random.Next(0, 5) * 100;
+
+            game.AddObject(new Enemy
+            {
+                Position = new PointF(gamePanel.Width, y),
+                Size = new Size(300, 300),
+
+                Sprite = new AnimatedSprite(Resources.BasicZombieWalking, 0.1f),
+                Movement = new MoveLeftMovement(3f),
+                IsRigidBody = true,
+            });
         }
         private void GameForm_Load(object sender, EventArgs e)
         {
@@ -358,7 +356,6 @@ namespace GameFrameWork
             {
                 return;
             }
-            levelTimer++;
             if (levelTimer >= levelDuration) 
             {
                 levelStart = false;
@@ -394,7 +391,6 @@ namespace GameFrameWork
 
                 game.Objects.Clear();
 
-                GenerateZombie();
                 sunflowerbtn = plantBarButtons(Resources.sunflowerBar, 20);
                 sunflowerbtn.Click += Sunflowerbtn_Click;
 
@@ -403,7 +399,7 @@ namespace GameFrameWork
 
                 gamePanel.MouseClick += gamePanel_MouseClick;
 
-                sunCount = sunCountLabel();
+                sunCountLabel();
 
                 gamePanel.Controls.Add(sunflowerbtn);
                 gamePanel.Controls.Add(peashooterbtn);
@@ -469,7 +465,7 @@ namespace GameFrameWork
         private void PlantCardLock() 
         {
             
-            if(game.sunCount < SUNFLOWER_COST) 
+            if(game.sunCount <= SUNFLOWER_COST) 
             {
                 sunflowerbtn.BackgroundImage = Resources.sunflowerBar_disabled_ ;
                 sunflowerbtn.Enabled = false;
@@ -479,7 +475,7 @@ namespace GameFrameWork
                 sunflowerbtn.BackgroundImage = Resources.sunflowerBar;
                 sunflowerbtn.Enabled = true;
             }            
-            if(game.sunCount  < PEASHOOTER_COST) 
+            if(game.sunCount  <= PEASHOOTER_COST) 
             {
                peashooterbtn.BackgroundImage = Resources.peashooterBar_disabled_;                
                peashooterbtn.Enabled = false;
@@ -516,18 +512,15 @@ namespace GameFrameWork
         {
             sound.BackgroundPlay(Resources.BackgroundSound);
         }
-        private Label sunCountLabel() 
+        private void sunCountLabel() 
         {
-            scoreLabel = new Label
-            {
-                Text = game.sunCount.ToString(),
-                Font = new Font("Arial", 24, FontStyle.Bold),
-                ForeColor = Color.Black,
-                BackColor = Color.Transparent,
-                Location = new Point(600, 10),
-                AutoSize = true
-            };
-            return scoreLabel;
+            sunCount.Text = game.sunCount.ToString();
+            sunCount.Font = new Font("Arial", 24, FontStyle.Bold);
+            sunCount.ForeColor = Color.Black;
+            sunCount.BackColor = Color.LightGoldenrodYellow;
+            sunCount.Location = new Point(640, 12);
+            sunCount.AutoSize = true;
+           
         }
         private Panel SunBar() 
         {

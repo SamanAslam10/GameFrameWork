@@ -7,7 +7,7 @@ namespace GameFrameWork
     public partial class Game
     {
         private List<GameObject> objects = new List<GameObject>();
-        public int sunCount { get; set; } = 50;
+        public int sunCount { get; set; } = 300;
 
         public List<GameObject> Objects => objects;
 

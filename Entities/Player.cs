@@ -8,6 +8,7 @@ namespace GameFrameWork
         public float FireCooldown ;
         private float fireTimer = 0f;
         public string PlantType;
+        public Game GameRef ;
 
         // Movement strategy: demonstrates composition over inheritance.
         // Different movement behaviors can be injected (KeyboardMovement, PatrolMovement, etc.).
@@ -39,8 +40,8 @@ namespace GameFrameWork
                 GameRef.AddObject(new Bullet
                 {
                     Sprite = new StaticSprite(Resources.sun),
-                    Size = new SizeF(60, 60),
-                    Position = new PointF(Position.X + 30, Position.Y + 30),
+                    Size = new SizeF(110, 110),
+                    Position = new PointF(Position.X, Position.Y-5),
                     Movement = new UpwardMovement(10f),
                     IsSun = true,
 
@@ -51,8 +52,8 @@ namespace GameFrameWork
                 GameRef.AddObject(new Bullet
                 {
                     Sprite = new StaticSprite(Resources.pea),
-                    Size = new SizeF(40, 40),
-                    Position = new PointF(Position.X + Size.Width, Position.Y + 40),
+                    Size = new SizeF(60, 60),
+                    Position = new PointF(Position.X + Size.Width, Position.Y),
                     Movement = new MoveRightMovement(10f)
                 });
             }

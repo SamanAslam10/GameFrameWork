@@ -27,7 +27,6 @@ namespace GameFrameWork
                 IsActive = false;
             }
 
-            // Pea out of bounds
             if (!IsSun && Position.X > 2000)
             {
                 IsActive = false;
@@ -37,7 +36,7 @@ namespace GameFrameWork
         /// Simple visual representation for bullets (polymorphism example).
         public override void Draw(Graphics g)
         {
-            g.FillRectangle(Brushes.Yellow, Bounds);
+            base.Draw(g);
         }
 
         /// On collision bullets deactivate when hitting an enemy.
