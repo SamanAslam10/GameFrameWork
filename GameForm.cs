@@ -14,6 +14,8 @@ namespace GameFrameWork
     {
         Game game = new Game();
         SoundManager sound = new SoundManager();
+        PhysicsSystem physics = new PhysicsSystem();
+        CollisionSystem collisions = new CollisionSystem();
         Random Random = new Random();
 
         private bool isLoading = true;
@@ -24,9 +26,10 @@ namespace GameFrameWork
         private string selectedPlantType = null;
    
         private DateTime lastUpdateTime = DateTime.Now;
-        Panel gamePanel;
+        private Panel gamePanel;
 
         private Label sunCount = new Label();
+        private int sunvalue = 0;
 
         private const int SUNFLOWER_COST = 50;
         private const int PEASHOOTER_COST = 100;
@@ -72,11 +75,7 @@ namespace GameFrameWork
             DateTime currentTime = DateTime.Now;
             float deltaTime = (float)(currentTime - lastUpdateTime).TotalSeconds;
             lastUpdateTime = currentTime;
-            
-            if (sunCount != null)
-            {
-                sunCount.Text = game.sunCount.ToString();
-            }
+           
             if (levelStart && noZombieGenerated < maxZombie)
             {
                 zombieGenerationTimer++;
@@ -89,11 +88,12 @@ namespace GameFrameWork
                     noZombieGenerated++;
                 }
             }
-            if (levelStart == true) 
+            if (levelStart == true ) 
             {
                 levelTimer++;
                 PlantCardLock();
                 CheckLevelCompletion();
+                UpdateSunCount();
                 sunCountLabel();
             }
             game.Update(new GameTime() { DeltaTime = deltaTime});
@@ -101,8 +101,13 @@ namespace GameFrameWork
             {
                 gamePanel.Invalidate();
             }
+            physics.Apply(game.Objects.ToList());
+            collisions.Check(game.Objects.ToList());
             game.Cleanup();
-
+        }
+        private void UpdateSunCount() 
+        {
+            sunvalue = game.sunCount;
         }
         private void GenerateZombie()
         {
@@ -330,7 +335,7 @@ namespace GameFrameWork
             level = levelno;
             levelStart = true;
             levelTimer = 0;
-
+            game.AddSun(200);
             if (level == 1) 
             {
                 levelDuration = 3000;
@@ -348,7 +353,7 @@ namespace GameFrameWork
             }
             noZombieGenerated = 0;
             zombieGenerationTimer = 0;
-            zombieGenerationDuration = 100;
+            zombieGenerationDuration = 200;
         }
         private void CheckLevelCompletion() 
         {
@@ -399,7 +404,6 @@ namespace GameFrameWork
 
                 gamePanel.MouseClick += gamePanel_MouseClick;
 
-                sunCountLabel();
                 GameEventsSound(Resources.gameStartSound);
                 gamePanel.Controls.Add(sunflowerbtn);
                 gamePanel.Controls.Add(peashooterbtn);
@@ -518,11 +522,11 @@ namespace GameFrameWork
         }
         private void sunCountLabel() 
         {
-            sunCount.Text = game.sunCount.ToString();
+            sunCount.Text = sunvalue.ToString();
             sunCount.Font = new Font("Arial", 24, FontStyle.Bold);
             sunCount.ForeColor = Color.Black;
             sunCount.BackColor = Color.LightGoldenrodYellow;
-            sunCount.Location = new Point(640, 12);
+            sunCount.Location = new Point(500, 18);
             sunCount.AutoSize = true;
            
         }

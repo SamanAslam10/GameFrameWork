@@ -21,7 +21,7 @@ namespace GameFrameWork
             base.Update(gameTime);
 
             
-            if (IsSun && Position.Y <= 80)
+            if (IsSun && Position.Y <= 10)
             {
                 game.AddSun(50);
                 IsActive = false;

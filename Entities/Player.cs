@@ -40,7 +40,7 @@ namespace GameFrameWork
                 GameRef.AddObject(new Bullet
                 {
                     Sprite = new StaticSprite(Resources.sun),
-                    Size = new SizeF(110, 110),
+                    Size = new SizeF(130, 130),
                     Position = new PointF(Position.X, Position.Y-5),
                     Movement = new UpwardMovement(10f),
                     IsSun = true,
