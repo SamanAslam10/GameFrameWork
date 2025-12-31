@@ -70,7 +70,7 @@ namespace GameFrameWork
         {
             if (other is Enemy zombie)
             {
-                Health -= 1;
+                Health = Health - 1;
                 zombie.IsEating = true;
 
                 if (Health <= 0)

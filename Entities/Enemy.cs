@@ -48,8 +48,12 @@ namespace GameFrameWork
         {
             if (other is Bullet)
             {
-                Health -= 20;
+                Health -= 10;
                 other.IsActive = false;
+                if (Health <= 20) 
+                {
+                    Sprite = new AnimatedSprite(GameFrameWork.Properties.Resources.zombieDeath);
+                }
             }
 
             if (other is Player)

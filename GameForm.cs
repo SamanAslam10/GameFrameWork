@@ -112,6 +112,17 @@ namespace GameFrameWork
         private void GenerateZombie()
         {
             int y = 150 + Random.Next(0, 5) * 100;
+            if (noZombieGenerated == maxZombie - 2) 
+            {
+                game.AddObject(new Enemy
+                {
+                    Position = new PointF(gamePanel.Width, y),
+                    Size = new SizeF(250, 250),
+                    Sprite = new AnimatedSprite(Resources.FlagZombieWalking),
+                    Movement = new MoveLeftMovement(1f),
+                    IsRigidBody = true,
+                });
+            }
             game.AddObject(new Enemy
             {
                 Position = new PointF(gamePanel.Width, y),
