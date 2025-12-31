@@ -120,20 +120,11 @@ namespace GameFrameWork.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
-        /// </summary>
-        internal static System.IO.UnmanagedMemoryStream gameOver {
-            get {
-                return ResourceManager.GetStream("gameOver", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap gameOverx {
+        internal static System.Drawing.Bitmap gameOverCard {
             get {
-                object obj = ResourceManager.GetObject("gameOverx", resourceCulture);
+                object obj = ResourceManager.GetObject("gameOverCard", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -141,9 +132,18 @@ namespace GameFrameWork.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
         /// </summary>
-        internal static System.IO.UnmanagedMemoryStream gameStart {
+        internal static System.IO.UnmanagedMemoryStream gameOverSound {
             get {
-                return ResourceManager.GetStream("gameStart", resourceCulture);
+                return ResourceManager.GetStream("gameOverSound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream gameStartSound {
+            get {
+                return ResourceManager.GetStream("gameStartSound", resourceCulture);
             }
         }
         

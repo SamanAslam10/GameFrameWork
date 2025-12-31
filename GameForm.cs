@@ -1,5 +1,6 @@
 using GameFrameWork.Movements;
 using GameFrameWork.Properties;
+using Microsoft.VisualBasic.Devices;
 using System;
 using System.Drawing;
 using System.Runtime.CompilerServices;
@@ -82,6 +83,7 @@ namespace GameFrameWork
 
                 if (zombieGenerationTimer >= zombieGenerationDuration)
                 {
+                    
                     GenerateZombie();
                     zombieGenerationTimer = 0;
                     noZombieGenerated++;
@@ -105,14 +107,12 @@ namespace GameFrameWork
         private void GenerateZombie()
         {
             int y = 150 + Random.Next(0, 5) * 100;
-
             game.AddObject(new Enemy
             {
                 Position = new PointF(gamePanel.Width, y),
-                Size = new SizeF(300, 300),
-
+                Size = new SizeF(250, 250),
                 Sprite = new AnimatedSprite(Resources.BasicZombieWalking),
-                Movement = new MoveLeftMovement(3f),
+                Movement = new MoveLeftMovement(1f),
                 IsRigidBody = true,
             });
         }
@@ -295,9 +295,9 @@ namespace GameFrameWork
         }
         private void GameOver() 
         {
-
+            GameEventsSound(Resources.gameOverSound);
             gameOver = new Panel();
-            gameOver.BackgroundImage = Resources.gameOverx;
+            gameOver.BackgroundImage = Resources.gameOverCard;
             gameOver.BackgroundImageLayout = ImageLayout.Stretch;
             gameOver.Size = new Size(600,600 );
             gameOver.Dock = DockStyle.Bottom;
@@ -400,7 +400,7 @@ namespace GameFrameWork
                 gamePanel.MouseClick += gamePanel_MouseClick;
 
                 sunCountLabel();
-
+                GameEventsSound(Resources.gameStartSound);
                 gamePanel.Controls.Add(sunflowerbtn);
                 gamePanel.Controls.Add(peashooterbtn);
                 gamePanel.Controls.Add(SunBar());
@@ -511,6 +511,10 @@ namespace GameFrameWork
         private void BackgroundMusic()
         {
             sound.BackgroundPlay(Resources.BackgroundSound);
+        }
+        private void GameEventsSound(System.IO.UnmanagedMemoryStream soundplay)
+        {
+            sound.Play(soundplay);
         }
         private void sunCountLabel() 
         {

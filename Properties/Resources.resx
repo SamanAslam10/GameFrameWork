@@ -136,13 +136,13 @@
   <data name="FlagZombieWalking" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\FlagZombieWalking.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="gameOver" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="gameOverSound" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Plants vs. Zombies - The Zombies Ate Your Brains! GAME OVER.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="gameOverx" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="gameOverCard" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\gameOver_magic.jpeg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="gameStart" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="gameStartSound" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\The Zombies Are coming Sound Effect.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="lawn" type="System.Resources.ResXFileRef, System.Windows.Forms">
