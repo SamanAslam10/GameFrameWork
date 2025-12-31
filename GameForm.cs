@@ -109,9 +109,9 @@ namespace GameFrameWork
             game.AddObject(new Enemy
             {
                 Position = new PointF(gamePanel.Width, y),
-                Size = new Size(300, 300),
+                Size = new SizeF(300, 300),
 
-                Sprite = new AnimatedSprite(Resources.BasicZombieWalking, 0.1f),
+                Sprite = new AnimatedSprite(Resources.BasicZombieWalking),
                 Movement = new MoveLeftMovement(3f),
                 IsRigidBody = true,
             });
@@ -465,25 +465,25 @@ namespace GameFrameWork
         private void PlantCardLock() 
         {
             
-            if(game.sunCount <= SUNFLOWER_COST) 
-            {
-                sunflowerbtn.BackgroundImage = Resources.sunflowerBar_disabled_ ;
-                sunflowerbtn.Enabled = false;
-            }
-            else 
+            if(game.sunCount >= SUNFLOWER_COST) 
             {
                 sunflowerbtn.BackgroundImage = Resources.sunflowerBar;
                 sunflowerbtn.Enabled = true;
-            }            
-            if(game.sunCount  <= PEASHOOTER_COST) 
+            }
+            else 
             {
-               peashooterbtn.BackgroundImage = Resources.peashooterBar_disabled_;                
-               peashooterbtn.Enabled = false;
+                sunflowerbtn.BackgroundImage = Resources.sunflowerBar_disabled_;
+                sunflowerbtn.Enabled = false;
+            }            
+            if(game.sunCount  >= PEASHOOTER_COST) 
+            {
+                peashooterbtn.BackgroundImage = Resources.peashooterBar_disabled_;
+                peashooterbtn.Enabled = true;
             }
             else 
             {
                 peashooterbtn.BackgroundImage = Resources.peashooterBar_disabled_;
-                peashooterbtn.Enabled = true;
+                peashooterbtn.Enabled = false;
             }
         }
         private void Peashooterbtn_Click(object? sender, EventArgs e)
