@@ -3,6 +3,7 @@ using GameFrameWork.Properties;
 using Microsoft.VisualBasic.Devices;
 using System;
 using System.Drawing;
+using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Runtime.Versioning;
 using System.Security.Policy;
@@ -46,7 +47,7 @@ namespace GameFrameWork
         private int zombieGenerationTimer = 0;
         private int zombieGenerationDuration = 0;
 
-
+        private string name;
         public GameForm()
         {
             InitializeComponent();
@@ -68,6 +69,7 @@ namespace GameFrameWork
                 {
                     isLoading = false;
                     this.Controls.Remove(loadingscreen);
+                    Login();
                     MainMenu();
                 }
                 return;
@@ -314,9 +316,9 @@ namespace GameFrameWork
             GameEventsSound(Resources.gameOverSound);
             gameOver = new Panel();
             gameOver.BackgroundImage = Resources.gameOverCard;
-            gameOver.BackgroundImageLayout = ImageLayout.Stretch;
+            gameOver.BackgroundImageLayout = ImageLayout.Zoom;
             gameOver.Size = new Size(600,600 );
-            gameOver.Dock = DockStyle.Bottom;
+            gameOver.Location = new Point(600 , 300);
             gameOver.BackColor = Color.Transparent;
             gameOver.BorderStyle = BorderStyle.None;
             
@@ -325,7 +327,7 @@ namespace GameFrameWork
             Button nextLevelBtn = new Button();
             nextLevelBtn.Text = "Next Level";
             nextLevelBtn.Size = new Size(200, 80);
-            nextLevelBtn.Location = new Point(this.Width / 2 - 100, this.Height / 2);
+            nextLevelBtn.Location = new Point(gameOver.Width / 2 - 100, gameOver.Height / 2);
             nextLevelBtn.Click += nextlevelBtn_Click;
             
 
@@ -587,6 +589,22 @@ namespace GameFrameWork
         {
             Controls.Clear();
             MainMenu();
+        }
+        private void Login() 
+        {
+            Panel login = new Panel();
+            login.BackgroundImage = Resources.EnterName;
+            login.Size = new Size(600, 600);
+            login.Location = new Point(600, 300);
+            login.BackgroundImageLayout = ImageLayout.Zoom;
+
+            this.Controls.Add(login);
+
+            TextBox nameText = new TextBox();
+            nameText.BackColor = Color.Brown;
+            nameText.Size = new Size(400, 20);
+            nameText.Location = new Point(1000, 800);
+            nameText.Font = new Font("Arial", 16); 
         }
         private void SetDoubleBuffered(Control control)
         {
