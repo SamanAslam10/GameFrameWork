@@ -60,6 +60,7 @@ namespace GameFrameWork
             {
                 IsEating = true;
                 Sprite = new AnimatedSprite(GameFrameWork.Properties.Resources.zombieEating);
+                Movement = null;
             }
         }
     }

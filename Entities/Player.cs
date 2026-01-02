@@ -44,6 +44,7 @@ namespace GameFrameWork
                     Position = new PointF(Position.X, Position.Y-5),
                     Movement = new UpwardMovement(10f),
                     IsSun = true,
+                    IsRigidBody = false,
 
                 });
             }
@@ -78,9 +79,9 @@ namespace GameFrameWork
                     IsActive = false;
                     zombie.IsEating = false;
                     zombie.Sprite = new AnimatedSprite(GameFrameWork.Properties.Resources.BasicZombieWalking);
+                    zombie.Movement = new MoveLeftMovement(3f);
                 }
             }
         }
     }
- 
 }

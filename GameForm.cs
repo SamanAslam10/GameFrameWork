@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Runtime.Versioning;
+using System.Security.AccessControl;
 using System.Security.Policy;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrayNotify;
 
@@ -31,7 +32,7 @@ namespace GameFrameWork
 
         private Label sunCount = new Label();
         private int sunvalue = 0;
-
+        private string PlayerName;
         private const int SUNFLOWER_COST = 50;
         private const int PEASHOOTER_COST = 100;
         Button sunflowerbtn;
@@ -70,7 +71,6 @@ namespace GameFrameWork
                     isLoading = false;
                     this.Controls.Remove(loadingscreen);
                     Login();
-                    MainMenu();
                 }
                 return;
             }
@@ -121,7 +121,7 @@ namespace GameFrameWork
                     Position = new PointF(gamePanel.Width, y),
                     Size = new SizeF(250, 250),
                     Sprite = new AnimatedSprite(Resources.FlagZombieWalking),
-                    Movement = new MoveLeftMovement(1f),
+                    Movement = new MoveLeftMovement(3f),
                     IsRigidBody = true,
                 });
             }
@@ -130,7 +130,7 @@ namespace GameFrameWork
                 Position = new PointF(gamePanel.Width, y),
                 Size = new SizeF(250, 250),
                 Sprite = new AnimatedSprite(Resources.BasicZombieWalking),
-                Movement = new MoveLeftMovement(1f),
+                Movement = new MoveLeftMovement(3f),
                 IsRigidBody = true,
             });
         }
@@ -598,13 +598,65 @@ namespace GameFrameWork
             login.Location = new Point(600, 300);
             login.BackgroundImageLayout = ImageLayout.Zoom;
 
+            SetDoubleBuffered(login);
             this.Controls.Add(login);
+            LoginTextBox(login);
+            int x = this.Width/ 2;
+            int y = this.Height - 100;
+            Button Okbtn = loginButton(Resources.OkButton, x, y);
+            Button cancelBtn = loginButton(Resources.CancelButton, x , y);
+            
+            Okbtn.Click += Okbtn_Click;
+            cancelBtn.Click += cancelBtn_Click;
 
+            login.Controls.Add(Okbtn);
+            login.Controls.Add(cancelBtn);
+
+            this.Controls.Add(login);
+            login.BringToFront();
+        }
+        private void Okbtn_Click(object? sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(PlayerName)) 
+            {
+                return;
+            }
+            else 
+            {
+                SaveNameintoFile(PlayerName);
+                Controls.Clear();
+                MainMenu();
+            }
+        }
+        private void cancelBtn_Click(object? sender, EventArgs e)
+        {
+            Controls.Clear();
+            MainMenu();
+        }
+
+        private void LoginTextBox(Panel login) 
+        {
             TextBox nameText = new TextBox();
             nameText.BackColor = Color.Brown;
             nameText.Size = new Size(400, 20);
             nameText.Location = new Point(1000, 800);
-            nameText.Font = new Font("Arial", 16); 
+            nameText.Font = new Font("Arial", 16);
+
+            PlayerName = nameText.Text;
+            login.Controls.Add(nameText);
+        }
+        private Button loginButton(Image img , int x , int y) 
+        {
+            Button login = new Button();
+            login.BackgroundImage = img;
+            login.Size = new Size(150, 50);
+            login.Location = new Point(x,y);
+
+            return login;
+        }
+        private void SaveNameintoFile(string PlayerName) 
+        {
+
         }
         private void SetDoubleBuffered(Control control)
         {
@@ -612,9 +664,7 @@ namespace GameFrameWork
                 return;
 
             System.Reflection.PropertyInfo prop = typeof(Control).GetProperty
-                ( "DoubleBuffered",System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance
-                );
-
+            ( "DoubleBuffered",System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
             prop.SetValue(control, true, null);
         }
     }

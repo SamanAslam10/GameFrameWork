@@ -18,7 +18,7 @@ namespace GameFrameWork
 
         public Size Size { get; set; }
 
-        public AnimatedSprite(Image gif, float fps = 10f)
+        public AnimatedSprite(Image gif, float fps = 30f)
         {
             this.gif = gif;
             dimension = new FrameDimension(gif.FrameDimensionsList[0]);
