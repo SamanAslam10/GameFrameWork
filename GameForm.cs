@@ -316,14 +316,14 @@ namespace GameFrameWork
         }
         private void GameOver() 
         {
+            
             GameEventsSound(Resources.gameOverSound);
+            BackgroundMusic();
             gameOver = new Panel();
             gameOver.BackgroundImage = Resources.gameOverCard;
             gameOver.BackgroundImageLayout = ImageLayout.Zoom;
             gameOver.Size = new Size(600,600 );
             gameOver.Location = new Point(600 , 300);
-            gameOver.BackColor = Color.Transparent;
-            gameOver.BorderStyle = BorderStyle.None;
             
             SetDoubleBuffered(gameOver);
 
@@ -421,6 +421,7 @@ namespace GameFrameWork
                 gamePanel.MouseClick += gamePanel_MouseClick;
 
                 GameEventsSound(Resources.gameStartSound);
+                BackgroundMusic();
                 gamePanel.Controls.Add(sunflowerbtn);
                 gamePanel.Controls.Add(peashooterbtn);
                 gamePanel.Controls.Add(SunBar());
