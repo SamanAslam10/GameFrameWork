@@ -36,8 +36,9 @@ namespace GameFrameWork
         private string PlayerName;
         private const int SUNFLOWER_COST = 50;
         private const int PEASHOOTER_COST = 100;
-        Button sunflowerbtn;
-        Button peashooterbtn;
+        private Button sunflowerbtn;
+        private Button peashooterbtn;
+        private TextBox nameText;
 
         private bool levelStart = false;
         private int level = 0;
@@ -602,10 +603,9 @@ namespace GameFrameWork
             SetDoubleBuffered(login);
             this.Controls.Add(login);
             LoginTextBox(login);
-            int x = this.Width/ 2;
-            int y = this.Height - 100;
-            Button Okbtn = loginButton(Resources.OkButton, x, y);
-            Button cancelBtn = loginButton(Resources.CancelButton, x , y);
+          
+            Button Okbtn = loginButton(Resources.OkButton, 30,400);
+            Button cancelBtn = loginButton(Resources.CancelButton,310 , 400);
             
             Okbtn.Click += Okbtn_Click;
             cancelBtn.Click += cancelBtn_Click;
@@ -618,16 +618,15 @@ namespace GameFrameWork
         }
         private void Okbtn_Click(object? sender, EventArgs e)
         {
+            PlayerName = nameText.Text.Trim();
+
             if (string.IsNullOrEmpty(PlayerName)) 
             {
                 return;
             }
-            else 
-            {
-                SaveNameintoFile(PlayerName);
-                Controls.Clear();
-                MainMenu();
-            }
+            SaveNameintoFile(PlayerName);
+            Controls.Clear();
+            MainMenu();
         }
         private void cancelBtn_Click(object? sender, EventArgs e)
         {
@@ -637,27 +636,27 @@ namespace GameFrameWork
 
         private void LoginTextBox(Panel login) 
         {
-            TextBox nameText = new TextBox();
-            nameText.BackColor = Color.Brown;
-            nameText.Size = new Size(400, 20);
-            nameText.Location = new Point(1000, 800);
+            nameText = new TextBox();
+            nameText.BackColor = Color.DarkSlateGray;
+            nameText.Size = new Size(520, 40);
+            nameText.Location = new Point(40, 300); 
             nameText.Font = new Font("Arial", 16);
+            nameText.ForeColor = Color.White;
 
-            PlayerName = nameText.Text;
             login.Controls.Add(nameText);
         }
         private Button loginButton(Image img , int x , int y) 
         {
             Button login = new Button();
             login.BackgroundImage = img;
-            login.Size = new Size(150, 50);
+            login.Size = new Size(250, 50);
             login.Location = new Point(x,y);
 
             return login;
         }
         private void SaveNameintoFile(string PlayerName) 
         {
-
+            file.Save(1, PlayerName);
         }
         private void SetDoubleBuffered(Control control)
         {

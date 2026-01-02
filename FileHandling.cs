@@ -12,11 +12,22 @@ namespace GameFrameWork
         string name = "";
         public void Save(int level , string PlayerName) 
         {
-            if (File.Exists("Progress.txt")) 
+            string path = "Progress.txt";
+
+            if (!File.Exists(path))
+                File.Create(path).Close();
+
+            string[] records = File.ReadAllLines(path);
+            foreach (string record in records)
             {
-                StreamWriter writer = new StreamWriter("Progress.txt",true);
-                writer.WriteLine(PlayerName,level);
-                writer.Close();
+                string existingName = record.Split(',')[0];
+                if (existingName == PlayerName)
+                    return;
+            }
+
+            using (StreamWriter writer = new StreamWriter(path, true))
+            {
+                writer.WriteLine($"{PlayerName},{level}");
             }
         }
         public void Load()
@@ -28,7 +39,7 @@ namespace GameFrameWork
                 while ((record = read.ReadLine()) != null) 
                 {
                     level = Convert.ToInt32(ParseData(record,1));
-                    name = ParseData(record, 2);
+                    name = ParseData(record, 0);
                 }
                 read.Close();
             }
