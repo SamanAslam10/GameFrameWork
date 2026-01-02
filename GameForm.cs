@@ -57,7 +57,6 @@ namespace GameFrameWork
             InitializeComponent();
             DoubleBuffered = true;
 
-            //1
             GameTimer.Interval = 16;
             GameTimer.Start();
 
@@ -311,23 +310,23 @@ namespace GameFrameWork
             gameOver = new Panel();
             gameOver.BackgroundImage = Resources.gameOverCard;
             gameOver.BackgroundImageLayout = ImageLayout.Zoom;
-            gameOver.Size = new Size(600,400 );
-            gameOver.Location = new Point(600 , 300);
+            gameOver.Size = new Size(400,400 );
+            gameOver.Location = new Point((this.ClientSize.Width - gameOver.Width) / 2,(this.ClientSize.Height - gameOver.Height) / 2);
             SetDoubleBuffered(gameOver);
 
             if (value == 1)
             {
-                Button nextlvlBtn = GameOverButtons(Resources.NextLevelButton, 10, 20);
+                Button nextlvlBtn = GameOverButtons(Resources.NextLevelButton, 150, 280);
                 nextlvlBtn.Click += nextlvlBtn_Click;
                 gameOver.Controls.Add(nextlvlBtn);
             }
             else if (value == 2) 
             {
-                Button tryAgainBtn = GameOverButtons(Resources.tryAgainButton, 10, 20);
+                Button tryAgainBtn = GameOverButtons(Resources.tryAgainButton, 150, 280);
                 tryAgainBtn.Click += tryAgainBtn_Click;
                 gameOver.Controls.Add(tryAgainBtn);
             }
-            Button MainMenuBtn = GameOverButtons(Resources.mainMenuButton, 40, 20);
+            Button MainMenuBtn = GameOverButtons(Resources.mainMenuButton, 310, 280);
             MainMenuBtn.Click += MainMenuBtn_Click;
             gameOver.Controls.Add(MainMenuBtn);
             this.Controls.Add(gameOver);
@@ -340,25 +339,23 @@ namespace GameFrameWork
             Button Btn = new Button();
 
             Btn.Image = img;    
-            Btn.Size = new Size(200, 80);
+            Btn.Size = new Size(180, 70);
             Btn.Location = new Point(x, y);
-
+            Btn.FlatStyle = FlatStyle.Flat;
+            Btn.FlatAppearance.BorderSize = 0;
             return Btn;
         }
         private void nextlvlBtn_Click(object? sender, EventArgs e)
         {
-            Console.Clear();
             level++;
             StartLevel(level);
         }
         private void tryAgainBtn_Click(object? sender, EventArgs e)
         {
-            Console.Clear();
             StartLevel(level);
         }
         private void MainMenuBtn_Click(object? sender, EventArgs e)
         {
-            Console.Clear();
             MainMenu();
         }
         private void StartLevel(int levelno) 
@@ -367,24 +364,24 @@ namespace GameFrameWork
             levelStart = true;
             levelTimer = 0;
             game.AddSun(200);
-            if (level == 1) 
+            if (level == 1)
             {
-                levelDuration = 3000;
+                levelDuration = 1500;
+                maxZombie = 10;
+            }
+            else if (level == 2)
+            {
+                levelDuration = 2000;
                 maxZombie = 15;
             }
-            else if(level == 2) 
+            else if (level == 3)
             {
-                levelDuration = 3500;
+                levelDuration = 2500;
                 maxZombie = 20;
-            }
-            else if (level == 3) 
-            {
-                levelDuration = 4000;
-                maxZombie = 25;
             }
             noZombieGenerated = 0;
             zombieGenerationTimer = 0;
-            zombieGenerationDuration = 200;
+            zombieGenerationDuration = 150;
         }
         private void CheckLevelCompletion() 
         {
