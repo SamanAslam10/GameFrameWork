@@ -160,9 +160,10 @@ namespace GameFrameWork
             loadingbar.Minimum = 0;
             loadingbar.Maximum = 100;
             loadingbar.Value = 0;
-            loadingbar.Size = new Size(this.Width - 300, 30);
-            loadingbar.Location = new Point(150, this.Height - 70);
+            loadingbar.Size = new Size(this.Width - 500, 30);
+            loadingbar.Location = new Point(250, this.Height - 70);
             loadingbar.Style = ProgressBarStyle.Continuous;
+            loadingbar.BackColor = Color.DarkTurquoise;
 
             this.Controls.Add(loadingscreen);
             loadingscreen.Controls.Add(loadingbar);
