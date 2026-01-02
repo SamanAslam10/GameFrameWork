@@ -8,20 +8,57 @@ namespace GameFrameWork
 {
     internal class FileHandling
     {
-        public static void Save(int level) 
+        int level = 0 ;
+        string name = "";
+        public void Save(int level , string PlayerName) 
         {
-            File.WriteAllText("Progress.txt", level.ToString());
+            if (File.Exists("Progress.txt")) 
+            {
+                StreamWriter writer = new StreamWriter("Progress.txt",true);
+                writer.WriteLine(PlayerName,level);
+                writer.Close();
+            }
         }
-        public static int Load()
+        public void Load()
         {
-            if (!File.Exists("Progress.txt"))
+            if (File.Exists("Progress.txt")) 
             {
-                return 1;
+                StreamReader read = new StreamReader("Progress.txt");
+                string record;
+                while ((record = read.ReadLine()) != null) 
+                {
+                    level = Convert.ToInt32(ParseData(record,1));
+                    name = ParseData(record, 2);
+                }
+                read.Close();
             }
-            else 
+        }
+        public string GetName() 
+        {
+            Load();
+            return name;
+        }
+        public int GetLevel() 
+        {
+            Load();
+            return level;
+        }
+        private string ParseData(string record , int field) 
+        {
+            int comma = 0;
+            string item = "";
+            for(int i = 0; i < record.Length ; i ++) 
             {
-                return int.Parse(File.ReadAllText("Progress.txt"));
+                if(record[i] == ',') 
+                {
+                    comma++;
+                }
+                else if(comma == field) 
+                {
+                    item = item + record[i];
+                }
             }
+            return item;
         }
     }
 }

@@ -15,6 +15,7 @@ namespace GameFrameWork
     public partial class GameForm : Form
     {
         Game game = new Game();
+        FileHandling file = new FileHandling();
         SoundManager sound = new SoundManager();
         PhysicsSystem physics = new PhysicsSystem();
         CollisionSystem collisions = new CollisionSystem();
@@ -227,7 +228,7 @@ namespace GameFrameWork
             levels.Dock = DockStyle.Fill;
             levels.BackgroundImageLayout = ImageLayout.Stretch;
 
-            int unlocked = FileHandling.Load();
+            int unlocked = file.GetLevel();
 
             int x = 350;
             int gap = 150;
@@ -378,10 +379,10 @@ namespace GameFrameWork
             {
                 levelStart = false;
 
-                int unlockedlevel = FileHandling.Load();
+                int unlockedlevel = file.GetLevel();
                 if(level > unlockedlevel) 
                 {
-                    FileHandling.Save(level);
+                   file.Save(level,PlayerName);
                 }
                 GameOver();
             }
