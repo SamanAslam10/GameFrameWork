@@ -318,14 +318,17 @@ namespace GameFrameWork
             if (value == 1)
             {
                 Button nextlvlBtn = GameOverButtons(Resources.NextLevelButton, 10, 20);
+                nextlvlBtn.Click += nextlvlBtn_Click;
                 gameOver.Controls.Add(nextlvlBtn);
             }
             else if (value == 2) 
             {
                 Button tryAgainBtn = GameOverButtons(Resources.tryAgainButton, 10, 20);
+                tryAgainBtn.Click += tryAgainBtn_Click;
                 gameOver.Controls.Add(tryAgainBtn);
             }
             Button MainMenuBtn = GameOverButtons(Resources.mainMenuButton, 40, 20);
+            MainMenuBtn.Click += MainMenuBtn_Click;
             gameOver.Controls.Add(MainMenuBtn);
             this.Controls.Add(gameOver);
             gameOver.BringToFront();
@@ -342,11 +345,21 @@ namespace GameFrameWork
 
             return Btn;
         }
-        private void nextlevelBtn_Click(object? sender, EventArgs e)
+        private void nextlvlBtn_Click(object? sender, EventArgs e)
         {
+            Console.Clear();
             level++;
             StartLevel(level);
-            this.Controls.Remove(gameOver);
+        }
+        private void tryAgainBtn_Click(object? sender, EventArgs e)
+        {
+            Console.Clear();
+            StartLevel(level);
+        }
+        private void MainMenuBtn_Click(object? sender, EventArgs e)
+        {
+            Console.Clear();
+            MainMenu();
         }
         private void StartLevel(int levelno) 
         {
