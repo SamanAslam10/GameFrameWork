@@ -260,9 +260,29 @@ namespace GameFrameWork.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap mainMenuButton {
+            get {
+                object obj = ResourceManager.GetObject("mainMenuButton", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap menubar {
             get {
                 object obj = ResourceManager.GetObject("menubar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap NextLevelButton {
+            get {
+                object obj = ResourceManager.GetObject("NextLevelButton", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -403,6 +423,16 @@ namespace GameFrameWork.Properties {
         internal static System.Drawing.Bitmap Sunflowerlogo {
             get {
                 object obj = ResourceManager.GetObject("Sunflowerlogo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap tryAgainButton {
+            get {
+                object obj = ResourceManager.GetObject("tryAgainButton", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

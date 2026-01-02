@@ -55,7 +55,8 @@ namespace GameFrameWork
                     Sprite = new StaticSprite(Resources.pea),
                     Size = new SizeF(60, 60),
                     Position = new PointF(Position.X + Size.Width, Position.Y),
-                    Movement = new MoveRightMovement(10f)
+                    Movement = new MoveRightMovement(10f),
+                    IsRigidBody = false
                 });
             }
         }

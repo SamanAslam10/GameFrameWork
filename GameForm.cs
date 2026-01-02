@@ -305,41 +305,42 @@ namespace GameFrameWork
         {
             MainMenu();
         }
-        private void Level(int no , int duration) 
+        private void GameOver(int value) 
         {
-            int levelNo = no;
-            int levelDuration = duration;
-            if(levelTimer > levelDuration) 
-            {
-                levelStart = false;
-                GameOver();
-            } 
-        }
-        private void GameOver() 
-        {
-            
             GameEventsSound(Resources.gameOverSound);
-            BackgroundMusic();
             gameOver = new Panel();
             gameOver.BackgroundImage = Resources.gameOverCard;
             gameOver.BackgroundImageLayout = ImageLayout.Zoom;
-            gameOver.Size = new Size(600,600 );
+            gameOver.Size = new Size(600,400 );
             gameOver.Location = new Point(600 , 300);
-            
             SetDoubleBuffered(gameOver);
 
-            Button nextLevelBtn = new Button();
-            nextLevelBtn.Text = "Next Level";
-            nextLevelBtn.Size = new Size(200, 80);
-            nextLevelBtn.Location = new Point(gameOver.Width / 2 - 100, gameOver.Height / 2);
-            nextLevelBtn.Click += nextlevelBtn_Click;
-            
-
-            gameOver.Controls.Add(nextLevelBtn);
+            if (value == 1)
+            {
+                Button nextlvlBtn = GameOverButtons(Resources.NextLevelButton, 10, 20);
+                gameOver.Controls.Add(nextlvlBtn);
+            }
+            else if (value == 2) 
+            {
+                Button tryAgainBtn = GameOverButtons(Resources.tryAgainButton, 10, 20);
+                gameOver.Controls.Add(tryAgainBtn);
+            }
+            Button MainMenuBtn = GameOverButtons(Resources.mainMenuButton, 40, 20);
+            gameOver.Controls.Add(MainMenuBtn);
             this.Controls.Add(gameOver);
             gameOver.BringToFront();
 
 
+        }
+        private Button GameOverButtons(Image img , int x , int y) 
+        {
+            Button Btn = new Button();
+
+            Btn.Image = img;    
+            Btn.Size = new Size(200, 80);
+            Btn.Location = new Point(x, y);
+
+            return Btn;
         }
         private void nextlevelBtn_Click(object? sender, EventArgs e)
         {
@@ -383,18 +384,22 @@ namespace GameFrameWork
                 levelStart = false;
 
                 int unlockedlevel = file.GetLevel();
-                if(level > unlockedlevel) 
+                if (level > unlockedlevel)
                 {
-                   file.Save(level,PlayerName);
+                    file.Save(level, PlayerName);
+                    GameOver(1);
                 }
-                GameOver();
+                else 
+                {
+                    GameOver(0);
+                }
             }
         }
         private void LoadLevels(int no , int duration , bool start)
         {
             if (start == true) 
             {
-                Level(no , duration); Controls.Clear();
+                Controls.Clear();
 
                 gamePanel = new Panel();
                 gamePanel.BackgroundImage = Resources.lawn;
@@ -636,7 +641,6 @@ namespace GameFrameWork
             Controls.Clear();
             MainMenu();
         }
-
         private void LoginTextBox(Panel login) 
         {
             nameText = new TextBox();
