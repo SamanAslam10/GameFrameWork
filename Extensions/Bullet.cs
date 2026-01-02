@@ -7,7 +7,7 @@ namespace GameFrameWork
         // Bullets set a default velocity in the constructor - a simple example of behavior initialization.
         public IMovement? Movement { get; set; }
         public bool IsSun = false;
-        Game game = new Game();
+        public Game gameRef {  get; set; }
         public Bullet()
         {
             Velocity = new PointF(8, 0);
@@ -23,7 +23,7 @@ namespace GameFrameWork
             
             if (IsSun && Position.Y <= 10)
             {
-                game.AddSun(50);
+                gameRef.AddSun(50);
                 IsActive = false;
             }
 

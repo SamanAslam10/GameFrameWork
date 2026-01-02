@@ -45,7 +45,7 @@ namespace GameFrameWork
                     Movement = new UpwardMovement(10f),
                     IsSun = true,
                     IsRigidBody = false,
-
+                    gameRef = this.GameRef
                 });
             }
             else if (PlantType == "Peashooter")

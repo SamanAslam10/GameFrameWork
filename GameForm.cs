@@ -9,6 +9,7 @@ using System.Runtime.Versioning;
 using System.Security.AccessControl;
 using System.Security.Policy;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrayNotify;
+using System.IO;
 
 namespace GameFrameWork
 {
@@ -658,7 +659,8 @@ namespace GameFrameWork
         }
         private void SaveNameintoFile(string PlayerName) 
         {
-            file.Save(1, PlayerName);
+            int currentLevel = file.GetLevel();
+            file.Save(currentLevel, PlayerName);
         }
         private void SetDoubleBuffered(Control control)
         {
