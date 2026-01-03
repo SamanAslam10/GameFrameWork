@@ -169,7 +169,46 @@ namespace GameFrameWork
         private void GenerateZombie()
         {
             int y = 150 + Random.Next(0, 5) * 100;
-            if (noZombieGenerated == maxZombie - 2) 
+            if (level >= 2 && noZombieGenerated % 2 == 0) 
+            {
+                game.AddObject(new Enemy
+                {
+                    Position = new PointF(gamePanel.Width, y),
+                    Size = new SizeF(300, 300),
+                    Sprite = new AnimatedSprite(Resources.Conehead),
+                    Movement = new JumpMovement(2.5f , y),
+                    IsRigidBody = true,
+                    GameRef = game,
+                    Health = 150
+                });
+            }
+            else if (level >= 3 && noZombieGenerated % 3 == 0) 
+            {
+                game.AddObject( new Enemy
+                {
+                    Position = new PointF(gamePanel.Width, y),
+                    Size = new SizeF(350, 350),
+                    Sprite = new AnimatedSprite(Resources.buckethead),
+                    Movement = new TeleportMovement(2f),
+                    IsRigidBody = true,
+                    GameRef = game,
+                    Health = 200 
+                });
+            }
+            else 
+            {
+                game.AddObject(new Enemy
+                {
+                    Position = new PointF(gamePanel.Width, y),
+                    Size = new SizeF(350, 350),
+                    Sprite = new AnimatedSprite(Resources.BasicZombieWalking),
+                    Movement = new MoveLeftMovement(3f),
+                    IsRigidBody = true,
+                    GameRef = game,
+                    Health = 100
+                });
+            }
+            if (noZombieGenerated == maxZombie - 2)
             {
                 game.AddObject(new Enemy
                 {
@@ -178,18 +217,11 @@ namespace GameFrameWork
                     Sprite = new AnimatedSprite(Resources.FlagZombieWalking),
                     Movement = new MoveLeftMovement(3f),
                     IsRigidBody = true,
-                    GameRef = game
+                    GameRef = game,
+                    Health = 100
                 });
             }
-            game.AddObject(new Enemy
-            {
-                Position = new PointF(gamePanel.Width, y),
-                Size = new SizeF(350, 350),
-                Sprite = new AnimatedSprite(Resources.BasicZombieWalking),
-                Movement = new MoveLeftMovement(3f),
-                IsRigidBody = true,
-                GameRef = game
-            });
+            
         }
         private void GameForm_Load(object sender, EventArgs e)
         {
