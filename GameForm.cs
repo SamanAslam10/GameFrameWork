@@ -360,23 +360,23 @@ namespace GameFrameWork
             gameOver = new Panel();
             gameOver.BackgroundImage = Resources.gameOverCard;
             gameOver.BackgroundImageLayout = ImageLayout.Zoom;
-            gameOver.Size = new Size(400,400 );
+            gameOver.Size = new Size(600,600 );
             gameOver.Location = new Point((this.ClientSize.Width - gameOver.Width) / 2,(this.ClientSize.Height - gameOver.Height) / 2);
             SetDoubleBuffered(gameOver);
 
             if (value == 1)
             {
-                Button nextlvlBtn = GameOverButtons(Resources.NextLevelButton, 150, 280);
+                Button nextlvlBtn = GameOverButtons(Resources.NextLevelButton, 82, 360);
                 nextlvlBtn.Click += nextlvlBtn_Click;
                 gameOver.Controls.Add(nextlvlBtn);
             }
             else if (value == 0) 
             {
-                Button tryAgainBtn = GameOverButtons(Resources.tryAgainButton, 150, 280);
+                Button tryAgainBtn = GameOverButtons(Resources.tryAgainButton, 82, 360);
                 tryAgainBtn.Click += tryAgainBtn_Click;
                 gameOver.Controls.Add(tryAgainBtn);
             }
-            Button MainMenuBtn = GameOverButtons(Resources.mainMenuButton, 310, 280);
+            Button MainMenuBtn = GameOverButtons(Resources.mainMenuButton, 310, 360);
             MainMenuBtn.Click += MainMenuBtn_Click;
             gameOver.Controls.Add(MainMenuBtn);
             this.Controls.Add(gameOver);
@@ -390,6 +390,7 @@ namespace GameFrameWork
 
             Btn.Image = img;    
             Btn.Size = new Size(180, 70);
+            Btn.AutoSize = true;
             Btn.Location = new Point(x, y);
             Btn.FlatStyle = FlatStyle.Flat;
             Btn.FlatAppearance.BorderSize = 0;
