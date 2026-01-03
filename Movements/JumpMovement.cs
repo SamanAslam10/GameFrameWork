@@ -9,13 +9,30 @@ namespace GameFrameWork.Movements
 {
     internal class JumpMovement : IMovement
     {
-        private float jumpPower = 20f;
+        private float speed;
+        private float jumpHeight = 50f;
+        private float groundY;
+        private bool jumping = false;
+
+        public JumpMovement(float speed, float startY)
+        {
+            this.speed = speed;
+            this.groundY = startY;
+        }
+
         public void Move(GameObject obj, GameTime gameTime)
         {
-            if (Keyboard.IsKeyPressed(Key.Space) && Keyboard.IsKeyPressed(Key.Control))
+            obj.Position = new PointF(obj.Position.X - speed, obj.Position.Y);
+
+            if (!jumping && new Random().Next(0, 200) == 0)
             {
-                obj.Velocity = new PointF(obj.Velocity.X, -jumpPower);
-                obj.HasPhysics = true;
+                jumping = true;
+            }
+
+            if (jumping)
+            {
+                obj.Position = new PointF(obj.Position.X, obj.Position.Y - jumpHeight * gameTime.DeltaTime);
+                jumping = false;
             }
         }
     }
