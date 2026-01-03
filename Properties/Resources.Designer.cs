@@ -112,6 +112,26 @@ namespace GameFrameWork.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap cactusCard {
+            get {
+                object obj = ResourceManager.GetObject("cactusCard", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap cactusCard_Disabled {
+            get {
+                object obj = ResourceManager.GetObject("cactusCard_Disabled", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap CancelButton {
             get {
                 object obj = ResourceManager.GetObject("CancelButton", resourceCulture);
@@ -132,6 +152,26 @@ namespace GameFrameWork.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap cattaiCard {
+            get {
+                object obj = ResourceManager.GetObject("cattaiCard", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap cattaiCard_Disabled {
+            get {
+                object obj = ResourceManager.GetObject("cattaiCard_Disabled", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Conehead {
             get {
                 object obj = ResourceManager.GetObject("Conehead", resourceCulture);
@@ -145,6 +185,26 @@ namespace GameFrameWork.Properties {
         internal static System.Drawing.Bitmap eater {
             get {
                 object obj = ResourceManager.GetObject("eater", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap EaterCard__3_ {
+            get {
+                object obj = ResourceManager.GetObject("EaterCard (3)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap EaterCard_Disabled {
+            get {
+                object obj = ResourceManager.GetObject("EaterCard_Disabled", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -223,6 +283,26 @@ namespace GameFrameWork.Properties {
         internal static System.Drawing.Bitmap jumper {
             get {
                 object obj = ResourceManager.GetObject("jumper", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap JumperCard {
+            get {
+                object obj = ResourceManager.GetObject("JumperCard", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap JumperCard_Disabled {
+            get {
+                object obj = ResourceManager.GetObject("JumperCard_Disabled", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
