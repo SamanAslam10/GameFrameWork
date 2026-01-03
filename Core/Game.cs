@@ -8,7 +8,8 @@ namespace GameFrameWork
     {
         private List<GameObject> objects = new List<GameObject>();
         public int sunCount { get; set; } = 0;
-
+        public int PlayerScore { get; set; }
+        public int EnemyScore { get; set; }
         public List<GameObject> Objects => objects;
 
         /// Add a game object to the scene.

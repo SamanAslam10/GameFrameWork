@@ -6,8 +6,7 @@ namespace GameFrameWork
     {
         public int Health = 100;
         public float Speed = 40f;
-
-
+        public Game GameRef;
         public bool IsEating = false;
         // Optional movement behavior: demonstrates composition and allows testable movement logic.
         public IMovement? Movement { get; set; }
@@ -61,6 +60,7 @@ namespace GameFrameWork
                 IsEating = true;
                 Sprite = new AnimatedSprite(GameFrameWork.Properties.Resources.zombieEating);
                 Movement = null;
+                GameRef.EnemyScore += 5;
             }
         }
     }

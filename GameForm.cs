@@ -50,9 +50,11 @@ namespace GameFrameWork
         private int noZombieGenerated = 0;
         private int zombieGenerationTimer = 0;
         private int zombieGenerationDuration = 0;
+        private int ZombieBarValue = 0;
+        ProgressBar zombieBar;
 
-        private int playerScore;
-        private int zombieScore;
+        private int playerScore = 0;
+        private int zombieScore = 0;
 
         private string name;
         public GameForm()
@@ -93,6 +95,7 @@ namespace GameFrameWork
                     GenerateZombie();
                     zombieGenerationTimer = 0;
                     noZombieGenerated++;
+                    ZombieBarValue += 10;
                 }
             }
             if (levelStart == true ) 
@@ -102,6 +105,19 @@ namespace GameFrameWork
                 CheckLevelCompletion();
                 UpdateSunCount();
                 sunCountLabel();
+                UpdateZombieBar();
+            }
+            foreach (var obj in game.Objects)
+            {
+                if (obj is Enemy zombie)
+                {
+                    if (zombie.Position.X <= 120)
+                    {
+                        GameTimer.Stop();
+                        GameOver(0);
+                        return;
+                    }
+                }
             }
             game.Update(new GameTime() { DeltaTime = deltaTime});
             if (gamePanel != null && game.Objects.Count > 0)
@@ -116,6 +132,16 @@ namespace GameFrameWork
         {
             sunvalue = game.sunCount;
         }
+        private void PowerUp() 
+        {
+            game.AddObject(new PowerUp
+            {
+                Position = new PointF(600 , 300),
+                Size = new SizeF(60,60),
+                GameRef = game,
+                IsRigidBody = true,
+            });
+        }
         private void GenerateZombie()
         {
             int y = 150 + Random.Next(0, 5) * 100;
@@ -128,15 +154,17 @@ namespace GameFrameWork
                     Sprite = new AnimatedSprite(Resources.FlagZombieWalking),
                     Movement = new MoveLeftMovement(3f),
                     IsRigidBody = true,
+                    GameRef = game
                 });
             }
             game.AddObject(new Enemy
             {
                 Position = new PointF(gamePanel.Width, y),
-                Size = new SizeF(250, 250),
+                Size = new SizeF(350, 350),
                 Sprite = new AnimatedSprite(Resources.BasicZombieWalking),
                 Movement = new MoveLeftMovement(3f),
                 IsRigidBody = true,
+                GameRef = game
             });
         }
         private void GameForm_Load(object sender, EventArgs e)
@@ -339,7 +367,7 @@ namespace GameFrameWork
                 nextlvlBtn.Click += nextlvlBtn_Click;
                 gameOver.Controls.Add(nextlvlBtn);
             }
-            else if (value == 2) 
+            else if (value == 0) 
             {
                 Button tryAgainBtn = GameOverButtons(Resources.tryAgainButton, 150, 280);
                 tryAgainBtn.Click += tryAgainBtn_Click;
@@ -413,7 +441,7 @@ namespace GameFrameWork
                 levelStart = false;
 
                 int unlockedlevel = file.GetLevel();
-                if (level > unlockedlevel)
+                if (level > unlockedlevel || game.PlayerScore >= game.EnemyScore)
                 {
                     file.Save(level, PlayerName);
                     GameOver(1);
@@ -454,14 +482,13 @@ namespace GameFrameWork
                 peashooterbtn.Click += Peashooterbtn_Click;
 
                 gamePanel.MouseClick += gamePanel_MouseClick;
-
+                PowerUp();
                 GameEventsSound(Resources.gameStartSound);
-                BackgroundMusic();
                 gamePanel.Controls.Add(sunflowerbtn);
                 gamePanel.Controls.Add(peashooterbtn);
                 gamePanel.Controls.Add(SunBar());
-                gamePanel.Controls.Add(ZombieBar());
                 gamePanel.Controls.Add(TopBarMenuButton());
+                gamePanel.Controls.Add(ZombieBar());
                 gamePanel.Controls.Add(sunCount);
                 sunCount.BringToFront();
 
@@ -598,16 +625,21 @@ namespace GameFrameWork
         }
         private ProgressBar ZombieBar() 
         {
-            ProgressBar zombieBar = new ProgressBar();
+            zombieBar = new ProgressBar();
             zombieBar.Size = new Size(250, 50);
             zombieBar.Location = new Point(800, 20);
-
-            zombieBar.Value = ZombieBarValue();
+            zombieBar.Minimum = 0;
+            zombieBar.Maximum = maxZombie * 10; 
+            zombieBar.Value = 0;
+        
             return zombieBar;
         }
-        private int ZombieBarValue() 
+        private void UpdateZombieBar() 
         {
-            return 50;
+            if (zombieBar == null) return;
+
+            ZombieBarValue = Math.Min(ZombieBarValue, zombieBar.Maximum);
+            zombieBar.Value = ZombieBarValue;
         }
         private Button TopBarMenuButton() 
         {

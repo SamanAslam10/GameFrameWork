@@ -4,6 +4,7 @@ namespace GameFrameWork
 
     public class PowerUp : GameObject
     {
+        public Game GameRef { get; set; }
         // PowerUps don't move, so Update is intentionally empty (single responsibility: provide pickup behavior)
         public override void Update(GameTime gameTime) { }
 
@@ -19,6 +20,8 @@ namespace GameFrameWork
             if (other is Player player)
             {
                 player.Health += 20;
+
+                GameRef.PlayerScore += 10;
                 IsActive = false;
             }
         }
