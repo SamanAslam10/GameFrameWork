@@ -37,10 +37,10 @@ namespace GameFrameWork
         private string PlayerName;
         private const int SUNFLOWER_COST = 50;
         private const int PEASHOOTER_COST = 100;
-        private const int EATER_COST = 125;
-        private const int JUMPER_COST = 100;
+        private const int EATER_COST = 150;
+        private const int JUMPER_COST = 50;
         private const int CACTUS_COST = 150;
-        private const int CATTAI_COST = 225;
+        private const int CATTAI_COST = 250;
         private Button sunflowerbtn;
         private Button peashooterbtn;
         private Button eaterbtn;
@@ -549,16 +549,16 @@ namespace GameFrameWork
                 peashooterbtn = plantBarButtons(Resources.peashooterBar, 300);
                 peashooterbtn.Click += Peashooterbtn_Click;
 
-                eaterbtn = plantBarButtons(Resources.eater, 580);
+                eaterbtn = plantBarButtons(Resources.EaterCard__3_, 580);
                 eaterbtn.Click += Eaterbtn_Click;
 
-                jumperbtn = plantBarButtons(Resources.jumper, 860);
+                jumperbtn = plantBarButtons(Resources.JumperCard, 860);
                 jumperbtn.Click += Jumperbtn_Click;
 
-                cactusbtn = plantBarButtons(Resources.cactus, 1140);
+                cactusbtn = plantBarButtons(Resources.cactusCard, 1140);
                 cactusbtn.Click += Cactusbtn_Click;
 
-                cattaibtn = plantBarButtons(Resources.cattai, 1420);
+                cattaibtn = plantBarButtons(Resources.cattaiCard, 1420);
                 cattaibtn.Click += Cattaibtn_Click;
                 ;
                 cactusbtn.Visible = false;
@@ -718,7 +718,6 @@ namespace GameFrameWork
         }
         private void PlantCardLock() 
         {
-
             if (game.sunCount >= SUNFLOWER_COST) 
             {
                 sunflowerbtn.BackgroundImage = Resources.sunflowerBar;
@@ -739,7 +738,46 @@ namespace GameFrameWork
                 peashooterbtn.BackgroundImage = Resources.peashooterBar_disabled_;
                 peashooterbtn.Enabled = false;
             }
-
+            if (game.sunCount >= JUMPER_COST)
+            {
+                jumperbtn.BackgroundImage = Resources.JumperCard;
+                jumperbtn.Enabled = true;
+            }
+            else
+            {
+                jumperbtn.BackgroundImage = Resources.JumperCard_Disabled;
+                jumperbtn.Enabled = false;
+            }
+            if (game.sunCount >= EATER_COST)
+            {
+                eaterbtn.BackgroundImage = Resources.EaterCard__3_;
+                eaterbtn.Enabled = true;
+            }
+            else
+            {
+                eaterbtn.BackgroundImage = Resources.EaterCard_Disabled;
+                eaterbtn.Enabled = false;
+            }
+            if (game.sunCount >= CACTUS_COST)
+            {
+                cactusbtn.BackgroundImage = Resources.cactusCard;
+                cactusbtn.Enabled = true;
+            }
+            else
+            {
+                cactusbtn.BackgroundImage = Resources.cactusCard_Disabled;
+                cactusbtn.Enabled = false;
+            }
+            if (game.sunCount >= CATTAI_COST)
+            {
+                cattaibtn.BackgroundImage = Resources.cattaiCard;
+                cattaibtn.Enabled = true;
+            }
+            else
+            {
+                cattaibtn.BackgroundImage = Resources.cattaiCard_Disabled;
+                cattaibtn.Enabled = false;
+            }
         }
         private void UpdatePlantAvailability()
         {
