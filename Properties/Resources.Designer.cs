@@ -102,6 +102,16 @@ namespace GameFrameWork.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap cactus {
+            get {
+                object obj = ResourceManager.GetObject("cactus", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap CancelButton {
             get {
                 object obj = ResourceManager.GetObject("CancelButton", resourceCulture);
@@ -112,9 +122,29 @@ namespace GameFrameWork.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap cattai {
+            get {
+                object obj = ResourceManager.GetObject("cattai", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Conehead {
             get {
                 object obj = ResourceManager.GetObject("Conehead", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap eater {
+            get {
+                object obj = ResourceManager.GetObject("eater", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -184,6 +214,16 @@ namespace GameFrameWork.Properties {
         internal static System.IO.UnmanagedMemoryStream gameStartSound {
             get {
                 return ResourceManager.GetStream("gameStartSound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap jumper {
+            get {
+                object obj = ResourceManager.GetObject("jumper", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

@@ -37,8 +37,16 @@ namespace GameFrameWork
         private string PlayerName;
         private const int SUNFLOWER_COST = 50;
         private const int PEASHOOTER_COST = 100;
+        private const int EATER_COST = 125;
+        private const int JUMPER_COST = 100;
+        private const int CACTUS_COST = 150;
+        private const int CATTAI_COST = 225;
         private Button sunflowerbtn;
         private Button peashooterbtn;
+        private Button eaterbtn;
+        private Button jumperbtn;
+        private Button cactusbtn;
+        private Button cattaibtn;
         private TextBox nameText;
 
         private bool levelStart = false;
@@ -466,6 +474,7 @@ namespace GameFrameWork
         }
         private void StartLevel(int levelno) 
         {
+            UpdatePlantAvailability();
             level = levelno;
             levelStart = true;
             levelTimer = 0;
@@ -540,6 +549,21 @@ namespace GameFrameWork
                 peashooterbtn = plantBarButtons(Resources.peashooterBar, 300);
                 peashooterbtn.Click += Peashooterbtn_Click;
 
+                eaterbtn = plantBarButtons(Resources.eater, 580);
+                eaterbtn.Click += Eaterbtn_Click;
+
+                jumperbtn = plantBarButtons(Resources.jumper, 860);
+                jumperbtn.Click += Jumperbtn_Click;
+
+                cactusbtn = plantBarButtons(Resources.cactus, 1140);
+                cactusbtn.Click += Cactusbtn_Click;
+
+                cattaibtn = plantBarButtons(Resources.cattai, 1420);
+                cattaibtn.Click += Cattaibtn_Click;
+                ;
+                cactusbtn.Visible = false;
+                cattaibtn.Visible = false;
+
                 PlayerScoreLabel = ScoreLabels(1200, 30);
                 EnemyScoreLabel = ScoreLabels(1200, 70);
 
@@ -548,6 +572,10 @@ namespace GameFrameWork
                 GameEventsSound(Resources.gameStartSound);
                 gamePanel.Controls.Add(sunflowerbtn);
                 gamePanel.Controls.Add(peashooterbtn);
+                gamePanel.Controls.Add(eaterbtn);
+                gamePanel.Controls.Add(jumperbtn);
+                gamePanel.Controls.Add(cactusbtn);
+                gamePanel.Controls.Add(cattaibtn);
                 gamePanel.Controls.Add(SunBar());
                 gamePanel.Controls.Add(TopBarMenuButton());
                 gamePanel.Controls.Add(ZombieBar());
@@ -617,13 +645,81 @@ namespace GameFrameWork
                         game.AddSun(-PEASHOOTER_COST);
                     }
                 }
-                
+                else if (selectedPlantType == "Eater")
+                {
+                    if (game.sunCount < EATER_COST) return;
+
+                    game.AddObject(new Player
+                    {
+                        Sprite = new AnimatedSprite(Resources.eater),
+                        Size = new SizeF(200, 200),
+                        Position = new PointF(e.X, e.Y),
+                        PlantType = "Eater",
+                        FireCooldown = 2f,
+                        GameRef = game,
+                        IsRigidBody = true,
+                    });
+
+                    game.AddSun(-EATER_COST);
+                }
+                else if (selectedPlantType == "Jumper")
+                {
+                    if (game.sunCount < JUMPER_COST) return;
+
+                    game.AddObject(new Player
+                    {
+                        Sprite = new AnimatedSprite(Resources.jumper),
+                        Size = new SizeF(180, 180),
+                        Position = new PointF(e.X, e.Y),
+                        PlantType = "Jumper",
+                        FireCooldown = 1.5f,
+                        GameRef = game,
+                        IsRigidBody = true,
+                    });
+
+                    game.AddSun(-JUMPER_COST);
+                }
+                else if (selectedPlantType == "Cactus")
+                {
+                    if (game.sunCount < CACTUS_COST) return;
+
+                    game.AddObject(new Player
+                    {
+                        Sprite = new AnimatedSprite(Resources.cactus),
+                        Size = new SizeF(200, 200),
+                        Position = new PointF(e.X, e.Y),
+                        PlantType = "Cactus",
+                        FireCooldown = 1f,
+                        GameRef = game,
+                        IsRigidBody = true,
+                    });
+
+                    game.AddSun(-CACTUS_COST);
+                }
+                else if (selectedPlantType == "Cattai")
+                {
+                    if (game.sunCount < CATTAI_COST) return;
+
+                    game.AddObject(new Player
+                    {
+                        Sprite = new AnimatedSprite(Resources.cattai),
+                        Size = new SizeF(220, 220),
+                        Position = new PointF(e.X, e.Y),
+                        PlantType = "Cattai",
+                        FireCooldown = 0.75f,
+                        GameRef = game,
+                        IsRigidBody = true,
+                    });
+
+                    game.AddSun(-CATTAI_COST);
+                }
+
             } 
         }
         private void PlantCardLock() 
         {
-            
-            if(game.sunCount >= SUNFLOWER_COST) 
+
+            if (game.sunCount >= SUNFLOWER_COST) 
             {
                 sunflowerbtn.BackgroundImage = Resources.sunflowerBar;
                 sunflowerbtn.Enabled = true;
@@ -643,11 +739,40 @@ namespace GameFrameWork
                 peashooterbtn.BackgroundImage = Resources.peashooterBar_disabled_;
                 peashooterbtn.Enabled = false;
             }
+
+        }
+        private void UpdatePlantAvailability()
+        {
+            sunflowerbtn.Visible = level >= 1;
+            peashooterbtn.Visible = level >= 1;
+            eaterbtn.Visible = level >= 1;
+            jumperbtn.Visible = level >= 1;
+
+            cactusbtn.Visible = level >= 2;
+
+            cattaibtn.Visible = level >= 3;
         }
         private void Peashooterbtn_Click(object? sender, EventArgs e)
         {
             selectedPlantType = "Peashooter";
         }
+        private void Eaterbtn_Click(object? sender, EventArgs e)
+        {
+            selectedPlantType = "Eater";
+        }
+        private void Jumperbtn_Click(object? sender, EventArgs e)
+        {
+            selectedPlantType = "Jumper";
+        }
+        private void Cactusbtn_Click(object? sender, EventArgs e)
+        {
+            selectedPlantType = "Cactus";
+        }
+        private void Cattaibtn_Click(object? sender, EventArgs e)
+        {
+            selectedPlantType = "cattai";
+        }
+
         private void Sunflowerbtn_Click(object? sender, EventArgs e)
         {
             selectedPlantType = "Sunflower";
