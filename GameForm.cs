@@ -113,8 +113,8 @@ namespace GameFrameWork
                 {
                     if (zombie.Position.X <= 120)
                     {
-                        GameTimer.Stop();
-                        GameOver(0);
+                        zombie.Movement = null;
+                        HouseEntry(zombie);
                         return;
                     }
                 }
@@ -129,6 +129,28 @@ namespace GameFrameWork
             physics.Apply(game.Objects.ToList());
             collisions.Check(game.Objects.ToList());
             game.Cleanup();
+        }
+        private void HouseEntry(Enemy zombie) 
+        {
+            GameTimer.Stop();
+            levelStart = false;
+
+            gamePanel.BackgroundImage = Resources.lawnDoorOpen;
+            gamePanel.BackgroundImageLayout = ImageLayout.Stretch;
+
+            zombie.Sprite = new AnimatedSprite(Resources.zombieEating);
+            zombie.Movement = null;
+
+            GameEventsSound(Resources.gameOverSound);
+
+            System.Windows.Forms.Timer t = new System.Windows.Forms.Timer();
+            t.Interval = 2000;
+            t.Tick += (s, e) =>
+            {
+                t.Stop();
+                GameOver(0);
+            };
+            t.Start();
         }
         private void UpdateSunCount() 
         {
@@ -356,7 +378,6 @@ namespace GameFrameWork
         }
         private void GameOver(int value) 
         {
-            GameEventsSound(Resources.gameOverSound);
             gameOver = new Panel();
             gameOver.BackgroundImage = Resources.gameOverCard;
             gameOver.BackgroundImageLayout = ImageLayout.Zoom;
@@ -400,10 +421,12 @@ namespace GameFrameWork
         {
             level++;
             StartLevel(level);
+            LoadLevels(level, levelDuration, true);
         }
         private void tryAgainBtn_Click(object? sender, EventArgs e)
         {
             StartLevel(level);
+            LoadLevels(level, levelDuration, true);
         }
         private void MainMenuBtn_Click(object? sender, EventArgs e)
         {

@@ -92,9 +92,29 @@ namespace GameFrameWork.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap buckethead {
+            get {
+                object obj = ResourceManager.GetObject("buckethead", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap CancelButton {
             get {
                 object obj = ResourceManager.GetObject("CancelButton", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Conehead {
+            get {
+                object obj = ResourceManager.GetObject("Conehead", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -173,6 +193,16 @@ namespace GameFrameWork.Properties {
         internal static System.Drawing.Bitmap lawn {
             get {
                 object obj = ResourceManager.GetObject("lawn", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap lawnDoorOpen {
+            get {
+                object obj = ResourceManager.GetObject("lawnDoorOpen", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
