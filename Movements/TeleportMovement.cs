@@ -9,26 +9,23 @@ namespace GameFrameWork.Movements
 {
     internal class TeleportMovement : IMovement
     {
-        Random random = new Random();
-        private float width;
-        private float height; 
-        public TeleportMovement(float width , float height) 
+        private float speed;
+        private int tickCounter = 0;
+
+        public TeleportMovement(float speed)
         {
-            this.width = width;
-            this.height = height;
-        }   
-        public void Move(GameObject obj , GameTime gameTime) 
-        {
-            if (Keyboard.IsKeyPressed(Key.Shift))
-            {
-                obj.Position = RandomPosition(obj.Size);
-            }
+            this.speed = speed;
         }
-        private PointF RandomPosition(SizeF size) 
+
+        public void Move(GameObject obj, GameTime gameTime)
         {
-            float x = random.Next(0, (int)(width - size.Width));
-            float y = random.Next(0, (int)(height - size.Height));
-            return new PointF(x, y);
+            tickCounter++;
+            obj.Position = new PointF(obj.Position.X - speed, obj.Position.Y);
+
+            if (tickCounter % 300 == 0) 
+            {
+                obj.Position = new PointF(obj.Position.X - 100, obj.Position.Y);
+            }
         }
     }
 }
