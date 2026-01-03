@@ -77,6 +77,7 @@ namespace GameFrameWork
 
                 if (Health <= 0)
                 {
+                    GameRef.EnemyScore += 10;
                     IsActive = false;
                     zombie.IsEating = false;
                     zombie.Sprite = new AnimatedSprite(GameFrameWork.Properties.Resources.BasicZombieWalking);

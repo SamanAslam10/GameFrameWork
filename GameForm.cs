@@ -53,8 +53,8 @@ namespace GameFrameWork
         private int ZombieBarValue = 0;
         ProgressBar zombieBar;
 
-        private int playerScore = 0;
-        private int zombieScore = 0;
+        private Label PlayerScoreLabel = new Label();
+        private Label EnemyScoreLabel = new Label();
 
         private string name;
         public GameForm()
@@ -119,6 +119,8 @@ namespace GameFrameWork
                     }
                 }
             }
+            PlayerScoreLabel.Text = "You: " + game.PlayerScore;
+            EnemyScoreLabel.Text = "Zombies: " + game.EnemyScore;
             game.Update(new GameTime() { DeltaTime = deltaTime});
             if (gamePanel != null && game.Objects.Count > 0)
             {
@@ -234,8 +236,9 @@ namespace GameFrameWork
         private Label CreateNameLabel(string name ,int x , int y) 
         {
             Label nameLabel = new Label();
-            nameLabel.BackColor = Color.DarkSlateGray;
-            nameLabel.ForeColor = Color.Wheat;
+            nameLabel.BackColor = Color.Transparent;
+            nameLabel.ForeColor = Color.DarkSlateGray;
+            nameLabel.AutoSize = true;
             nameLabel.Text = name.ToString();
             nameLabel.Font = new Font("SHOWCARD GOTHIC", 20, FontStyle.Italic);
             nameLabel.Size = new Size(300, 50);
@@ -481,6 +484,9 @@ namespace GameFrameWork
                 peashooterbtn = plantBarButtons(Resources.peashooterBar, 300);
                 peashooterbtn.Click += Peashooterbtn_Click;
 
+                PlayerScoreLabel = ScoreLabels(1200, 30);
+                EnemyScoreLabel = ScoreLabels(1200, 70);
+
                 gamePanel.MouseClick += gamePanel_MouseClick;
                 PowerUp();
                 GameEventsSound(Resources.gameStartSound);
@@ -490,9 +496,22 @@ namespace GameFrameWork
                 gamePanel.Controls.Add(TopBarMenuButton());
                 gamePanel.Controls.Add(ZombieBar());
                 gamePanel.Controls.Add(sunCount);
+                gamePanel.Controls.Add(PlayerScoreLabel);
+                gamePanel.Controls.Add(EnemyScoreLabel);
                 sunCount.BringToFront();
 
             }
+        }
+        private Label ScoreLabels(int x , int y) 
+        {
+            Label ScoreLabel = new Label();
+            ScoreLabel.Font = new Font("Arial", 18, FontStyle.Bold);
+            ScoreLabel.ForeColor = Color.DarkSlateGray;
+            ScoreLabel.BackColor = Color.Wheat;
+            ScoreLabel.Location = new Point(x, y);
+            ScoreLabel.AutoSize = true;
+            
+            return ScoreLabel;
         }
         private void gamePanel_MouseClick(object? sender, MouseEventArgs e)
         {
@@ -535,7 +554,7 @@ namespace GameFrameWork
                             Size = new SizeF(200, 200),
                             Position = new PointF(e.X, e.Y),
                             PlantType = "Peashooter",
-                            FireCooldown = 2f,
+                            FireCooldown = 1f,
                             GameRef = game,
                             IsRigidBody= true,
                         });
