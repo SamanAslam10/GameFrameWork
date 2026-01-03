@@ -51,6 +51,9 @@ namespace GameFrameWork
         private int zombieGenerationTimer = 0;
         private int zombieGenerationDuration = 0;
 
+        private int playerScore;
+        private int zombieScore;
+
         private string name;
         public GameForm()
         {
@@ -183,6 +186,8 @@ namespace GameFrameWork
             Button StartButton = CreateMenuButton("START", centerX, baseY);
             Button LevelButton = CreateMenuButton("LEVELS", centerX, baseY + gap);
             Button ExitButton = CreateMenuButton("EXIT", centerX, baseY + gap * 2);
+            Label WelcomeLabel = CreateNameLabel("Welcome", 0, 700);
+            Label nameLabel = CreateNameLabel(PlayerName, 0 , 800);
 
             StartButton.Click += StartButton_Click;
             LevelButton.Click += LevelButton_Click;
@@ -191,10 +196,24 @@ namespace GameFrameWork
             mainMenu.Controls.Add(StartButton);
             mainMenu.Controls.Add(LevelButton);
             mainMenu.Controls.Add(ExitButton);
+            mainMenu.Controls.Add(WelcomeLabel);
+            mainMenu.Controls.Add(nameLabel);
 
 
             this.Controls.Add(mainMenu);
             mainMenu.BringToFront();
+        }
+        private Label CreateNameLabel(string name ,int x , int y) 
+        {
+            Label nameLabel = new Label();
+            nameLabel.BackColor = Color.DarkSlateGray;
+            nameLabel.ForeColor = Color.Wheat;
+            nameLabel.Text = name.ToString();
+            nameLabel.Font = new Font("SHOWCARD GOTHIC", 20, FontStyle.Italic);
+            nameLabel.Size = new Size(300, 50);
+            nameLabel.Location = new Point(x, y);
+
+            return nameLabel;
         }
         private Button CreateMenuButton(string Text, int x, int y)
         {
