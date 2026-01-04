@@ -536,19 +536,19 @@ namespace GameFrameWork
                 sunflowerbtn = plantBarButtons(Resources.sunflowerBar, 20);
                 sunflowerbtn.Click += Sunflowerbtn_Click;
 
-                peashooterbtn = plantBarButtons(Resources.peashooterBar, 300);
+                peashooterbtn = plantBarButtons(Resources.peashooterBar, 200);
                 peashooterbtn.Click += Peashooterbtn_Click;
 
-                eaterbtn = plantBarButtons(Resources.EaterCard__3_, 580);
+                eaterbtn = plantBarButtons(Resources.EaterCard__3_, 400);
                 eaterbtn.Click += Eaterbtn_Click;
 
-                jumperbtn = plantBarButtons(Resources.JumperCard, 860);
+                jumperbtn = plantBarButtons(Resources.JumperCard, 600);
                 jumperbtn.Click += Jumperbtn_Click;
 
-                cactusbtn = plantBarButtons(Resources.cactusCard, 1140);
+                cactusbtn = plantBarButtons(Resources.cactusCard, 800);
                 cactusbtn.Click += Cactusbtn_Click;
 
-                cattaibtn = plantBarButtons(Resources.cattaiCard, 1420);
+                cattaibtn = plantBarButtons(Resources.cattaiCard, 1000);
                 cattaibtn.Click += Cattaibtn_Click;
                 ;
                 cactusbtn.Visible = false;
@@ -809,7 +809,7 @@ namespace GameFrameWork
         private Button plantBarButtons(Image img, int y)
         {
             Button btn = new Button();
-            btn.Size = new Size(150, 200);
+            btn.Size = new Size(160, 160);
             btn.Location = new Point(35, y);
             btn.BackgroundImage = img;
             btn.BackgroundImageLayout = ImageLayout.Stretch;
