@@ -192,6 +192,16 @@ namespace GameFrameWork.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap eater_eating {
+            get {
+                object obj = ResourceManager.GetObject("eater_eating", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap EaterCard__3_ {
             get {
                 object obj = ResourceManager.GetObject("EaterCard (3)", resourceCulture);

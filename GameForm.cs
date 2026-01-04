@@ -1,15 +1,5 @@
 using GameFrameWork.Movements;
 using GameFrameWork.Properties;
-using Microsoft.VisualBasic.Devices;
-using System;
-using System.Drawing;
-using System.Linq.Expressions;
-using System.Runtime.CompilerServices;
-using System.Runtime.Versioning;
-using System.Security.AccessControl;
-using System.Security.Policy;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrayNotify;
-using System.IO;
 
 namespace GameFrameWork
 {
@@ -28,7 +18,7 @@ namespace GameFrameWork
         private Panel gameOver;
 
         private string selectedPlantType = null;
-   
+
         private DateTime lastUpdateTime = DateTime.Now;
         private Panel gamePanel;
 
@@ -92,21 +82,21 @@ namespace GameFrameWork
             DateTime currentTime = DateTime.Now;
             float deltaTime = (float)(currentTime - lastUpdateTime).TotalSeconds;
             lastUpdateTime = currentTime;
-           
+
             if (levelStart && noZombieGenerated < maxZombie)
             {
                 zombieGenerationTimer++;
 
                 if (zombieGenerationTimer >= zombieGenerationDuration)
                 {
-                    
+
                     GenerateZombie();
                     zombieGenerationTimer = 0;
                     noZombieGenerated++;
                     ZombieBarValue += 10;
                 }
             }
-            if (levelStart == true ) 
+            if (levelStart == true)
             {
                 levelTimer++;
                 PlantCardLock();
@@ -129,7 +119,7 @@ namespace GameFrameWork
             }
             PlayerScoreLabel.Text = "You: " + game.PlayerScore;
             EnemyScoreLabel.Text = "Zombies: " + game.EnemyScore;
-            game.Update(new GameTime() { DeltaTime = deltaTime});
+            game.Update(new GameTime() { DeltaTime = deltaTime });
             if (gamePanel != null && game.Objects.Count > 0)
             {
                 gamePanel.Invalidate();
@@ -138,7 +128,7 @@ namespace GameFrameWork
             collisions.Check(game.Objects.ToList());
             game.Cleanup();
         }
-        private void HouseEntry(Enemy zombie) 
+        private void HouseEntry(Enemy zombie)
         {
             GameTimer.Stop();
             levelStart = false;
@@ -160,16 +150,16 @@ namespace GameFrameWork
             };
             t.Start();
         }
-        private void UpdateSunCount() 
+        private void UpdateSunCount()
         {
             sunvalue = game.sunCount;
         }
-        private void PowerUp() 
+        private void PowerUp()
         {
             game.AddObject(new PowerUp
             {
-                Position = new PointF(600 , 300),
-                Size = new SizeF(60,60),
+                Position = new PointF(600, 300),
+                Size = new SizeF(60, 60),
                 GameRef = game,
                 IsRigidBody = true,
             });
@@ -177,22 +167,22 @@ namespace GameFrameWork
         private void GenerateZombie()
         {
             int y = 150 + Random.Next(0, 5) * 100;
-            if (level >= 2 && noZombieGenerated % 2 == 0) 
+            if (level >= 2 && noZombieGenerated % 2 == 0)
             {
                 game.AddObject(new Enemy
                 {
                     Position = new PointF(gamePanel.Width, y),
                     Size = new SizeF(300, 300),
                     Sprite = new AnimatedSprite(Resources.Conehead),
-                    Movement = new JumpMovement(2.5f , y),
+                    Movement = new JumpMovement(2.5f, y),
                     IsRigidBody = true,
                     GameRef = game,
                     Health = 150
                 });
             }
-            else if (level >= 3 && noZombieGenerated % 3 == 0) 
+            else if (level >= 3 && noZombieGenerated % 3 == 0)
             {
-                game.AddObject( new Enemy
+                game.AddObject(new Enemy
                 {
                     Position = new PointF(gamePanel.Width, y),
                     Size = new SizeF(350, 350),
@@ -200,10 +190,10 @@ namespace GameFrameWork
                     Movement = new TeleportMovement(2f),
                     IsRigidBody = true,
                     GameRef = game,
-                    Health = 200 
+                    Health = 200
                 });
             }
-            else 
+            else
             {
                 game.AddObject(new Enemy
                 {
@@ -229,7 +219,7 @@ namespace GameFrameWork
                     Health = 100
                 });
             }
-            
+
         }
         private void GameForm_Load(object sender, EventArgs e)
         {
@@ -279,7 +269,7 @@ namespace GameFrameWork
             Button LevelButton = CreateMenuButton("LEVELS", centerX, baseY + gap);
             Button ExitButton = CreateMenuButton("EXIT", centerX, baseY + gap * 2);
             Label WelcomeLabel = CreateNameLabel("Welcome", 0, 700);
-            Label nameLabel = CreateNameLabel(PlayerName, 0 , 800);
+            Label nameLabel = CreateNameLabel(PlayerName, 0, 800);
 
             StartButton.Click += StartButton_Click;
             LevelButton.Click += LevelButton_Click;
@@ -295,7 +285,7 @@ namespace GameFrameWork
             this.Controls.Add(mainMenu);
             mainMenu.BringToFront();
         }
-        private Label CreateNameLabel(string name ,int x , int y) 
+        private Label CreateNameLabel(string name, int x, int y)
         {
             Label nameLabel = new Label();
             nameLabel.BackColor = Color.Transparent;
@@ -405,7 +395,7 @@ namespace GameFrameWork
             {
                 button.BackgroundImage = img;
             }
-            else 
+            else
             {
                 button.BackgroundImage = Resources.level_locked_;
             }
@@ -416,13 +406,13 @@ namespace GameFrameWork
         {
             MainMenu();
         }
-        private void GameOver(int value) 
+        private void GameOver(int value)
         {
             gameOver = new Panel();
             gameOver.BackgroundImage = Resources.gameOverCard;
             gameOver.BackgroundImageLayout = ImageLayout.Zoom;
-            gameOver.Size = new Size(600,600 );
-            gameOver.Location = new Point((this.ClientSize.Width - gameOver.Width) / 2,(this.ClientSize.Height - gameOver.Height) / 2);
+            gameOver.Size = new Size(600, 600);
+            gameOver.Location = new Point((this.ClientSize.Width - gameOver.Width) / 2, (this.ClientSize.Height - gameOver.Height) / 2);
             SetDoubleBuffered(gameOver);
 
             if (value == 1)
@@ -431,7 +421,7 @@ namespace GameFrameWork
                 nextlvlBtn.Click += nextlvlBtn_Click;
                 gameOver.Controls.Add(nextlvlBtn);
             }
-            else if (value == 0) 
+            else if (value == 0)
             {
                 Button tryAgainBtn = GameOverButtons(Resources.tryAgainButton, 82, 360);
                 tryAgainBtn.Click += tryAgainBtn_Click;
@@ -445,11 +435,11 @@ namespace GameFrameWork
 
 
         }
-        private Button GameOverButtons(Image img , int x , int y) 
+        private Button GameOverButtons(Image img, int x, int y)
         {
             Button Btn = new Button();
 
-            Btn.Image = img;    
+            Btn.Image = img;
             Btn.Size = new Size(180, 70);
             Btn.AutoSize = true;
             Btn.Location = new Point(x, y);
@@ -472,7 +462,7 @@ namespace GameFrameWork
         {
             MainMenu();
         }
-        private void StartLevel(int levelno) 
+        private void StartLevel(int levelno)
         {
             UpdatePlantAvailability();
             level = levelno;
@@ -498,13 +488,13 @@ namespace GameFrameWork
             zombieGenerationTimer = 0;
             zombieGenerationDuration = 150;
         }
-        private void CheckLevelCompletion() 
+        private void CheckLevelCompletion()
         {
-            if (!levelStart) 
+            if (!levelStart)
             {
                 return;
             }
-            if (levelTimer >= levelDuration) 
+            if (levelTimer >= levelDuration)
             {
                 levelStart = false;
 
@@ -514,15 +504,15 @@ namespace GameFrameWork
                     file.Save(level, PlayerName);
                     GameOver(1);
                 }
-                else 
+                else
                 {
                     GameOver(0);
                 }
             }
         }
-        private void LoadLevels(int no , int duration , bool start)
+        private void LoadLevels(int no, int duration, bool start)
         {
-            if (start == true) 
+            if (start == true)
             {
                 Controls.Clear();
 
@@ -586,7 +576,7 @@ namespace GameFrameWork
 
             }
         }
-        private Label ScoreLabels(int x , int y) 
+        private Label ScoreLabels(int x, int y)
         {
             Label ScoreLabel = new Label();
             ScoreLabel.Font = new Font("Arial", 18, FontStyle.Bold);
@@ -594,21 +584,21 @@ namespace GameFrameWork
             ScoreLabel.BackColor = Color.Wheat;
             ScoreLabel.Location = new Point(x, y);
             ScoreLabel.AutoSize = true;
-            
+
             return ScoreLabel;
         }
         private void gamePanel_MouseClick(object? sender, MouseEventArgs e)
         {
-            if(selectedPlantType != null) 
+            if (selectedPlantType != null)
             {
-                
-                if (selectedPlantType == "Sunflower") 
+
+                if (selectedPlantType == "Sunflower")
                 {
-                    if(game.sunCount < SUNFLOWER_COST) 
+                    if (game.sunCount < SUNFLOWER_COST)
                     {
                         return;
                     }
-                    if(game.sunCount >= SUNFLOWER_COST) 
+                    if (game.sunCount >= SUNFLOWER_COST)
                     {
                         game.AddObject(new Player
                         {
@@ -622,15 +612,15 @@ namespace GameFrameWork
                         });
                         game.AddSun(-SUNFLOWER_COST);
                     }
-                    
+
                 }
-                else if(selectedPlantType == "Peashooter") 
+                else if (selectedPlantType == "Peashooter")
                 {
-                    if(game.sunCount < PEASHOOTER_COST) 
+                    if (game.sunCount < PEASHOOTER_COST)
                     {
                         return;
                     }
-                    if(game.sunCount >= PEASHOOTER_COST) 
+                    if (game.sunCount >= PEASHOOTER_COST)
                     {
                         game.AddObject(new Player
                         {
@@ -640,7 +630,7 @@ namespace GameFrameWork
                             PlantType = "Peashooter",
                             FireCooldown = 1f,
                             GameRef = game,
-                            IsRigidBody= true,
+                            IsRigidBody = true,
                         });
                         game.AddSun(-PEASHOOTER_COST);
                     }
@@ -714,26 +704,26 @@ namespace GameFrameWork
                     game.AddSun(-CATTAI_COST);
                 }
 
-            } 
+            }
         }
-        private void PlantCardLock() 
+        private void PlantCardLock()
         {
-            if (game.sunCount >= SUNFLOWER_COST) 
+            if (game.sunCount >= SUNFLOWER_COST)
             {
                 sunflowerbtn.BackgroundImage = Resources.sunflowerBar;
                 sunflowerbtn.Enabled = true;
             }
-            else 
+            else
             {
                 sunflowerbtn.BackgroundImage = Resources.sunflowerBar_disabled_;
                 sunflowerbtn.Enabled = false;
-            }            
-            if(game.sunCount  >= PEASHOOTER_COST) 
+            }
+            if (game.sunCount >= PEASHOOTER_COST)
             {
                 peashooterbtn.BackgroundImage = Resources.peashooterBar;
                 peashooterbtn.Enabled = true;
             }
-            else 
+            else
             {
                 peashooterbtn.BackgroundImage = Resources.peashooterBar_disabled_;
                 peashooterbtn.Enabled = false;
@@ -781,6 +771,8 @@ namespace GameFrameWork
         }
         private void UpdatePlantAvailability()
         {
+            if (sunflowerbtn == null) return;
+
             sunflowerbtn.Visible = level >= 1;
             peashooterbtn.Visible = level >= 1;
             eaterbtn.Visible = level >= 1;
@@ -810,12 +802,11 @@ namespace GameFrameWork
         {
             selectedPlantType = "cattai";
         }
-
         private void Sunflowerbtn_Click(object? sender, EventArgs e)
         {
             selectedPlantType = "Sunflower";
         }
-        private Button plantBarButtons(Image img , int y) 
+        private Button plantBarButtons(Image img, int y)
         {
             Button btn = new Button();
             btn.Size = new Size(150, 200);
@@ -837,7 +828,7 @@ namespace GameFrameWork
         {
             sound.Play(soundplay);
         }
-        private void sunCountLabel() 
+        private void sunCountLabel()
         {
             sunCount.Text = sunvalue.ToString();
             sunCount.Font = new Font("Arial", 24, FontStyle.Bold);
@@ -845,46 +836,46 @@ namespace GameFrameWork
             sunCount.BackColor = Color.LightGoldenrodYellow;
             sunCount.Location = new Point(500, 18);
             sunCount.AutoSize = true;
-           
+
         }
-        private Panel SunBar() 
+        private Panel SunBar()
         {
             Panel sunPanel = new Panel();
             sunPanel.BackgroundImage = Resources.sunbar;
             sunPanel.BackgroundImageLayout = ImageLayout.Stretch;
             sunPanel.Size = new Size(350, 80);
             sunPanel.Location = new Point(350, 20);
-            sunPanel.BackColor = Color.Transparent; 
+            sunPanel.BackColor = Color.Transparent;
             sunPanel.BorderStyle = BorderStyle.None;
 
             SetDoubleBuffered(sunPanel);
 
             return sunPanel;
         }
-        private ProgressBar ZombieBar() 
+        private ProgressBar ZombieBar()
         {
             zombieBar = new ProgressBar();
             zombieBar.Size = new Size(250, 50);
             zombieBar.Location = new Point(800, 20);
             zombieBar.Minimum = 0;
-            zombieBar.Maximum = maxZombie * 10; 
+            zombieBar.Maximum = maxZombie * 10;
             zombieBar.Value = 0;
-        
+
             return zombieBar;
         }
-        private void UpdateZombieBar() 
+        private void UpdateZombieBar()
         {
             if (zombieBar == null) return;
 
             ZombieBarValue = Math.Min(ZombieBarValue, zombieBar.Maximum);
             zombieBar.Value = ZombieBarValue;
         }
-        private Button TopBarMenuButton() 
+        private Button TopBarMenuButton()
         {
             Button menuBtn = new Button();
             menuBtn.Image = Resources.menubar;
-            menuBtn.BackgroundImageLayout =(ImageLayout)ImageLayout.Stretch;
-            menuBtn.Size = new Size(250,50);
+            menuBtn.BackgroundImageLayout = (ImageLayout)ImageLayout.Stretch;
+            menuBtn.Size = new Size(250, 50);
             menuBtn.Location = new Point(1400, 20);
             menuBtn.BackColor = Color.Transparent;
             menuBtn.FlatStyle = FlatStyle.Flat;
@@ -899,7 +890,7 @@ namespace GameFrameWork
             Controls.Clear();
             MainMenu();
         }
-        private void Login() 
+        private void Login()
         {
             Panel login = new Panel();
             login.BackgroundImage = Resources.EnterName;
@@ -910,10 +901,10 @@ namespace GameFrameWork
             SetDoubleBuffered(login);
             this.Controls.Add(login);
             LoginTextBox(login);
-          
-            Button Okbtn = loginButton(Resources.OkButton, 30,400);
-            Button cancelBtn = loginButton(Resources.CancelButton,310 , 400);
-            
+
+            Button Okbtn = loginButton(Resources.OkButton, 30, 400);
+            Button cancelBtn = loginButton(Resources.CancelButton, 310, 400);
+
             Okbtn.Click += Okbtn_Click;
             cancelBtn.Click += cancelBtn_Click;
 
@@ -927,7 +918,7 @@ namespace GameFrameWork
         {
             PlayerName = nameText.Text.Trim();
 
-            if (string.IsNullOrEmpty(PlayerName)) 
+            if (string.IsNullOrEmpty(PlayerName))
             {
                 return;
             }
@@ -940,27 +931,27 @@ namespace GameFrameWork
             Controls.Clear();
             MainMenu();
         }
-        private void LoginTextBox(Panel login) 
+        private void LoginTextBox(Panel login)
         {
             nameText = new TextBox();
             nameText.BackColor = Color.DarkSlateGray;
             nameText.Size = new Size(520, 40);
-            nameText.Location = new Point(40, 300); 
+            nameText.Location = new Point(40, 300);
             nameText.Font = new Font("Arial", 16);
             nameText.ForeColor = Color.White;
 
             login.Controls.Add(nameText);
         }
-        private Button loginButton(Image img , int x , int y) 
+        private Button loginButton(Image img, int x, int y)
         {
             Button login = new Button();
             login.BackgroundImage = img;
             login.Size = new Size(250, 50);
-            login.Location = new Point(x,y);
+            login.Location = new Point(x, y);
 
             return login;
         }
-        private void SaveNameintoFile(string PlayerName) 
+        private void SaveNameintoFile(string PlayerName)
         {
             int currentLevel = file.GetLevel();
             file.Save(currentLevel, PlayerName);
@@ -971,7 +962,7 @@ namespace GameFrameWork
                 return;
 
             System.Reflection.PropertyInfo prop = typeof(Control).GetProperty
-            ( "DoubleBuffered",System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            ("DoubleBuffered", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
             prop.SetValue(control, true, null);
         }
     }

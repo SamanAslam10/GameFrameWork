@@ -9,7 +9,9 @@ namespace GameFrameWork
         private float fireTimer = 0f;
         public string PlantType;
         public Game GameRef ;
-
+        public bool IsEating { get; set; } = false;
+        public float EatTimer { get; set; } = 0f;
+        public float EatDuration { get; set; } = 2f;
         // Movement strategy: demonstrates composition over inheritance.
         // Different movement behaviors can be injected (KeyboardMovement, PatrolMovement, etc.).
         public IMovement? Movement { get; set; }
@@ -32,6 +34,19 @@ namespace GameFrameWork
             }
             Movement?.Move(this, gameTime);
             base.Update(gameTime);
+            if (PlantType == "Eater" && IsEating)
+            {
+                EatTimer += gameTime.DeltaTime;
+
+                if (EatTimer >= EatDuration)
+                {
+                    IsEating = false;
+                    EatTimer = 0f;
+                    Sprite = new AnimatedSprite(Resources.eater);
+                }
+
+                return; 
+            }
         }
         private void Shoot()
         {
@@ -83,6 +98,20 @@ namespace GameFrameWork
                     zombie.Sprite = new AnimatedSprite(GameFrameWork.Properties.Resources.BasicZombieWalking);
                     zombie.Movement = new MoveLeftMovement(3f);
                 }
+            }
+            if (PlantType != "Eater") return;
+            if (IsEating) return;
+
+            if (other is Enemy zombieX)
+            {
+                if (zombieX.Position.X < this.Position.X) return;
+
+                IsEating = true;
+                EatTimer = 0f;
+                
+                zombieX.Health = 0;          
+                zombieX.Movement = null;   
+                Sprite = new AnimatedSprite(Resources.eater_eating);
             }
         }
     }
