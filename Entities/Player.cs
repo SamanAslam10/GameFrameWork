@@ -12,10 +12,8 @@ namespace GameFrameWork
         public bool IsEating { get; set; } = false;
         public float EatTimer { get; set; } = 0f;
         public float EatDuration { get; set; } = 2f;
-        public bool IsJumping { get; set; } = false;
-        public float JumpTimer { get; set; } = 0f;
-        public float JumpCooldown { get; set; } = 2f;
-        public float JumpDistance { get; set; } = 120f;
+        
+
         // Movement strategy: demonstrates composition over inheritance.
         // Different movement behaviors can be injected (KeyboardMovement, PatrolMovement, etc.).
         public IMovement? Movement { get; set; }
@@ -52,18 +50,6 @@ namespace GameFrameWork
                 }
 
                 return; 
-            }
-            if (PlantType == "Jumper" && IsJumping)
-            {
-                JumpTimer += gameTime.DeltaTime;
-
-                if (JumpTimer >= JumpCooldown)
-                {
-                    IsJumping = false;
-                    JumpTimer = 0f;
-                }
-
-                return;
             }
             
         }
@@ -127,22 +113,7 @@ namespace GameFrameWork
         public override void OnCollision(GameObject other)
         {
             if (other is not Enemy zombie) return;
-            if (PlantType == "Jumper")
-            {
-                if (IsJumping) return;
-                if (zombie.Position.X < Position.X) return;
-
-                IsJumping = true;
-                JumpTimer = 0f;
-
-                Position = new PointF(
-                    zombie.Position.X + zombie.Size.Width + 10,
-                    Position.Y
-                );
-
-                return; 
-            }
-
+            
             if (PlantType == "Eater")
             {
                 if (IsEating) return;

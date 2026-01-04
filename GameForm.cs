@@ -28,13 +28,11 @@ namespace GameFrameWork
         private const int SUNFLOWER_COST = 50;
         private const int PEASHOOTER_COST = 100;
         private const int EATER_COST = 150;
-        private const int JUMPER_COST = 50;
         private const int CACTUS_COST = 150;
         private const int CATTAI_COST = 250;
         private Button sunflowerbtn;
         private Button peashooterbtn;
         private Button eaterbtn;
-        private Button jumperbtn;
         private Button cactusbtn;
         private Button cattaibtn;
         private TextBox nameText;
@@ -542,9 +540,6 @@ namespace GameFrameWork
                 eaterbtn = plantBarButtons(Resources.EaterCard__3_, 400);
                 eaterbtn.Click += Eaterbtn_Click;
 
-                jumperbtn = plantBarButtons(Resources.JumperCard, 600);
-                jumperbtn.Click += Jumperbtn_Click;
-
                 cactusbtn = plantBarButtons(Resources.cactusCard, 800);
                 cactusbtn.Click += Cactusbtn_Click;
 
@@ -563,7 +558,6 @@ namespace GameFrameWork
                 gamePanel.Controls.Add(sunflowerbtn);
                 gamePanel.Controls.Add(peashooterbtn);
                 gamePanel.Controls.Add(eaterbtn);
-                gamePanel.Controls.Add(jumperbtn);
                 gamePanel.Controls.Add(cactusbtn);
                 gamePanel.Controls.Add(cattaibtn);
                 gamePanel.Controls.Add(SunBar());
@@ -652,23 +646,6 @@ namespace GameFrameWork
 
                     game.AddSun(-EATER_COST);
                 }
-                else if (selectedPlantType == "Jumper")
-                {
-                    if (game.sunCount < JUMPER_COST) return;
-
-                    game.AddObject(new Player
-                    {
-                        Sprite = new AnimatedSprite(Resources.jumper),
-                        Size = new SizeF(180, 180),
-                        Position = new PointF(e.X, e.Y),
-                        PlantType = "Jumper",
-                        FireCooldown = 1.5f,
-                        GameRef = game,
-                        IsRigidBody = true,
-                    });
-
-                    game.AddSun(-JUMPER_COST);
-                }
                 else if (selectedPlantType == "Cactus")
                 {
                     if (game.sunCount < CACTUS_COST) return;
@@ -728,16 +705,7 @@ namespace GameFrameWork
                 peashooterbtn.BackgroundImage = Resources.peashooterBar_disabled_;
                 peashooterbtn.Enabled = false;
             }
-            if (game.sunCount >= JUMPER_COST)
-            {
-                jumperbtn.BackgroundImage = Resources.JumperCard;
-                jumperbtn.Enabled = true;
-            }
-            else
-            {
-                jumperbtn.BackgroundImage = Resources.JumperCard_Disabled;
-                jumperbtn.Enabled = false;
-            }
+            
             if (game.sunCount >= EATER_COST)
             {
                 eaterbtn.BackgroundImage = Resources.EaterCard__3_;
@@ -776,7 +744,6 @@ namespace GameFrameWork
             sunflowerbtn.Visible = level >= 1;
             peashooterbtn.Visible = level >= 1;
             eaterbtn.Visible = level >= 1;
-            jumperbtn.Visible = level >= 1;
 
             cactusbtn.Visible = level >= 2;
 
