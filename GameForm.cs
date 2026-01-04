@@ -131,7 +131,7 @@ namespace GameFrameWork
             GameTimer.Stop();
             levelStart = false;
 
-            gamePanel.BackgroundImage = Resources.lawnDoorOpen;
+            gamePanel.BackgroundImage = Resources.lawnDoorOpen___Copy;
             gamePanel.BackgroundImageLayout = ImageLayout.Stretch;
 
             zombie.Sprite = new AnimatedSprite(Resources.zombieEating);
@@ -165,7 +165,7 @@ namespace GameFrameWork
         private void GenerateZombie()
         {
             int y = 150 + Random.Next(0, 5) * 100;
-            if (level >= 2 && noZombieGenerated % 2 == 0)
+            if (level >= 1 && noZombieGenerated % 2 == 0)
             {
                 game.AddObject(new Enemy
                 {
@@ -178,13 +178,39 @@ namespace GameFrameWork
                     Health = 150
                 });
             }
-            else if (level >= 3 && noZombieGenerated % 3 == 0)
+            else if (level >= 2 && noZombieGenerated % 3 == 0)
             {
                 game.AddObject(new Enemy
                 {
                     Position = new PointF(gamePanel.Width, y),
                     Size = new SizeF(320, 320),
                     Sprite = new AnimatedSprite(Resources.buckethead),
+                    Movement = new TeleportMovement(2f),
+                    IsRigidBody = true,
+                    GameRef = game,
+                    Health = 200
+                });
+            }
+            else if (level >= 2 && noZombieGenerated % 4 == 0)
+            {
+                game.AddObject(new Enemy
+                {
+                    Position = new PointF(gamePanel.Width, y),
+                    Size = new SizeF(320, 320),
+                    Sprite = new AnimatedSprite(Resources.zombiDancer),
+                    Movement = new TeleportMovement(2f),
+                    IsRigidBody = true,
+                    GameRef = game,
+                    Health = 200
+                });
+            }
+            else if (level >= 3 && noZombieGenerated % 4 == 0)
+            {
+                game.AddObject(new Enemy
+                {
+                    Position = new PointF(gamePanel.Width, y),
+                    Size = new SizeF(320, 320),
+                    Sprite = new AnimatedSprite(Resources.footballerZombie),
                     Movement = new TeleportMovement(2f),
                     IsRigidBody = true,
                     GameRef = game,
@@ -515,7 +541,14 @@ namespace GameFrameWork
                 Controls.Clear();
 
                 gamePanel = new Panel();
-                gamePanel.BackgroundImage = Resources.lawn;
+                if(no == 1) 
+                {
+                    gamePanel.BackgroundImage = Resources.lawn;
+                }
+                if (no > 1) 
+                {
+                    gamePanel.BackgroundImage = Resources.LawnNight;
+                }
                 gamePanel.Dock = DockStyle.Fill;
                 gamePanel.BackgroundImageLayout = ImageLayout.Stretch;
 

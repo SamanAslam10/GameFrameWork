@@ -262,6 +262,16 @@ namespace GameFrameWork.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap footballerZombie {
+            get {
+                object obj = ResourceManager.GetObject("footballerZombie", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap gameOverCard {
             get {
                 object obj = ResourceManager.GetObject("gameOverCard", resourceCulture);
@@ -330,9 +340,19 @@ namespace GameFrameWork.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap lawnDoorOpen {
+        internal static System.Drawing.Bitmap lawnDoorOpen___Copy {
             get {
-                object obj = ResourceManager.GetObject("lawnDoorOpen", resourceCulture);
+                object obj = ResourceManager.GetObject("lawnDoorOpen - Copy", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap LawnNight {
+            get {
+                object obj = ResourceManager.GetObject("LawnNight", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -603,6 +623,16 @@ namespace GameFrameWork.Properties {
         internal static System.Drawing.Bitmap tryAgainButton {
             get {
                 object obj = ResourceManager.GetObject("tryAgainButton", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap zombiDancer {
+            get {
+                object obj = ResourceManager.GetObject("zombiDancer", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
