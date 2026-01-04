@@ -30,12 +30,15 @@ namespace GameFrameWork
         {
             Movement?.Move(this, gameTime);
             base.Update(gameTime);
-            fireTimer += gameTime.DeltaTime;
-
-            if (fireTimer >= FireCooldown)
+            if (PlantType != "Eater" && PlantType != "Jumper")
             {
-                fireTimer = 0f;
-                Shoot();
+                fireTimer += gameTime.DeltaTime;
+
+                if (fireTimer >= FireCooldown)
+                {
+                    fireTimer = 0f;
+                    Shoot();
+                }
             }
             if (PlantType == "Eater" && IsEating)
             {
@@ -123,48 +126,50 @@ namespace GameFrameWork
         /// Collision reaction for the player. Demonstrates single responsibility: domain reaction is handled here.
         public override void OnCollision(GameObject other)
         {
-            if (other is Enemy zombie)
+            if (other is not Enemy zombie) return;
+            if (PlantType == "Jumper")
             {
-                Health = Health - 1;
-                zombie.IsEating = true;
-
-                if (Health <= 0)
-                {
-                    GameRef.EnemyScore += 10;
-                    IsActive = false;
-                    zombie.IsEating = false;
-                    zombie.Sprite = new AnimatedSprite(GameFrameWork.Properties.Resources.BasicZombieWalking);
-                    zombie.Movement = new MoveLeftMovement(3f);
-                }
-            }
-            if (PlantType != "Jumper") return;
-            if (IsJumping) return;
-
-            if (other is Enemy z)
-            {
-                if (z.Position.X < Position.X) return;
+                if (IsJumping) return;
+                if (zombie.Position.X < Position.X) return;
 
                 IsJumping = true;
                 JumpTimer = 0f;
 
                 Position = new PointF(
-                    Position.X + JumpDistance,
+                    zombie.Position.X + zombie.Size.Width + 10,
                     Position.Y
                 );
-            }
-            if (PlantType != "Eater") return;
-            if (IsEating) return;
 
-            if (other is Enemy zombieX)
+                return; 
+            }
+
+            if (PlantType == "Eater")
             {
-                if (zombieX.Position.X < this.Position.X) return;
+                if (IsEating) return;
+                if (zombie.Position.X < Position.X) return;
 
                 IsEating = true;
                 EatTimer = 0f;
-                
-                zombieX.Health = 0;          
-                zombieX.Movement = null;   
+
+                zombie.Health = 0;
+                zombie.Movement = null;
+
                 Sprite = new AnimatedSprite(Resources.eater_eating);
+
+                return;
+            }
+
+            Health -= 1;
+            zombie.IsEating = true;
+
+            if (Health <= 0)
+            {
+                GameRef.EnemyScore += 10;
+                IsActive = false;
+
+                zombie.IsEating = false;
+                zombie.Sprite = new AnimatedSprite(Resources.BasicZombieWalking);
+                zombie.Movement = new MoveLeftMovement(3f);
             }
         }
     }
