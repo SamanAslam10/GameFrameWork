@@ -185,7 +185,7 @@ namespace GameFrameWork
                 game.AddObject(new Enemy
                 {
                     Position = new PointF(gamePanel.Width, y),
-                    Size = new SizeF(350, 350),
+                    Size = new SizeF(320, 320),
                     Sprite = new AnimatedSprite(Resources.buckethead),
                     Movement = new TeleportMovement(2f),
                     IsRigidBody = true,
@@ -198,7 +198,7 @@ namespace GameFrameWork
                 game.AddObject(new Enemy
                 {
                     Position = new PointF(gamePanel.Width, y),
-                    Size = new SizeF(350, 350),
+                    Size = new SizeF(270, 270),
                     Sprite = new AnimatedSprite(Resources.BasicZombieWalking),
                     Movement = new MoveLeftMovement(3f),
                     IsRigidBody = true,
@@ -211,7 +211,7 @@ namespace GameFrameWork
                 game.AddObject(new Enemy
                 {
                     Position = new PointF(gamePanel.Width, y),
-                    Size = new SizeF(250, 250),
+                    Size = new SizeF(270, 270),
                     Sprite = new AnimatedSprite(Resources.FlagZombieWalking),
                     Movement = new MoveLeftMovement(3f),
                     IsRigidBody = true,
