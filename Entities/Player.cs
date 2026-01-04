@@ -74,6 +74,17 @@ namespace GameFrameWork
                     IsRigidBody = false
                 });
             }
+            else if (PlantType == "Cactus") 
+            {
+                GameRef.AddObject(new Bullet
+                {
+                    Sprite = new StaticSprite(Resources.spikeBullet_),
+                    Size = new SizeF(60, 60),
+                    Position = new PointF(Position.X + Size.Width, Position.Y),
+                    Movement = new MoveRightMovement(10f),
+                    IsRigidBody = false
+                });
+            }
         }
         /// Draw uses base implementation; override if player needs custom visuals.
 
