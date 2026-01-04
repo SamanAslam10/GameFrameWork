@@ -12,6 +12,10 @@ namespace GameFrameWork
         public bool IsEating { get; set; } = false;
         public float EatTimer { get; set; } = 0f;
         public float EatDuration { get; set; } = 2f;
+        public bool IsJumping { get; set; } = false;
+        public float JumpTimer { get; set; } = 0f;
+        public float JumpCooldown { get; set; } = 2f;
+        public float JumpDistance { get; set; } = 120f;
         // Movement strategy: demonstrates composition over inheritance.
         // Different movement behaviors can be injected (KeyboardMovement, PatrolMovement, etc.).
         public IMovement? Movement { get; set; }
@@ -19,12 +23,13 @@ namespace GameFrameWork
 
         // Domain state
         public int Health { get; set; } = 100;
-        public int Score { get; set; } = 0;
 
         /// Update the player: delegate movement to the Movement strategy (if provided) and then apply base update.
         /// Shows the Strategy pattern (movement behavior varies independently from Player class).
         public override void Update(GameTime gameTime)
         {
+            Movement?.Move(this, gameTime);
+            base.Update(gameTime);
             fireTimer += gameTime.DeltaTime;
 
             if (fireTimer >= FireCooldown)
@@ -32,8 +37,6 @@ namespace GameFrameWork
                 fireTimer = 0f;
                 Shoot();
             }
-            Movement?.Move(this, gameTime);
-            base.Update(gameTime);
             if (PlantType == "Eater" && IsEating)
             {
                 EatTimer += gameTime.DeltaTime;
@@ -47,6 +50,19 @@ namespace GameFrameWork
 
                 return; 
             }
+            if (PlantType == "Jumper" && IsJumping)
+            {
+                JumpTimer += gameTime.DeltaTime;
+
+                if (JumpTimer >= JumpCooldown)
+                {
+                    IsJumping = false;
+                    JumpTimer = 0f;
+                }
+
+                return;
+            }
+            
         }
         private void Shoot()
         {
@@ -120,6 +136,21 @@ namespace GameFrameWork
                     zombie.Sprite = new AnimatedSprite(GameFrameWork.Properties.Resources.BasicZombieWalking);
                     zombie.Movement = new MoveLeftMovement(3f);
                 }
+            }
+            if (PlantType != "Jumper") return;
+            if (IsJumping) return;
+
+            if (other is Enemy z)
+            {
+                if (z.Position.X < Position.X) return;
+
+                IsJumping = true;
+                JumpTimer = 0f;
+
+                Position = new PointF(
+                    Position.X + JumpDistance,
+                    Position.Y
+                );
             }
             if (PlantType != "Eater") return;
             if (IsEating) return;
