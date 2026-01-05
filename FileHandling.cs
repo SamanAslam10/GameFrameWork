@@ -4,73 +4,70 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-
 namespace GameFrameWork
 {
     internal class FileHandling
     {
-        int level = 0 ;
-        string name = "";
-        public void Save(int level , string PlayerName) 
-        {
-            string path = "Progress.txt";
+        private string path = "S:\\CS\\semester2\\OOP\\Lab\\code\\PlantsVsZombies\\Progress.txt";
 
+        public int GetLevel(string playerName)
+        {
+            Dictionary<string, int> records = LoadAllRecords();
+            if (records.ContainsKey(playerName))
+                return records[playerName];
+            return 0;
+        }
+
+       
+        public void Save(int level, string playerName)
+        {
+            Dictionary<string, int> records = LoadAllRecords();
+
+            if (records.ContainsKey(playerName))
+            {
+              
+                if (level > records[playerName])
+                    records[playerName] = level;
+            }
+            else
+            {
+                records[playerName] = level; 
+            }
+
+            WriteAllRecords(records);
+        }
+
+        private Dictionary<string, int> LoadAllRecords()
+        {
+            Dictionary<string, int> records = new Dictionary<string, int>();
             if (!File.Exists(path))
                 File.Create(path).Close();
 
-            string[] records = File.ReadAllLines(path);
-            foreach (string record in records)
+            string[] lines = File.ReadAllLines(path);
+            foreach (string line in lines)
             {
-                string existingName = record.Split(',')[0];
-                if (existingName == PlayerName)
-                    return;
-            }
+                if (string.IsNullOrWhiteSpace(line)) continue;
+                string[] parts = line.Split(',');
+                if (parts.Length != 2) continue;
 
-            using (StreamWriter writer = new StreamWriter(path, true))
-            {
-                writer.WriteLine($"{PlayerName},{level}");
+                string name = parts[0];
+                if (!int.TryParse(parts[1], out int level)) continue;
+
+                if (!records.ContainsKey(name))
+                    records.Add(name, level);
             }
+            return records;
         }
-        public void Load()
+
+        private void WriteAllRecords(Dictionary<string, int> records)
         {
-            if (File.Exists("Progress.txt")) 
+            using (StreamWriter writer = new StreamWriter(path, false))
             {
-                StreamReader read = new StreamReader("Progress.txt");
-                string record;
-                while ((record = read.ReadLine()) != null) 
+                foreach (var kvp in records)
                 {
-                    level = Convert.ToInt32(ParseData(record,1));
-                    name = ParseData(record, 0);
-                }
-                read.Close();
-            }
-        }
-        public string GetName() 
-        {
-            Load();
-            return name;
-        }
-        public int GetLevel() 
-        {
-            Load();
-            return level;
-        }
-        private string ParseData(string record , int field) 
-        {
-            int comma = 0;
-            string item = "";
-            for(int i = 0; i < record.Length ; i ++) 
-            {
-                if(record[i] == ',') 
-                {
-                    comma++;
-                }
-                else if(comma == field) 
-                {
-                    item = item + record[i];
+                    writer.WriteLine($"{kvp.Key},{kvp.Value}");
                 }
             }
-            return item;
         }
     }
 }

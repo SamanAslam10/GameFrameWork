@@ -178,7 +178,7 @@ namespace GameFrameWork
                     Health = 150
                 });
             }
-            else if (level >= 2 && noZombieGenerated % 3 == 0)
+            else if (level >= 2 && noZombieGenerated % 2 == 0)
             {
                 game.AddObject(new Enemy
                 {
@@ -191,7 +191,7 @@ namespace GameFrameWork
                     Health = 200
                 });
             }
-            else if (level >= 2 && noZombieGenerated % 4 == 0)
+            else if (level >= 2 && noZombieGenerated % 3 == 0)
             {
                 game.AddObject(new Enemy
                 {
@@ -337,8 +337,14 @@ namespace GameFrameWork
         }
         private void StartButton_Click(object sender, EventArgs e)
         {
-            StartLevel(1);
-            LoadLevels(1, levelDuration, true);
+            int unlocked = file.GetLevel(PlayerName);
+
+            if (unlocked < 1) 
+            {
+                unlocked = 1;
+            }
+            StartLevel(unlocked);
+            LoadLevels(unlocked, levelDuration, true);
         }
         private void LevelButton_Click(object sender, EventArgs e)
         {
@@ -356,7 +362,7 @@ namespace GameFrameWork
             levels.Dock = DockStyle.Fill;
             levels.BackgroundImageLayout = ImageLayout.Stretch;
 
-            int unlocked = file.GetLevel();
+            int unlocked = file.GetLevel(PlayerName);
 
             int x = 350;
             int gap = 150;
@@ -484,11 +490,12 @@ namespace GameFrameWork
         }
         private void MainMenuBtn_Click(object? sender, EventArgs e)
         {
+            Controls.Clear();
+            level = file.GetLevel(PlayerName);   
             MainMenu();
         }
         private void StartLevel(int levelno)
         {
-            UpdatePlantAvailability();
             level = levelno;
             levelStart = true;
             levelTimer = 0;
@@ -522,7 +529,7 @@ namespace GameFrameWork
             {
                 levelStart = false;
 
-                int unlockedlevel = file.GetLevel();
+                int unlockedlevel = file.GetLevel(PlayerName);
                 if (level > unlockedlevel || game.PlayerScore >= game.EnemyScore)
                 {
                     file.Save(level, PlayerName);
@@ -573,14 +580,12 @@ namespace GameFrameWork
                 eaterbtn = plantBarButtons(Resources.EaterCard__3_, 400);
                 eaterbtn.Click += Eaterbtn_Click;
 
-                cactusbtn = plantBarButtons(Resources.cactusCard, 800);
+                cactusbtn = plantBarButtons(Resources.cactusCard, 600);
                 cactusbtn.Click += Cactusbtn_Click;
 
-                cattaibtn = plantBarButtons(Resources.cattaiCard, 1000);
+                cattaibtn = plantBarButtons(Resources.cattaiCard, 800);
                 cattaibtn.Click += Cattaibtn_Click;
                 ;
-                cactusbtn.Visible = false;
-                cattaibtn.Visible = false;
 
                 PlayerScoreLabel = ScoreLabels(1200, 30);
                 EnemyScoreLabel = ScoreLabels(1200, 70);
@@ -600,7 +605,7 @@ namespace GameFrameWork
                 gamePanel.Controls.Add(PlayerScoreLabel);
                 gamePanel.Controls.Add(EnemyScoreLabel);
                 sunCount.BringToFront();
-
+                UpdatePlantAvailability();
             }
         }
         private Label ScoreLabels(int x, int y)
@@ -696,7 +701,7 @@ namespace GameFrameWork
 
                     game.AddSun(-CACTUS_COST);
                 }
-                else if (selectedPlantType == "Cattai")
+                else if (selectedPlantType == "cattai")
                 {
                     if (game.sunCount < CATTAI_COST) return;
 
@@ -773,14 +778,17 @@ namespace GameFrameWork
         private void UpdatePlantAvailability()
         {
             if (sunflowerbtn == null) return;
+            peashooterbtn.Visible = true;
+            sunflowerbtn.Visible = true;
+            eaterbtn.Visible = true;
+            cactusbtn.Visible = false;
+            cattaibtn.Visible = false;
 
-            sunflowerbtn.Visible = level >= 1;
-            peashooterbtn.Visible = level >= 1;
-            eaterbtn.Visible = level >= 1;
+            if (level >= 2)
+                cactusbtn.Visible = true;
 
-            cactusbtn.Visible = level >= 2;
-
-            cattaibtn.Visible = level >= 3;
+            if (level >= 3)
+                cattaibtn.Visible = true;
         }
         private void Peashooterbtn_Click(object? sender, EventArgs e)
         {
@@ -789,10 +797,6 @@ namespace GameFrameWork
         private void Eaterbtn_Click(object? sender, EventArgs e)
         {
             selectedPlantType = "Eater";
-        }
-        private void Jumperbtn_Click(object? sender, EventArgs e)
-        {
-            selectedPlantType = "Jumper";
         }
         private void Cactusbtn_Click(object? sender, EventArgs e)
         {
@@ -919,11 +923,10 @@ namespace GameFrameWork
             PlayerName = nameText.Text.Trim();
 
             if (string.IsNullOrEmpty(PlayerName))
-            {
                 return;
-            }
-            SaveNameintoFile(PlayerName);
-            Controls.Clear();
+
+            int savedLevel = file.GetLevel(PlayerName);
+            level = savedLevel;           
             MainMenu();
         }
         private void cancelBtn_Click(object? sender, EventArgs e)
@@ -951,10 +954,9 @@ namespace GameFrameWork
 
             return login;
         }
-        private void SaveNameintoFile(string PlayerName)
+        private void SaveNameintoFile(int level ,string PlayerName)
         {
-            int currentLevel = file.GetLevel();
-            file.Save(currentLevel, PlayerName);
+            file.Save(level, PlayerName);
         }
         private void SetDoubleBuffered(Control control)
         {
